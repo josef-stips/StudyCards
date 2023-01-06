@@ -6,6 +6,12 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
+require('update-electron-app')({
+    repo: 'josef-stips/StudyCards',
+    updateInterval: '1 hour',
+    logger: require('electron-log')
+})
+
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
