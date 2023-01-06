@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-
-// require('update-electron-app')()
+const shipItProcesses = await findProcess('name', 'ShipIt');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -67,4 +66,25 @@ if (isDev) {
     console.log('Running in development');
 } else {
     console.log('Running in production');
+}
+
+if (shipItProcesses.some(f => f.cmd.includes('com.org.my-app'))) {
+    shouldRestartBeforeLaunch = true;
+    console.debug('Waiting for auto update to finish');
+    setTimeout(makeSureAutoUpdateFinished, 1500);
+} else {
+    // ...
+}
+
+if (shouldRestartBeforeLaunch) {
+    try {
+        const Electron = require('electron');
+        Electron.app.relaunch();
+        Electron.app.exit(0);
+    } catch (error) {
+        console.error('Failed to restart the app through electron', error);
+        process.exit(1);
+    }
+} else {
+    require('./main');
 }
