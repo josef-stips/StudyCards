@@ -72,3 +72,7 @@ if (isDev) {
 } else {
     console.log('Running in production');
 }
+
+require('update-electron-app')({
+    logger: require('electron-log')
+})
