@@ -1,6 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+// require('update-electron-app')()
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
     app.quit();
@@ -29,6 +31,16 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
+app.on('ready', () => {
+    updateApp = require('update-electron-app');
+
+    updateApp({
+        // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
+        updateInterval: '1 hour',
+        notifyUser: true
+    });
+});
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
@@ -48,3 +60,11 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+const isDev = require('electron-is-dev');
+
+if (isDev) {
+    console.log('Running in development');
+} else {
+    console.log('Running in production');
+}
