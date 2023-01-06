@@ -7,7 +7,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 require('update-electron-app')({
-    repo: 'josef-stips/StudyCards',
+    repo: 'https://github.com/josef-stips/StudyCards',
     updateInterval: '1 hour',
     logger: require('electron-log')
 })
