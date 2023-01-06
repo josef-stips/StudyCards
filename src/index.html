@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Josef's StudyCards</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="https://kit.fontawesome.com/8f7afdedcd.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Press+Start+2P&family=Readex+Pro:wght@200;300;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Secular+One&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<script defer src="js/script.js"></script>
+<script defer src="js/MaxTextLength.js"></script>
+
+<body>
+    <header>
+        <a title="index card menu" id="sdm-open-button" href="#" class="fa-solid fa-bars fa-2x"></a>
+
+        <h1 id="StackNameTitle">Your stack name</h1>
+
+        <nav>
+            <ul id="nav_links">
+                <li>
+                    <a title="switch color theme" href="#" class="fa-solid fa-moon fa-2x" id="colorSwitcher"></a>
+                </li>
+                <li>
+                    <a title="Settings" href="#" id="OpenSettWindow" class="fa-solid fa-gear fa-2x"></a>
+                </li>
+                <li>
+                    <a title="create a new index card" href="#" class="fa-solid fa-pen fa-2x" id="Nav_createCard-Pen"></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="side-menu">
+
+        <div id="sdm-content">
+            <h2>Stack collection</h2>
+
+            <div id="sdm-icons">
+                <i title="add a new stack" id="sdm-plus-item" class="fa-solid fa-plus"></i>
+                <i title="delete current stack" id="sdm-x-item" class="fa-solid fa-x "></i>
+                <i title="delete all stacks" id="sdm-trash-item" class="fa-solid fa-trash-can"></i>
+            </div>
+
+            <hr class="vertical-line">
+        </div>
+        <div class="table-wrapper">
+            <table id="sdm-table">
+            </table>
+        </div>
+
+        <!-- <tr>
+            <td data-table-index="0" id="Englisch-table" class="tableCell">Englisch</td>
+                </tr>
+                <tr>
+            <td data-table-index="1" id="Französisch-table" class="tableCell">Französisch</td>
+        </tr> -->
+        <a title="close" href="#" id="cls-menu-button" class="fa-solid fa-x " accesskey="k"></a>
+    </div>
+
+    <div id="wrapper">
+        <div id="main-content">
+            <div id="neuer-stappel">
+                <div id="sv">
+                    <h3 class="NeuerStapel_UserShortInput" contenteditable data-placeholder="front" id="NeuerStapel_vs"></h3>
+                </div>
+                <div id="sr">
+                    <h3 class="NeuerStapel_UserShortInput" contenteditable data-placeholder="back" id="NeuerStapel_rs"></h3>
+                </div>
+            </div>
+            <div id="stappel-wrapper">
+                <div title="click to learn" id="stappel">
+                    <h2 id="stappel-header"></h2>
+                    <h4 id="stappel-underhead"></h4>
+                </div>
+            </div>
+        </div>
+        <div id="initial-text">
+            <h1 id="Main_InI-Text">
+                Looks like there is no stack in your Storage yet...
+            </h1>
+            <h2 id="Main_SecInI-Text">
+                Create a stack by opening the left side menu
+            </h2>
+        </div>
+    </div>
+
+    <div id="dark-webapp-con"></div>
+
+
+    <div id="sts-popup">
+        <div id="side-con">
+            <table id="sts-table">
+                <tbody>
+                    <tr>
+                        <th id="sts-table-headline">
+                            Settings
+                        </th>
+                    </tr>
+                    <tr>
+                        <td id="stsTable-Item1">
+                            Shortcuts
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="stsTable-Item2">
+                            App Colors
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="stsTable-Item3">
+                            User Setings
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="sts-main-content">
+            <div id="sts-head">
+
+                <h3 id="sts-head-title">- Shortcuts</h3>
+                <i id="cls-sts-button" class="fa-solid fa-x fa-1x"></i>
+
+                <hr id="sts-line" class="vertical-line">
+            </div>
+
+            <div id="sts-content">
+                <div id="first-content">
+                    <h3>1. Open Side Menu</h3>
+                    <p class="sts-underText">To open the Side Menu with the following key shortcut, you must not have any other window open in the app.</p>
+                    <b class="sts-underText">Ctrl + M</b>
+
+                    <h3>2. Close Side Menu</h3>
+                    <p class="sts-underText">To close the Side Menu with the following key shortcut, the side menu should be open first.</p>
+                    <b class="sts-underText">Shift + M</b>
+
+                    <h3>3. Switch Dark/Light Mode</h3>
+                    <p class="sts-underText">Use the first Shortcut to switch to darkmode and the second for lightmode. Use the third key to toggle between light and darkmode.
+                    </p>
+                    <b class="sts-underText" id="firstKeyOf-KeyList">Shift + D</b>
+                    <br>
+                    <b class="sts-underText">Shift + L</b>
+                    <br>
+                    <b class="sts-underText">Shift + T</b>
+
+                    <h3>4. Add new index card to the stack</h3>
+                    <p class="sts-underText">This shortcut only works if the front and back of the new card are labeled and the focus is setted to the back of the card.</p>
+                    <b class="sts-underText">Enter</b>
+
+                    <h3>5. Switch to front and back</h3>
+                    <p class="sts-underText">Only works if one of the fields from the index card is focused.</p>
+                    <b class="sts-underText">key down / key up</b>
+
+                    <h3>6. Open Playground</h3>
+                    <p class="sts-underText">To open the Playground with the following key shortcut, you must not have any other window open in the app.</p>
+                    <b class="sts-underText">Shift + P</b>
+
+                    <h3>7. Close Playground</h3>
+                    <p class="sts-underText">To open the Playground with the following key shortcut, you must not have any other window open in the app.</p>
+                    <b class="sts-underText">Shift + G</b>
+
+                    <h3>8. Open Window with all index cards of the current stack</h3>
+                    <p class="sts-underText">A window will appear with a list of all your index cards in the currently selected deck.</p>
+                    <b class="sts-underText">Ctrl + Shift + C</b>
+                </div>
+
+                <div id="sec-content">
+                    <h2>This feature is availible in the next version</h2>
+                </div>
+
+                <div id="third-content">
+                    <h2>This feature is availible in the next version</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="CreateTableElWindow">
+        <h2>Type in a name</h2>
+        <p contenteditable class="UserShortInput2" id="input2"></p>
+
+        <nav>
+            <ul id="cteNav-links">
+                <li>
+                    <i title="confirm" id="cteAcceptName" class="fa-solid fa-check fa-2x"></i>
+                </li>
+                <li>
+                    <i title="abort" id="cteAbortButton" class="fa-solid fa-x fa-2x"></i>
+                </li>
+                <li>
+                    <i title="delete name" id="cteDeleteName" class="fa-solid fa-trash-can fa-2x"></i>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="play-ground">
+        <!--First Main Container-->
+        <div id="pg-NavHeader">
+            <nav>
+                <ul id="pg-NavItems">
+                    <li class="fa-solid fa-x fa-2x" id="pg-navClickEl-1"> </li>
+                    <li id="pg-navClickEl-3" class="fa-solid fa-rotate-right fa-2x"></li>
+                    <li id="pg-loc-header"></li>
+                    <li class="fa-solid fa-check fa-2x" id="pg-navClickEl-2"></li>
+                </ul>
+            </nav>
+            <hr id="pg-vl" class="vertical-line">
+        </div>
+        <!--Second Main Container-->
+        <div id="pg-karteikarten-div">
+            <div class="pg-Karteikarte">
+                <div id="pg-sv">
+                    <h3 class="UserShortInput">front</h3>
+                </div>
+                <div id="pg-sr">
+                    <h3 class="UserShortInput">back</h3>
+                </div>
+            </div>
+            <hr id="pg-vl2" class="vertical-line">
+        </div>
+        <!--Third Main Container-->
+        <div id="pg-Subheader">
+            <div class="pg-sub-firsDiv">
+                <button class="bn30">Show all cards</button>
+            </div>
+            <div class="pg-sub-secondDiv">
+                <!--Vor dem Spiel-->
+                <div class="pg-oben-SichtbarDiv">
+                    <p style="margin-top:1.4% ;">view above</p>
+                </div>
+                <div class="pg-unten-SichtbarDiv">
+                    <p style="margin-top:1.4% ;">view below</p>
+                </div>
+
+                <!--whärend dem Spiel-->
+                <div class="pg-wiederhohlen-div">
+                    <p style="margin-top:1.4% ;">repeat</p>
+                </div>
+                <div class="pg-kannIch-div">
+                    <p style="margin-top:1.4% ;">easy</p>
+                </div>
+
+                <!--Nach dem Spiel-->
+                <div class="pg-nochmal-div">
+                    <p style="margin-top:1.4% ;">repeat</p>
+                </div>
+                <div class="pg-spaeter-div">
+                    <p style="margin-top:1.4% ;">later</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="allCardsWindow">
+        <div class="ShowCards-sideCon">
+            <nav>
+                <ul class="SideCon-Icons">
+                    <li>
+                        <a href="#" class="fa-regular fa-circle-question fa-2x" title="Info" id="AllCardsWind-InfoButt"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="fa-solid fa-trash fa-2x" title="delete all" id="deleteAllCards_Button"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="fa-solid fa-pen fa-2x" title="edit" id="EditCard_Button"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="fa-solid fa-check fa-2x" id="Check_ForEdit" title="Done edit"></a>
+                    </li>
+                </ul>
+            </nav>
+            <hr id="pg-vl4" class="vertical-line">
+
+            <div id="ShowCardsWindow-SideCon">
+            </div>
+        </div>
+
+        <div class="showCards-Content">
+
+            <i id="showCards-WindButt" class="fa-solid fa-x fa-1x"></i>
+
+            <div class="CardListCont">
+                <nav>
+                    <ul class="AllCardsList">
+
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="small-pop-up">
+        <div>
+            <p id="spu-text"></p>
+        </div>
+        <div id="pop-up-button-div">
+            <button class="bn30" id="PopUp-yes-button">yes</button>
+            <button class="bn30" id="PopUp-no-button">no</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
