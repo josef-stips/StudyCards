@@ -548,6 +548,13 @@ header a {
     overflow: scroll;
 }
 
+#fourth-content {
+    display: none;
+    width: 95%;
+    height: 92%;
+    overflow: scroll;
+}
+
 
 /*********************USER-CREATE-NEW-TABLE-ELEMENT-POP-UP*********************/
 

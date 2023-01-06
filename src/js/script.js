@@ -89,12 +89,14 @@ let ShowAllCardsWind_OpenButton = document.getElementsByClassName('bn30')[0];
 let stsTable_Item1 = document.getElementById('stsTable-Item1');
 let stsTable_Item2 = document.getElementById('stsTable-Item2');
 let stsTable_Item3 = document.getElementById('stsTable-Item3');
+let stsTable_Item4 = document.getElementById('stsTable-Item4');
 
 let sts_HeadTitle = document.getElementById('sts-head-title');
 
 let sts_FirstContent = document.getElementById('first-content');
 let sts_SecondContent = document.getElementById('sec-content');
 let sts_ThirdContent = document.getElementById('third-content');
+let sts_FourthContent = document.getElementById('fourth-content');
 
 //Small PopUp window 
 let SmallPopUp = document.getElementsByClassName('small-pop-up')[0];
@@ -583,6 +585,7 @@ stsTable_Item1.addEventListener('click' ,  () => {
     sts_FirstContent.style.display = 'block';
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'none';
+    sts_FourthContent.style.display = 'none';
 })
 
 stsTable_Item2.addEventListener('click' ,  () => {
@@ -593,6 +596,7 @@ stsTable_Item2.addEventListener('click' ,  () => {
     sts_FirstContent.style.display = 'none';
     sts_SecondContent.style.display = 'block';
     sts_ThirdContent.style.display = 'none';
+    sts_FourthContent.style.display = 'none';
 })
 
 stsTable_Item3.addEventListener('click' ,  () => {
@@ -603,6 +607,18 @@ stsTable_Item3.addEventListener('click' ,  () => {
     sts_FirstContent.style.display = 'none';
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'block';
+    sts_FourthContent.style.display = 'none';
+})
+
+stsTable_Item4.addEventListener('click' ,  () => {
+    Settings_tabLocation = stsTable_Item4.textContent;
+
+    sts_HeadTitle.textContent = Settings_tabLocation;
+
+    sts_FirstContent.style.display = 'none';
+    sts_SecondContent.style.display = 'none';
+    sts_ThirdContent.style.display = 'none';
+    sts_FourthContent.style.display = 'block';
 })
 
 //Other
