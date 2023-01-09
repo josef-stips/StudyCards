@@ -906,9 +906,6 @@ function OpenPlayGround() {
             //Defines value for two arrays with copied values from the users first stack as default
             DefineValueForStackArray();
 
-            console.log(PlayGround_Cards_RS  , PlayGround_Cards_VS)
-            console.log(Karteikarten)
-
             PlayGround.style.display = 'flex';
             darkContainer.style.display = 'block';  
 
