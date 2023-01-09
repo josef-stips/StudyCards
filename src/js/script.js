@@ -1087,7 +1087,7 @@ function ShowEndText() {
     };
 
     stop_Timer();//Timer function of 'timer.js' file
-}
+};
 
 function ShowOptionsAfterGame() {
     pgKannIchButton.style.display = 'none';
