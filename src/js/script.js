@@ -287,10 +287,18 @@ stappel_RueckSeite.addEventListener('keyup' , (el) => {
     }
 });
 
-const ele = document.getElementById('NeuerStapel_vs');
+//Defines new Array for front and back cards from the original array.
+//When the user clicks on the stack field to start the game , this two arrays get mixed by a funtion
+let PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
+let PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+
 
 //Edits the Placeholder 
 function EditPlaceHolder() {
+
+    const ele = document.getElementById('NeuerStapel_vs');
+    const ele2 = document.getElementById('NeuerStapel_rs');
+
     // Get the placeholder attribute
     const placeholder = ele.getAttribute('data-placeholder');
 
@@ -306,8 +314,6 @@ function EditPlaceHolder() {
         const value = e.target.innerHTML;
         value === '' && (e.target.innerHTML = placeholder);
     });
-
-    const ele2 = document.getElementById('NeuerStapel_rs');
 
     // Get the placeholder attribute
     const placeholder2 = ele2.getAttribute('data-placeholder');
@@ -890,21 +896,35 @@ function ClosePlayGround() {
 function OpenPlayGround() {
     if(TableCells.length >= 1) {
         if (Karteikarten[`${stackLocation}`].vs.length != 0) {
+            //Defines value for two arrays with copied values from the users first stack as default
+            DefineValueForStackArray();
 
             PlayGround.style.display = 'flex';
             darkContainer.style.display = 'block';  
 
-            pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
-            pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
+            pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[0];
+            pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[0];
+
+            //If User clicked "view below" button or "view_above" button.
+            CardView();
 
             PlayMode = true;
-
-            pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)'
-            pgKarteiKarteVS.style.color = 'var(--front-color)'
 
         } else {
             SetUpSmallPopUp('Okay' , 'No' , 'block' , 'block' , `Add an index card first ${String.fromCodePoint(0x1F496)}`);
         }
+    };
+};
+
+function CardView() {
+    if (UntenSichtbar_Boolean) {
+                
+        pgKarteiKarteRS.style.color = 'var(--front-color)'
+        pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)'
+
+    } else {
+        pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)'
+        pgKarteiKarteVS.style.color = 'var(--front-color)'
     };
 };
 
@@ -961,8 +981,9 @@ function PlayModeIsNotActive() {
     pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[Runde]}`;
     pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[Runde]}`;
 
-    pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)';
-    pgKarteiKarteVS.style.color = 'var(--front-color)';
+    //Checks if the front or the back should be shown as default
+    CardView();
+
     pgShowCardsButton.style.display = 'flex';
     pgSubDoubleButton.style.marginTop = '1.5%'
 
@@ -994,7 +1015,7 @@ function ExitGame() {
 
 //When user presses the button "Kann Ich" wird die nächste Karte vom Stapel angezeigt
 function ShowNextCard() {
-    if(Runde == Karteikarten[`${stackLocation}`].vs.length - 1) {
+    if(Runde == Karteikarten[`${stackLocation}`].vs.length - 1) {//Checks if this is the last card of array
 
         EndScreen_Boolean = true;
 
@@ -1004,8 +1025,8 @@ function ShowNextCard() {
     }  else {
         Runde++;
 
-        pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[Runde]}`;
-        pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[Runde]}`;
+        pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[Runde];
+        pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[Runde];
     
         pgKannIchButton.style.display = 'none';
         pgWiederhohlenButton.style.display = 'none';
@@ -1050,6 +1071,32 @@ function ShowOptionsAfterGame() {
 
     pgShowCardsButton.style.display = 'flex';
 
+};
+
+//Defines Value for Array and calls shuffle function to shuffle array
+function DefineValueForStackArray() {
+    PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
+    PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+
+    shuffle(PlayGround_Cards_VS, PlayGround_Cards_RS);
+};
+
+
+//Function which shuffles an array
+function shuffle(obj1, obj2) {
+    var index = obj1.length;
+    var rnd, tmp1, tmp2;
+  
+    while (index) {
+      rnd = Math.floor(Math.random() * index);
+      index -= 1;
+      tmp1 = obj1[index];
+      tmp2 = obj2[index];
+      obj1[index] = obj1[rnd];
+      obj2[index] = obj2[rnd];
+      obj1[rnd] = tmp1;
+      obj2[rnd] = tmp2;
+    }
 };
 
 //This function creates a contenteditable table element for the user
