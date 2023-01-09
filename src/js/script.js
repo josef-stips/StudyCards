@@ -672,6 +672,8 @@ pgKannIchButton.addEventListener('click', () => {
 pgKarteikarte.addEventListener('click', () => {
     if (GameEnd == false) {
         PlayModeIsActive();
+
+        start_Timer();//Timer function of 'timer.js' file
     }
 })
 
@@ -689,6 +691,11 @@ pgNavClickEl_2.addEventListener('click', () => {
 
 pgNavClickEl_3.addEventListener('click' , () => {
     PlayModeIsNotActive();
+    // DefineValueForStackArray();
+
+    GameEnd = false;
+
+    pgKarteikarte.style.cursor = 'pointer';
 });
 
 ////////////////////////////////////////
@@ -899,6 +906,9 @@ function OpenPlayGround() {
             //Defines value for two arrays with copied values from the users first stack as default
             DefineValueForStackArray();
 
+            console.log(PlayGround_Cards_RS  , PlayGround_Cards_VS)
+            console.log(Karteikarten)
+
             PlayGround.style.display = 'flex';
             darkContainer.style.display = 'block';  
 
@@ -972,7 +982,8 @@ function PlayModeIsActive() {
 function PlayModeIsNotActive() {
     if(EndScreen_Boolean == true) {
         pgKarteikarte.removeChild(pgKarteikarte.lastElementChild);
-    }
+        pgKarteikarte.removeChild(pgKarteikarte.lastElementChild);
+    };
 
     EndScreen_Boolean = false;
     Runde = 0;
@@ -997,6 +1008,9 @@ function PlayModeIsNotActive() {
 
     pgKarteiKarteVS.style.display = 'flex';
     pgKarteiKarteRS.style.display = 'flex';
+
+    stop_Timer();//Timer function of 'timer.js' file
+    clear_Timer();//Timer function of 'timer.js' file
 };
 
 function ExitGame() {
@@ -1010,6 +1024,9 @@ function ExitGame() {
         PlayMode = false;
 
         pgKarteikarte.style.cursor = 'pointer';
+
+        stop_Timer();//Timer function of 'timer.js' file
+        clear_Timer();//Timer function of 'timer.js' file
     }; 
 }
 
@@ -1021,6 +1038,8 @@ function ShowNextCard() {
 
         ShowEndText();
         ShowOptionsAfterGame();
+
+        stop_Timer();//Timer function of 'timer.js' file
 
     }  else {
         Runde++;
@@ -1037,8 +1056,7 @@ function ShowNextCard() {
         } else {
             pgKarteiKarteRS.style.color = 'var(--front-color)';
             pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)';
-        }
-
+        };
     };
 };
 
@@ -1048,15 +1066,27 @@ function ShowEndText() {
     pgKarteiKarteVS.style.display = 'none';
     pgKarteiKarteRS.style.display = 'none';
     
-    let h3 = document.createElement('h3')
+    let h3 = document.createElement('h3');
+    let p = document.createElement('p');
+
+    //style p
+    p.style.marginTop = '0';
+    p.style.fontWeight = '600';
 
     let AfterGameText = document.createTextNode(`Super das du dich weiterbildest!    -    Du hast ${ZuWiederhohlen} Vokabeln zu wiederhohlen!`);
+    let underText = document.createTextNode(`Deine Zeit ${playTimer.textContent}`);
+
     h3.appendChild(AfterGameText);
+    p.appendChild(underText);
+
     pgKarteikarte.appendChild(h3);
+    pgKarteikarte.appendChild(p);
 
     if (GameEnd == true) {
         pgKarteikarte.style.cursor = 'default';
-    }
+    };
+
+    stop_Timer();//Timer function of 'timer.js' file
 }
 
 function ShowOptionsAfterGame() {
@@ -1107,8 +1137,7 @@ function CreateTableElement(user_input) {
         LastChildDataSet = document.getElementById('sdm-table').querySelector('tbody').lastElementChild.lastElementChild.getAttribute('data-table-index');
     } else {
         LastChildDataSet = 0;
-    }
-
+    };
 
     let UserCreatedName = document.createTextNode(`${user_input}`);
 
@@ -1307,10 +1336,6 @@ function DeleteCurrentStack() {
     SwitchToNextStack();
 };
 
-//Switches to the next stack in your table
-function SwitchToNextStack() {
-    
-}
 
 //Removes a specific node from an element (from Stackoverflow)
 function removeSpecificNode(i , Stack) {
@@ -1341,6 +1366,11 @@ function removeSpecificNode(i , Stack) {
     //Reloads the UserTable in localStorage
     localStorage.setItem('UserTable' , SideMenuTable.innerHTML);
 
+    SwitchToNextStack();
+};
+
+//Switches to the next stack in your table
+function SwitchToNextStack() {
     //Sets the focus to the next stack. If there is no stack anymore , another function will be called.
     if(TableCellList.length >= 1) {
 
@@ -1361,6 +1391,7 @@ function removeSpecificNode(i , Stack) {
         AllStacksDeleted();
     };
 };
+
 
 //When all stacks are deleted , this function shows the right things in the document
 function AllStacksDeleted() {

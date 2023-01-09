@@ -650,6 +650,7 @@ header a {
 
 #pg-NavItems li {
     display: inline-block;
+    font-size: 28px;
 }
 
 #pg-NavItems li:first-child {
@@ -662,6 +663,11 @@ header a {
     margin: 0.6% 0 0 1.15%;
 }
 
+#play-timer {
+    float: left;
+    margin: 0.22% 0 0 5%;
+}
+
 #pg-NavItems li:last-child {
     float: right;
     margin: 0.6% 0.45% 0 0;
@@ -670,6 +676,7 @@ header a {
 #pg-loc-header {
     font-size: 30px;
     color: var(--third-front-color);
+    margin-left: -12%;
 }
 
 #pg-vl {
