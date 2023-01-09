@@ -217,6 +217,11 @@ if (TableCells.length >= 1) {
     MainCon_InitialText.style.display = 'none';
     MainContent.style.display = 'flex';
 
+    //Defines new Array for front and back cards from the original array.
+    //When the user clicks on the stack field to start the game , this two arrays get mixed by a funtion
+    let PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
+    let PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+
 } else {
  
     MainCon_InitialText.style.display = 'block';
@@ -286,11 +291,6 @@ stappel_RueckSeite.addEventListener('keyup' , (el) => {
         NeuerStapel_VS.focus();
     }
 });
-
-//Defines new Array for front and back cards from the original array.
-//When the user clicks on the stack field to start the game , this two arrays get mixed by a funtion
-let PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
-let PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
 
 
 //Edits the Placeholder 
