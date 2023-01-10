@@ -1123,7 +1123,7 @@ function shuffle(obj1, obj2) {
       obj2[index] = obj2[rnd];
       obj1[rnd] = tmp1;
       obj2[rnd] = tmp2;
-    }
+    };
 };
 
 //This function creates a contenteditable table element for the user
@@ -1131,8 +1131,11 @@ function CreateTableElement(user_input) {
     let LastChildDataSet
 
     if (TableCells.length >= 1 && SideMenuTable.getElementsByTagName('tbody').length >= 1) {
+
         LastChildDataSet = document.getElementById('sdm-table').querySelector('tbody').lastElementChild.lastElementChild.getAttribute('data-table-index');
-    } else {
+    
+    } else if(TableCells.length <= 0 && SideMenuTable.getElementsByTagName('tbody').length <= 0) {
+        
         LastChildDataSet = 0;
     };
 
@@ -1322,17 +1325,17 @@ function DeleteCurrentStack() {
     let CurrStack = stackLocation;
     let LiveTableList = SideMenuTable.querySelector('tbody').children
 
+    if(LiveTableList.length == 1) {
+        DeleteAllStacks();
+    };
+
     for(i=0;i < LiveTableList.length;i++) {
 
         if (LiveTableList[i].innerText == CurrStack) {
             removeSpecificNode(i, CurrStack);
         };
     };
-
-    //Switches to the next stack in your table
-    SwitchToNextStack();
 };
-
 
 //Removes a specific node from an element (from Stackoverflow)
 function removeSpecificNode(i , Stack) {
@@ -1363,28 +1366,28 @@ function removeSpecificNode(i , Stack) {
     //Reloads the UserTable in localStorage
     localStorage.setItem('UserTable' , SideMenuTable.innerHTML);
 
-    SwitchToNextStack();
+    if(TableCellList != []) SwitchToNextStack(TableCellList);
 };
 
 //Switches to the next stack in your table
-function SwitchToNextStack() {
+function SwitchToNextStack(Array) {
     //Sets the focus to the next stack. If there is no stack anymore , another function will be called.
-    if(TableCellList.length >= 1) {
+    if(Array.length >= 1) {
 
         if(i <= 0) {
-            SetFocusToTable(TableCellList[i].textContent ,Karteikarten[`${TableCellList[i].textContent}`].vs.length);
+            SetFocusToTable(TableCellList[i].textContent ,Karteikarten[`${Array[i].textContent}`].vs.length);
 
-        } else if(i == TableCellList.length) {
-            SetFocusToTable(TableCellList[i - 1].textContent ,Karteikarten[`${TableCellList[i - 1].textContent}`].vs.length);
+        } else if(i == Array.length) {
+            SetFocusToTable(Array[i - 1].textContent ,Karteikarten[`${Array[i - 1].textContent}`].vs.length);
 
-        }  else if(i == TableCellList.length - 1) {
-            SetFocusToTable(TableCellList[i - 1].textContent ,Karteikarten[`${TableCellList[i - 1].textContent}`].vs.length);
+        }  else if(i == Array.length - 1) {
+            SetFocusToTable(Array[i - 1].textContent ,Karteikarten[`${Array[i - 1].textContent}`].vs.length);
 
         } else if(i > 0) {
-            SetFocusToTable(TableCellList[i].textContent ,Karteikarten[`${TableCellList[i - 1].textContent}`].vs.length);
+            SetFocusToTable(Array[i].textContent ,Karteikarten[`${Array[i - 1].textContent}`].vs.length);
         };
 
-    } else if(TableCellList.length <= 0) {
+    } else if(Array.length <= 0) {
         AllStacksDeleted();
     };
 };
