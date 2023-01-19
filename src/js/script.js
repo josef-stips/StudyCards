@@ -29,6 +29,9 @@ let ShowCardsWind_InfoButt = document.getElementById('AllCardsWind-InfoButt');
 
 let SideMenuTable = document.getElementById('sdm-table');
 
+let SetColorToDefault_Butt = document.getElementById('SetColorToDefault-Butt');
+let ResetApp_Butt = document.getElementById('ResetApp-Butt');
+
 //SideMenuIcons and IconDiv
 let sdm_Icons = document.getElementById('sdm-icons');
 
@@ -82,7 +85,7 @@ let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[0];
 let deleteAllCards_Button = document.getElementById('deleteAllCards_Button');
 let EditCard_Button = document.getElementById('EditCard_Button');
 
-let ShowAllCardsWind_OpenButton = document.getElementsByClassName('bn30')[0];
+let ShowAllCardsWind_OpenButton = document.getElementById('ShowAllCards-Button');
 
 //Settings Window table Elements
 
@@ -134,6 +137,8 @@ let Settings_tabLocation = 'Shortcuts';
 
 let pressed_DeleteAllStacks_butt = false;
 let pressed_DeleteCurrStack_butt = false;
+let pressed_ResetColors_butt = false;
+let pressed_ResetApp_butt = false;
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -232,44 +237,58 @@ if (TableCells.length >= 1) {
 
 //Fügt eine Karte einem Stapel hinzu
 stappel_RueckSeite.addEventListener('keydown', (e) => {
-
     if (e.key === 'Enter') {
 
-                e.preventDefault();
+        e.preventDefault();
 
-                //Anderes
-                let StInner = stappel_RueckSeite.innerText;
-                let StInner_vs = stappel_VorderSeite.innerText;
+        AddCardToStack();
 
-        if (StInner != 'back' && StInner_vs != 'front' && StInner != '') {
-            Karteikarten[`${stackLocation}`].vr.push(StInner);
-            Karteikarten[`${stackLocation}`].vs.push(StInner_vs);
-
-            
-            pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
-            pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
-    
-            stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
-
-            //Stapel wird gespeichert
-            localStorage.setItem(`${stackLocation}_stapel_VS` , JSON.stringify(Karteikarten[`${stackLocation}`].vs));
-            localStorage.setItem(`${stackLocation}_stapel_RS` , JSON.stringify(Karteikarten[`${stackLocation}`].vr));
-
-            //Sets focus to the first field (Vorderseite)
-            NeuerStapel_VS.focus();
-
-            for (let i = 0; i < NewStapel_Field.length; i++) {
-                const element = NewStapel_Field[i];
-                const El_placeholder = element.getAttribute('data-placeholder');
-
-                element.textContent = '';
-                NeuerStapel_RS.textContent = El_placeholder;
-                
-            };
-        };
+        ResetPlaceHolderToDefault();
     };
 });
 
+//Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
+function AddCardToStack() {
+    let StInner = stappel_RueckSeite.innerText;
+    let StInner_vs = stappel_VorderSeite.innerText;
+
+    if (StInner != 'back' && StInner_vs != 'front' && StInner != '') {
+
+        Karteikarten[`${stackLocation}`].vr.push(StInner);
+        Karteikarten[`${stackLocation}`].vs.push(StInner_vs);
+
+
+        pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
+        pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
+    
+        stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+
+        //Sets focus to the first field (Vorderseite)
+        NeuerStapel_VS.focus();
+
+        SaveStack();
+    };
+};
+
+//Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
+function SaveStack() {
+    //Stapel wird gespeichert
+    localStorage.setItem(`${stackLocation}_stapel_VS`, JSON.stringify(Karteikarten[`${stackLocation}`].vs));
+    localStorage.setItem(`${stackLocation}_stapel_RS`, JSON.stringify(Karteikarten[`${stackLocation}`].vr));
+};
+
+//Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
+function ResetPlaceHolderToDefault() {
+    for (let i = 0; i < NewStapel_Field.length; i++) {
+        const element = NewStapel_Field[i];
+        const El_placeholder = element.getAttribute('data-placeholder');
+
+        element.textContent = '';
+        NeuerStapel_RS.textContent = El_placeholder;
+    };
+};
+
+//Other
 stappel_VorderSeite.addEventListener('keydown' , (e) => {
     if(e.key === 'Enter') {
         
@@ -424,8 +443,8 @@ document.onkeydown = (e) => {
     }  else if(e.shiftKey && e.which == 71) {
 
         ClosePlayGround();
-    }
 
+    }
 };
 
 //Button in the header (moon)
@@ -497,6 +516,18 @@ function Darkmode() {
 };
 
 // A few button events
+ResetApp_Butt.addEventListener('click' , () => {
+    spu_text.style.fontSize = "23px";
+
+    SetUpSmallPopUp('Yeah why not' , 'No what the hell' , 'block' , 'block' , 'This is IRREVERSIBLE! All costum changes and Studycards will be deleted!')
+    pressed_ResetApp_butt = true;
+});
+
+SetColorToDefault_Butt.addEventListener('click' , () => {
+    SetUpSmallPopUp('Yea' , 'Nope' , 'block' , 'block' , 'Want to reset the app colors to default?');
+    pressed_ResetColors_butt = true;
+});
+
 sdm_XIcon.addEventListener('click' , () => {
     if (TableCells.length >= 1) {
 
@@ -529,7 +560,7 @@ spu_YesButton.addEventListener('click' , () => {
 
         PlayMode = false;
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false) {
+    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
         darkContainer.style.display = 'none';
 
     } else if(pressed_DeleteAllStacks_butt == true) {
@@ -545,6 +576,16 @@ spu_YesButton.addEventListener('click' , () => {
         darkContainer.style.display = 'none';
 
         pressed_DeleteCurrStack_butt = false;
+
+    } else if(pressed_ResetColors_butt == true) {
+        SetAppColorsToDefault();
+
+        pressed_ResetColors_butt = false;
+
+    } else if(pressed_ResetApp_butt == true) {
+        ResetApp();
+
+        pressed_ResetApp_butt = false;
     };
 })
 
@@ -552,7 +593,7 @@ spu_NoButton.addEventListener('click' , () => {
     if (PlayMode == true) {
         SmallPopUp.style.display = 'none';
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false) {
+    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -565,11 +606,22 @@ spu_NoButton.addEventListener('click' , () => {
         pressed_DeleteAllStacks_butt = false;
 
     } else if(pressed_DeleteCurrStack_butt == true) {
+
         darkContainer.style.display = 'none';
         SmallPopUp.style.display = 'none';
 
-
         pressed_DeleteCurrStack_butt = false;
+
+    } else if(pressed_ResetColors_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+
+        pressed_ResetColors_butt = false;
+
+    } else if(pressed_ResetApp_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_ResetApp_butt = false;
     };
 })
 
@@ -1299,10 +1351,10 @@ function deleteAllCards() {
 
 //Deletes all cards
 function DeleteAllStacks() {
+    ClearStorage();
+
     Karteikarten = {};
     TableCells = [];
-
-    localStorage.clear();
 
     setTimeout(() => {
         SideMenu.style.width = '0';
@@ -1327,6 +1379,8 @@ function DeleteCurrentStack() {
 
     if(LiveTableList.length == 1) {
         DeleteAllStacks();
+
+        return
     };
 
     for(i=0;i < LiveTableList.length;i++) {
@@ -1375,7 +1429,7 @@ function SwitchToNextStack(Array) {
     if(Array.length >= 1) {
 
         if(i <= 0) {
-            SetFocusToTable(TableCellList[i].textContent ,Karteikarten[`${Array[i].textContent}`].vs.length);
+            SetFocusToTable(Array[i].textContent ,Karteikarten[`${Array[i].textContent}`].vs.length);
 
         } else if(i == Array.length) {
             SetFocusToTable(Array[i - 1].textContent ,Karteikarten[`${Array[i - 1].textContent}`].vs.length);
@@ -1419,3 +1473,52 @@ function SetUpSmallPopUp(butt1_Inner , butt2_Inner , SmallPopUpDisplay , darkCon
 
 //Bug fix
 ShowCards_SideContent.textContent = ``;
+
+function ClearStorage() {
+    localStorage.removeItem('UserTable');
+    localStorage.removeItem('timesArray');
+
+    for (k in Karteikarten) {
+        localStorage.removeItem(`${k}_UserTimes`);
+        localStorage.removeItem(`${k}_stapel_RS`);
+        localStorage.removeItem(`${k}_stapel_VS`);
+    };
+};
+
+function SetAppColorsToDefault() {
+    if(localStorage.getItem('firstBackground')) localStorage.removeItem('firstBackground');
+    if(localStorage.getItem('secondBackground')) localStorage.removeItem('secondBackground');
+
+    r.style.setProperty('--bg-gardiant-01', "#528bff");
+    r.style.setProperty('--bg-gardiant-02', "#8575ff");
+
+    setColor(style1_Input, '--bg-gardiant-01', ColorField_1);
+    setColor(style2_Input, '--bg-gardiant-02', ColorField_2);
+};
+
+function ResetApp() {
+    localStorage.clear();
+
+    Karteikarten = {};
+    TableCells = [];
+
+    setTimeout(() => {
+        SideMenu.style.width = '0';
+    } , 10);
+
+
+    if(SideMenuTable.querySelector('tbody') != null) {
+        SideMenuTable.removeChild(SideMenuTable.querySelector('tbody'))
+    };
+
+    SideMenuTable.style.display = 'none';
+    MainContent.style.display = 'none';
+    MainCon_InitialText.style.display = 'block';
+
+    StackNameTitle.textContent = 'Your stack name';
+
+    SettingsWindow.style.display = 'none';
+    darkContainer.style.display = 'none';
+
+    SetAppColorsToDefault();
+};

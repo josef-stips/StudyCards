@@ -15,6 +15,7 @@
 <script defer src="js/timer.js"></script>
 <script defer src="js/script.js"></script>
 <script defer src="js/MaxTextLength.js"></script>
+<script defer src="js/AppColor.js"></script>
 
 <body>
     <header>
@@ -170,18 +171,40 @@
                     <h3>7. Close Playground</h3>
                     <p class="sts-underText">To open the Playground with the following key shortcut, you must not have any other window open in the app.</p>
                     <b class="sts-underText">Shift + G</b>
-
-                    <h3>8. Open Window with all index cards of the current stack (availible in Version 1.0.5)</h3>
-                    <p class="sts-underText">A window will appear with a list of all your index cards in the currently selected deck.</p>
-                    <b class="sts-underText">Ctrl + Shift + C</b>
                 </div>
 
                 <div id="sec-content">
-                    <h2>This feature is availible version 1.0.5</h2><br> Current Version: 1.0.4
+                    <h2 id="sec_con-title">Change your app colors to have the best learning experience</h2><br>
+
+                    <div id="color-field-1">
+
+                        <h3>first basic background color</h3>
+                        <input type="color" value="#43da86" id="style1" />
+                        <label for="style1" id="ColorText-1">#43da86</label>
+
+                        <h3>second basic background color</h3>
+                        <input type="color" value="#43da86" id="style2" />
+                        <label for="style2" id="ColorText-2">#43da86</label>
+
+                        <br><br>
+                        <button id="saveColorChanges-1" class="bn30">Save changes</button>
+                    </div>
+
                 </div>
 
                 <div id="third-content">
-                    <h2>This feature is availible version 1.0.5</h2><br> Current Version: 1.0.4
+                    <h2 class="tab-subtitle">- App Colors</h2>
+
+                    <div class="child-Content">
+                        <button id="SetColorToDefault-Butt" class="bn30">Set Colors to default</button>
+                    </div>
+
+                    <h2 class="tab-subtitle">- Other</h2>
+
+                    <div class="child-Content">
+                        <button id="ResetApp-Butt" class="bn30">Reset App (Dangerous)</button>
+                    </div>
+
                 </div>
 
                 <div id="fourth-content">
@@ -241,7 +264,7 @@
         <!--Third Main Container-->
         <div id="pg-Subheader">
             <div class="pg-sub-firsDiv">
-                <button class="bn30">Show all cards</button>
+                <button id="ShowAllCards-Button" class="bn30">Show all cards</button>
             </div>
             <div class="pg-sub-secondDiv">
                 <!--Vor dem Spiel-->

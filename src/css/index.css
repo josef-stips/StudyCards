@@ -1,8 +1,8 @@
 :root {
-    --bg-gardiant-01: rgb(36, 40, 45);
-    --bg-gardiant-02: rgb(26, 31, 37);
-    --bg-header-gardiant-01: rgb(16, 21, 26);
-    --bg-header-gardiant-02: rgb(25, 29, 35);
+    --bg-gardiant-01: #528bff;
+    --bg-gardiant-02: #8575ff;
+    --bg-header-gardiant-01: rgb(16, 23, 26);
+    --bg-header-gardiant-02: rgb(35, 41, 47);
     --front-color: #ffffff;
     --button-hover-color: #4568dc;
     --pop-up-dark-background: #00000066;
@@ -12,8 +12,8 @@
     --table-cell-hover: #6883de;
     --color-invisible: #00000000;
     --second-front-color: rgb(222, 222, 222);
-    --bg-div-gardiant-01: rgb(20, 27, 32);
-    --bg-div-gardiant-02: rgb(24, 30, 37);
+    --bg-div-gardiant-01: rgb(25, 32, 35);
+    --bg-div-gardiant-02: rgb(35, 41, 47);
     --second-border-color: rgb(13, 17, 21);
     --user-input-02: rgb(7, 14, 21);
     --bg-table-gardiant-03: rgb(21, 30, 38);
@@ -22,7 +22,8 @@
     --bg-alpha-color-02: rgba(255, 255, 255, 0.595);
     --bg-button-color: #b06ab3;
     --bg-mini-div: rgb(40, 54, 67);
-    --bg-pop-up-gardiant-01: rgb(16, 23, 26);
+    --bg-pop-up-gardiant-01: rgb(22, 31, 35);
+    --bg-pop-up-gardiant-02: rgb(25, 30, 35);
     --button-hover-color-02: rgba(128, 128, 128, 0.1);
     --third-border-color: #0e0e10;
     --white-front-color: rgb(255, 255, 255);
@@ -128,7 +129,7 @@ a:hover {
     top: 0;
     background-color: var(--pop-up-dark-background);
     display: none;
-    z-index: 2900;
+    z-index: 21100;
 }
 
 
@@ -302,37 +303,31 @@ header a {
 
 #main-content {
     height: 85vh;
-    width: 85%;
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+    width: min-content;
     display: none;
     flex-direction: column;
-    border-radius: 47px;
 }
 
 #neuer-stappel {
-    background-color: var(--color-invisible);
-    height: 50vh;
+    height: min-content;
+    width: min-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
     align-content: stretch;
     align-items: center;
-    border-top-left-radius: 47px;
-    border-top-right-radius: 47px;
+    background-image: linear-gradient(to top left, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
+    box-shadow: 0.5px 0.5px 7px var(--border-color);
 }
 
 #sv {
-    background-image: linear-gradient(to bottom, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
-    width: 70%;
-    height: 40%;
+    width: 100vh;
+    height: 20vh;
     text-align: center;
     font-weight: 600;
     color: var(--front-color);
     z-index: 1000;
-    border: 4.5px solid var(--second-border-color);
-    border-top-left-radius: 47px;
-    border-top-right-radius: 47px;
 }
 
 #sv h3 {
@@ -346,18 +341,12 @@ header a {
 }
 
 #sr {
-    background-image: linear-gradient(to top, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
-    width: 70%;
-    height: 40%;
+    width: 100vh;
+    height: 20vh;
     text-align: center;
     font-weight: 600;
     color: var(--front-color);
     z-index: 1000;
-    border-left: 4.5px solid var(--second-border-color);
-    border-right: 4.5px solid var(--second-border-color);
-    border-bottom: 4.5px solid var(--second-border-color);
-    border-bottom-left-radius: 47px;
-    border-bottom-right-radius: 47px;
 }
 
 #stappel-wrapper {
@@ -366,19 +355,16 @@ header a {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom-left-radius: 47px;
-    border-bottom-right-radius: 47px;
 }
 
 #stappel {
     background-image: linear-gradient(to bottom right, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
-    border: 4.5px solid var(--second-border-color);
-    width: 70%;
-    height: 90%;
+    width: 100vh;
+    height: 88%;
     text-align: center;
     font-weight: 600;
     color: var(--second-front-color);
-    border-radius: 47px;
+    box-shadow: 1px 1px 10px var(--border-color);
 }
 
 #stappel:hover {
@@ -424,26 +410,22 @@ header a {
     height: 800px;
     background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
     position: absolute;
-    z-index: 3112;
+    z-index: 21200;
     top: 120px;
     left: 10%;
     flex-direction: row;
-    border: 1px solid var(--border-color);
     display: none;
-    border-radius: 40px;
 }
 
 #side-con {
     width: 27.5%;
     height: 100%;
-    border-right: 1px solid var(--front-color);
 }
 
 #sts-main-content {
     width: 72.5%;
     height: 100%;
     background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
-    border-radius: 40px;
 }
 
 #cls-sts-button {
@@ -464,8 +446,8 @@ header a {
 #sts-table {
     width: 100%;
     color: var(--front-color);
-    background-image: linear-gradient(to bottom right, var(--bg-table-gardiant-03), var(--bg-gardiant-02));
-    border-top-left-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.01);
+    border: none;
 }
 
 #sts-table tr td {
@@ -473,19 +455,15 @@ header a {
     transition: all 0.2s ease-in;
     font-size: 17px;
     padding: 10px 0 15px 0;
-    border-top: 1px solid var(--front-color);
 }
 
 #sts-table tr th {
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
     text-align: center;
     transition: all 0.2s ease-in;
     font-size: 21px;
-    padding: 0;
     padding: 10px 0 12px 0;
-    border-bottom: 2px solid var(--front-color);
     letter-spacing: 4px;
-    border-top-left-radius: 40px;
+    border: none;
 }
 
 #sts-table tr td:first-child {
@@ -555,6 +533,22 @@ header a {
     overflow: scroll;
 }
 
+.tab-subtitle {
+    color: var(--second-front-color);
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#settingTab-parting-line {
+    margin-top: 25px;
+    width: 90%;
+    display: none;
+}
+
+.child-Content {
+    margin: 5px 0 10px 10px;
+}
+
 
 /*********************USER-CREATE-NEW-TABLE-ELEMENT-POP-UP*********************/
 
@@ -566,11 +560,10 @@ header a {
     top: 250px;
     left: 35%;
     box-shadow: 5px 5px 15px var(--border-color);
-    z-index: 3000;
+    z-index: 21200;
     color: var(--front-color);
     text-align: left;
     display: none;
-    border-radius: 20px;
 }
 
 #CreateTableElWindow h2 {
@@ -622,7 +615,7 @@ header a {
     top: 70px;
     left: 7.52%;
     box-shadow: 5px 5px 15px var(--border-color);
-    z-index: 3000;
+    z-index: 21200;
     color: var(--front-color);
     text-align: left;
     display: none;
@@ -770,8 +763,6 @@ header a {
     height: 50px;
     background-color: var(--bg-button-color);
     border-right: 2px solid var(--front-color);
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
 }
 
 .pg-oben-SichtbarDiv:hover {
@@ -784,8 +775,6 @@ header a {
     width: 35%;
     height: 50px;
     background-color: var(--bg-button-color);
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
 }
 
 .pg-unten-SichtbarDiv:hover {
@@ -799,8 +788,6 @@ header a {
     height: 50px;
     background-color: var(--bg-button-color);
     border-right: 2px solid var(--front-color);
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
     display: none;
 }
 
@@ -809,8 +796,6 @@ header a {
     width: 35%;
     height: 50px;
     background-color: var(--bg-button-color);
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
     display: none;
 }
 
@@ -830,8 +815,6 @@ header a {
     height: 50px;
     background-color: var(--bg-button-color);
     border-right: 2px solid var(--front-color);
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
     display: none;
 }
 
@@ -840,8 +823,6 @@ header a {
     width: 35%;
     height: 50px;
     background-color: var(--bg-button-color);
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
     display: none;
 }
 
@@ -900,7 +881,7 @@ header a {
     transform: translate(0);
     background-image: linear-gradient(45deg, var(--button-hover-color), var(--bg-button-color));
     padding: 0.7em 2em;
-    border-radius: 65px;
+    border-radius: 25px;
     box-shadow: 1px 1px 10px var(--bg-alpha-color);
     -webkit-transition: box-shadow 0.25s;
     transition: box-shadow 0.25s;
@@ -917,7 +898,7 @@ header a {
 
 .bn30:after {
     content: "";
-    border-radius: 18px;
+    border-radius: 20px;
     position: absolute;
     margin: 4px;
     top: 0;
@@ -946,7 +927,7 @@ header a {
     position: absolute;
     top: 70px;
     left: 7.52%;
-    z-index: 3112;
+    z-index: 22110;
     flex-direction: row;
     border: 1px solid var(--border-color);
     display: none;
@@ -1118,7 +1099,7 @@ header a {
 .small-pop-up {
     width: 30%;
     height: 180px;
-    background-image: linear-gradient(to bottom right, var(--bg-pop-up-gardiant-01), var(--bg-div-gardiant-02));
+    background-image: linear-gradient(to bottom right, var(--bg-pop-up-gardiant-01), var(--bg-pop-up-gardiant-02));
     position: absolute;
     top: 250px;
     left: 35%;
@@ -1129,8 +1110,7 @@ header a {
     display: none;
     font-size: 22px;
     text-align: center;
-    border-radius: 20px;
-    z-index: 9000;
+    z-index: 22500;
 }
 
 #pop-up-button-div {
@@ -1138,4 +1118,67 @@ header a {
     flex-direction: row;
     justify-content: space-evenly;
     margin: 40px 0 0 0;
+}
+
+
+/***************Settings Window - App Color - Tap****************/
+
+#ColorText-1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#ColorText-2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/*------ Style 1 ------*/
+
+#style1 {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#style1::-webkit-color-swatch {
+    border-radius: 10px;
+    border: none;
+}
+
+#style1::-moz-color-swatch {
+    border-radius: 10px;
+    border: none;
+}
+
+
+/*------ Style 2 ------*/
+
+#style2 {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#style2::-webkit-color-swatch {
+    border-radius: 10px;
+    border: none;
+}
+
+#style2::-moz-color-swatch {
+    border-radius: 10px;
+    border: none;
 }
