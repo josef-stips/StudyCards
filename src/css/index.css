@@ -181,7 +181,7 @@ header a {
 
 #nav_links li {
     display: inline-block;
-    padding-left: 75px;
+    padding-left: clamp(60px, 10px, 75px);
 }
 
 #nav_links li:first-child {
@@ -554,7 +554,7 @@ header a {
 
 #CreateTableElWindow {
     width: 30%;
-    height: 180px;
+    height: 170px;
     background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
     position: absolute;
     top: 250px;
@@ -591,6 +591,7 @@ header a {
     display: inline-block;
     padding-left: 35px;
     transition: color 0.2s ease-out;
+    font-size: 12px;
 }
 
 #cteNav-links li:hover {
@@ -601,7 +602,7 @@ header a {
 
 #cteNav-links li:first-child {
     padding-left: 0px;
-    margin: 0.25em 0 0 19.5em;
+    margin: 0.25em 0 0 27.5em;
 }
 
 
@@ -989,10 +990,14 @@ header a {
 
 .SideCon-Icons li {
     display: inline-block;
-    margin-left: 80px;
+    margin-left: clamp(18px, 17%, 80px);
     color: var(--front-color);
     transition: color 0.1s ease-in;
     font-size: 12px;
+}
+
+.SideCon-Icons {
+    padding-left: 20px;
 }
 
 .SideCon-Icons li:first-child {
@@ -1181,4 +1186,46 @@ header a {
 #style2::-moz-color-swatch {
     border-radius: 10px;
     border: none;
+}
+
+@media (max-width:1810px) {
+    #cteNav-links li {
+        padding-left: 27px;
+    }
+    #cteNav-links li:first-child {
+        margin-left: 18em;
+    }
+    #wrapper {
+        height: calc(100vh - 6.4851485148514851vh);
+    }
+}
+
+@media (max-width:1500px) {
+    #cteNav-links li {
+        padding-left: 27px;
+    }
+    #cteNav-links li:first-child {
+        margin-left: 16.5em;
+    }
+    #CreateTableElWindow {
+        height: 22.5%;
+    }
+    #sts-popup {
+        width: 70%;
+        height: 700px;
+        background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+        position: absolute;
+        z-index: 21200;
+        top: 25px;
+        left: 13%;
+    }
+    #pg-sv {
+        height: 28vh;
+    }
+    #pg-sr {
+        height: 28vh;
+    }
+    #wrapper {
+        height: calc(100vh - 8.7851485148514851vh);
+    }
 }
