@@ -1,7 +1,7 @@
 {
     "name": "studycards",
     "productName": "studycards",
-    "version": "1.0.0",
+    "version": "1.0.6",
     "description": "Learn with this app!",
     "main": "src/index.js",
     "repository": "https://github.com/josef-stips/StudyCards",
