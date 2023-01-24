@@ -107,6 +107,19 @@ let spu_YesButton = document.getElementById('PopUp-yes-button');
 let spu_NoButton = document.getElementById('PopUp-no-button');
 let spu_text = document.getElementById('spu-text');
 
+//Middle-Big PopUp and stuff
+let md_PopUp_TransferCards = document.getElementById('md-PopUp-TransferCards');
+let md_PopUp_DownloadCards = document.getElementById('md-PopUp-DownlaodCards');
+let md_PopUp_TimesProgress = document.getElementById('md-PopUp-TimesProgress');
+
+let sn_transferCards_butt = document.getElementById('sn-transferCards-butt');
+let sn_saveStack_butt = document.getElementById('sn-saveStack-butt');
+let sn_timeChart_butt = document.getElementById('sn-timeChart-butt');
+
+let second_md_PopUp_Header_item = document.getElementById('second-md-PopUp-Header-item');
+let second_DownloadCards_Header_item = document.getElementById('second-DownloadCards-Header-item');
+let second_TimesProgress_Header_item = document.getElementById('second-TimesProgress-Header-item');
+
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
@@ -516,6 +529,38 @@ function Darkmode() {
 };
 
 // A few button events
+second_md_PopUp_Header_item.addEventListener('click' , () => {
+    md_PopUp_TransferCards.style.display = 'none';
+    darkContainer.style.display = 'none';
+});
+
+second_DownloadCards_Header_item.addEventListener('click' , () => {
+    md_PopUp_DownloadCards.style.display = 'none';
+    darkContainer.style.display = 'none';
+});
+
+second_TimesProgress_Header_item.addEventListener('click' , () => {
+    md_PopUp_TimesProgress.style.display = 'none';
+
+    darkContainer.style.display = 'none';
+});
+
+sn_transferCards_butt.addEventListener('click' , () => {
+    md_PopUp_TransferCards.style.display = 'block';
+    darkContainer.style.display = 'block';
+});
+
+sn_saveStack_butt.addEventListener('click' , () => {
+    md_PopUp_DownloadCards.style.display = 'block';
+    darkContainer.style.display = 'block';
+});
+
+sn_timeChart_butt.addEventListener('click' , () => {
+    md_PopUp_TimesProgress.style.display = 'block';
+
+    darkContainer.style.display = 'block';
+});
+
 ResetApp_Butt.addEventListener('click' , () => {
     spu_text.style.fontSize = "23px";
 
@@ -1474,6 +1519,7 @@ function SetUpSmallPopUp(butt1_Inner , butt2_Inner , SmallPopUpDisplay , darkCon
 //Bug fix
 ShowCards_SideContent.textContent = ``;
 
+//Other
 function ClearStorage() {
     localStorage.removeItem('UserTable');
     localStorage.removeItem('timesArray');

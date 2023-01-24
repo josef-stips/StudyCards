@@ -65,7 +65,82 @@
         <a title="close" href="#" id="cls-menu-button" class="fa-solid fa-x " accesskey="k"></a>
     </div>
 
+    <!-- Pop Ups -->
+    <div class="middleBig-popUp" id="md-PopUp-TransferCards">
+        <div class="md-PopUp-Header">
+            <nav>
+                <ul id="first-md-PopUp-Header-List">
+                    <li>
+                        <i id="first-md-PopUp-Header-item" class="fa-solid fa-layer-group fa-2x"></i>
+                    </li>
+                    <li>
+                        <h2 id="first-md-PopUp-Header-title">Copy Cards from one stack to the other stack!</h2>
+                    </li>
+                    <li>
+                        <i id="second-md-PopUp-Header-item" class="fa-solid fa-x fa-2x"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="middleBig-popUp" id="md-PopUp-DownlaodCards">
+        <div class="md-PopUp-Header">
+            <nav>
+                <ul id="md-PopUp-DownlaodCards-Header-List">
+                    <li>
+                        <i id="first-DownloadCards-Header-item" class="fa-solid fa-download fa-2x"></i>
+                    </li>
+                    <li>
+                        <h2 id="first-DownloadCards-Header-title">Save your Stack as a file</h2>
+                    </li>
+                    <li>
+                        <i id="second-DownloadCards-Header-item" class="fa-solid fa-x fa-2x"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="middleBig-popUp" id="md-PopUp-TimesProgress">
+        <div class="md-PopUp-Header">
+            <nav>
+                <ul id="md-PopUp-TimesProgress-Header-List">
+                    <li>
+                        <i id="first-TimesProgress-Header-item" class="fa-solid fa-chart-simple fa-2x"></i>
+                    </li>
+                    <li>
+                        <h2 id="first-TimesProgress-Header-title">Check your times</h2>
+                    </li>
+                    <li>
+                        <i id="second-TimesProgress-Header-item" class="fa-solid fa-x fa-2x"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- main content -->
     <div id="wrapper">
+
+        <div id="side-navigation">
+            <button class="mini-button" id="sn-transferCards-butt" title="copy and paste cards">
+
+            <i id="sn-icon-1" class="fa-solid fa-layer-group fa-2x"></i>
+
+            </button>
+            <button class="mini-button" id="sn-saveStack-butt" title="download stack">
+
+                <i id="sn-icon-2" class="fa-solid fa-download fa-2x"></i>
+
+            </button>
+            <button class="mini-button" id="sn-timeChart-butt" title="times table/chart">
+
+                <i id="sn-icon-3" class="fa-solid fa-chart-simple fa-2x"></i>
+
+            </button>
+        </div>
+
         <div id="main-content">
             <div id="neuer-stappel">
                 <div id="sv">
@@ -82,6 +157,7 @@
                 </div>
             </div>
         </div>
+
         <div id="initial-text">
             <h1 id="Main_InI-Text">
                 Looks like there is no stack in your Storage yet...
@@ -89,6 +165,11 @@
             <h2 id="Main_SecInI-Text">
                 Create a stack by opening the left side menu
             </h2>
+        </div>
+
+        <!-- Just for flex box -->
+        <div class="right-empty-div">
+
         </div>
     </div>
 
