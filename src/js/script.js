@@ -428,36 +428,36 @@ function CreateMiniCardListLoop() {
 
 //Generall Shortcuts
 document.onkeydown = (e) => {
+    if (document.activeElement !== NeuerStapel_RS && document.activeElement !== NeuerStapel_VS) {
+        if(e.ctrlKey && e.which == 77) {
 
-    if(e.ctrlKey && e.which == 77) {
-
-        SideMenu.style.width = '35vh';
-
-    } else if( e.shiftKey && e.which == 77) {
-
-        SideMenu.style.width = '0';
-
-    } else if(e.shiftKey && e.which == 68) {
-
-        Darkmode();
-
-    }  else if(e.shiftKey && e.which == 76) {
-
-        LightMode();
-
-    }  else if(e.shiftKey && e.which == 84) {
-
-        ToggleDarkMode();
-
-    } else if(e.shiftKey && e.which == 80) {
-
-        OpenPlayGround();
-
-    }  else if(e.shiftKey && e.which == 71) {
-
-        ClosePlayGround();
-
-    }
+            SideMenu.style.width = '35vh';
+    
+        } else if( e.shiftKey && e.which == 77) {
+    
+            SideMenu.style.width = '0';
+    
+        } else if(e.shiftKey && e.which == 68) {
+    
+            Darkmode();
+    
+        }  else if(e.shiftKey && e.which == 76) {
+    
+            LightMode();
+    
+        }  else if(e.shiftKey && e.which == 84) {
+    
+            ToggleDarkMode();
+    
+        } else if(e.shiftKey && e.which == 80) {
+    
+            OpenPlayGround();
+    
+        }  else if(e.shiftKey && e.which == 71) {
+    
+            ClosePlayGround();
+        }
+    };
 };
 
 //Button in the header (moon)
