@@ -47,13 +47,29 @@ if (localStorage.getItem('secondBackground')) {
 style1_Input.addEventListener('input', () => {
     ColorField_1.textContent = style1_Input.value;
 
-    r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`)
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-01', `${style1_Input.value}`);
+        r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`);
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`);
+    };
 });
 
 style2_Input.addEventListener('input', () => {
     ColorField_2.textContent = style2_Input.value;
 
-    r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`)
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-02', `${style2_Input.value}`);
+        r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`);
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`);
+    };
 });
 
 //Save Colors

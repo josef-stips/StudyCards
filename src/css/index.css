@@ -1,9 +1,9 @@
 :root {
-    --bg-gardiant-01: #528bff;
-    --bg-gardiant-02: #8575ff;
+    --front-color: #ffffff;
     --bg-header-gardiant-01: rgb(16, 23, 26);
     --bg-header-gardiant-02: rgb(35, 41, 47);
-    --front-color: #ffffff;
+    --bg-div-gardiant-01: rgb(25, 32, 35);
+    --bg-div-gardiant-02: rgb(35, 41, 47);
     --button-hover-color: #4568dc;
     --pop-up-dark-background: #00000066;
     --border-color: #000000;
@@ -12,8 +12,6 @@
     --table-cell-hover: #6883de;
     --color-invisible: #00000000;
     --second-front-color: rgb(222, 222, 222);
-    --bg-div-gardiant-01: rgb(25, 32, 35);
-    --bg-div-gardiant-02: rgb(35, 41, 47);
     --second-border-color: rgb(13, 17, 21);
     --user-input-02: rgb(7, 14, 21);
     --bg-table-gardiant-03: rgb(21, 30, 38);
@@ -45,8 +43,6 @@
     --table-cell-hover: #6883de;
     --color-invisible: #00000000;
     --second-front-color: rgb(222, 222, 222);
-    --bg-div-gardiant-01: #528bff;
-    --bg-div-gardiant-02: #8575ff;
     --second-border-color: rgb(13, 17, 21);
     --user-input-02: rgb(7, 14, 21);
     --bg-table-gardiant-03: rgb(21, 30, 38);

@@ -153,6 +153,11 @@ let pressed_DeleteCurrStack_butt = false;
 let pressed_ResetColors_butt = false;
 let pressed_ResetApp_butt = false;
 
+//Darkmode configuration
+if (localStorage.getItem('DarkMode')) {
+    Darkmode("configurator");
+};
+
 //KarteiKarten Object
 let Karteikarten = {
     // 'Example0': {
@@ -439,7 +444,7 @@ document.onkeydown = (e) => {
     
         } else if(e.shiftKey && e.which == 68) {
     
-            Darkmode();
+            Darkmode("user_event");
     
         }  else if(e.shiftKey && e.which == 76) {
     
@@ -471,35 +476,21 @@ function ToggleDarkMode() {
 
     if(document.body.classList == 'dark-mode') {
 
-        if(CheckButton_Blur == true) {
-
-            r.style.setProperty('--button-blur' , 'rgba(0,0,0,0.4)');
-            r.style.setProperty('--button-hover-color-special' , 'rgba(0,0,0,0.4)');
-    
-        } else if(CheckButton_Blur == false) {
-    
-            r.style.setProperty('--button-blur' , 'rgba(0,0,0,1)');
-            r.style.setProperty('--button-hover-color-special' , '#5070d6');
-        };
+        Darkmode("user_event");
 
     } else if(document.body.classList != 'dark-mode') {
 
-        if(CheckButton_Blur == true) {
-
-            r.style.setProperty('--button-blur' , 'rgba(255,255,255,0.6)');
-            r.style.setProperty('--button-hover-color-special' , 'rgba(0,0,0,0.6)');
-    
-        } else if(CheckButton_Blur == false) {
-    
-            r.style.setProperty('--button-blur' , 'rgba(255,255,255,1)');
-            r.style.setProperty('--button-hover-color-special' , '#5070d6');
-        };
-
-    }
+        LightMode();
+    };
 };
 
 function LightMode() {
-    document.body.classList.add('dark-mode');
+    document.body.classList.remove('dark-mode');
+
+    localStorage.removeItem('DarkMode');
+
+    r.style.setProperty('--bg-div-gardiant-01' , `rgb(25, 32, 35)`);
+    r.style.setProperty('--bg-div-gardiant-02' , `rgb(35, 41, 47)`);
 
     if(CheckButton_Blur == true) {
 
@@ -513,8 +504,25 @@ function LightMode() {
     };
 };
 
-function Darkmode() {
-    document.body.classList.remove('dark-mode');
+function Darkmode(from) {
+    let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
+    let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
+
+    let firstBasicBG_Storage = localStorage.getItem('firstBackground');
+    let secondBasicBG_Storage = localStorage.getItem('secondBackground');
+
+    if (from == "configurator") {
+        r.style.setProperty('--bg-div-gardiant-01' , `${firstBasicBG_Storage}`);
+        r.style.setProperty('--bg-div-gardiant-02' , `${secondBasicBG_Storage}`);
+
+    } else {
+        r.style.setProperty('--bg-div-gardiant-01' , `${firstBasicBG}`);
+        r.style.setProperty('--bg-div-gardiant-02' , `${secondBasicBG}`);
+    }
+
+    document.body.classList.add('dark-mode');
+
+    localStorage.setItem('DarkMode' , true);
 
     if(CheckButton_Blur == true) {
 
@@ -1532,11 +1540,21 @@ function ClearStorage() {
 };
 
 function SetAppColorsToDefault() {
-    if(localStorage.getItem('firstBackground')) localStorage.removeItem('firstBackground');
-    if(localStorage.getItem('secondBackground')) localStorage.removeItem('secondBackground');
+    localStorage.setItem('firstBackground' , "#528bff");
+    localStorage.setItem('secondBackground' , "#8575ff");
 
-    r.style.setProperty('--bg-gardiant-01', "#528bff");
-    r.style.setProperty('--bg-gardiant-02', "#8575ff");
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-div-gardiant-02', "#8575ff");
+        r.style.setProperty('--bg-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-gardiant-02', "#8575ff");
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-gardiant-02', "#8575ff");
+    };
 
     setColor(style1_Input, '--bg-gardiant-01', ColorField_1);
     setColor(style2_Input, '--bg-gardiant-02', ColorField_2);
