@@ -29,6 +29,8 @@
     --button-hover-color-special: rgba(255, 255, 255, 0.5);
     --mini-button-hover: rgb(151, 191, 255);
     --mini-button-bg-color: #f8f7ff1b;
+    --standard-dark-color-01: rgb(16, 23, 26);
+    --standard-dark-color-02: rgb(7, 14, 21);
 }
 
 .dark-mode {
@@ -659,7 +661,6 @@ header a {
 }
 
 #sts-content {
-    margin: 0 0 0 10px;
     color: var(--front-color);
     height: 100%;
 }
@@ -673,6 +674,7 @@ header a {
 }
 
 #first-content {
+    padding: 0 0 0 10px;
     width: 95%;
     height: 92%;
     overflow: scroll;
@@ -687,12 +689,13 @@ header a {
 
 #sec-content {
     display: none;
-    width: 95%;
+    width: 100%;
     height: 92%;
     overflow: scroll;
 }
 
 #third-content {
+    padding: 0 0 0 10px;
     display: none;
     width: 95%;
     height: 92%;
@@ -700,6 +703,7 @@ header a {
 }
 
 #fourth-content {
+    padding: 0 0 0 10px;
     display: none;
     width: 95%;
     height: 92%;
@@ -720,6 +724,16 @@ header a {
 
 .child-Content {
     margin: 5px 0 10px 10px;
+}
+
+#color-field-1 {
+    background-image: linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02));
+    padding: 14px;
+    padding-bottom: 32px;
+}
+
+#sec_con-title {
+    margin-left: 7px;
 }
 
 
