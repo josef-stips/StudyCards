@@ -485,6 +485,8 @@ function ToggleDarkMode() {
 };
 
 function LightMode() {
+    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+
     document.body.classList.remove('dark-mode');
 
     localStorage.removeItem('DarkMode');
@@ -505,6 +507,8 @@ function LightMode() {
 };
 
 function Darkmode(from) {
+    ColorChangeUI_Area.style.backgroundImage = "none"
+
     let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
     let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
 

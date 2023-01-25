@@ -7,6 +7,13 @@ let style2_Input = document.getElementById('style2');
 let saveColorChanges1 = document.getElementById('saveColorChanges-1');
 
 //default Settings
+let ColorChangeUI_Area = document.getElementById('color-field-1');
+
+if (!document.body.classList.contains('dark-mode')) {
+
+    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+
+} else {};
 
 //Checks if the User already saved costum colors 
 //If not , the default colors are shown 

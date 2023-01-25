@@ -727,7 +727,6 @@ header a {
 }
 
 #color-field-1 {
-    background-image: linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02));
     padding: 14px;
     padding-bottom: 32px;
 }
