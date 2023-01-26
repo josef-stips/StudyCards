@@ -242,8 +242,7 @@ if (TableCells.length >= 1) {
 
     //Defines new Array for front and back cards from the original array.
     //When the user clicks on the stack field to start the game , this two arrays get mixed by a funtion
-    let PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
-    let PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+    DefineValueForStackArray();
 
 } else {
  
@@ -750,16 +749,10 @@ ShowAllCardsWind_OpenButton.addEventListener('click' , () => {
 
 ShowAllCardsWind_ClsButton.addEventListener('click' , () => {
     ShowAllcardsWind.style.display = 'none';
-
-    pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
-    pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
 });
 
 pgNochmalButton.addEventListener('click' , () => {
-    PlayModeIsNotActive();
-    GameEnd = false;
-
-    pgKarteikarte.style.cursor = 'pointer';
+    reloadGame();
 });
 
 pgSpaeterButton.addEventListener('click' , () => {
@@ -799,12 +792,7 @@ pgNavClickEl_2.addEventListener('click', () => {
 });
 
 pgNavClickEl_3.addEventListener('click' , () => {
-    PlayModeIsNotActive();
-    // DefineValueForStackArray();
-
-    GameEnd = false;
-
-    pgKarteikarte.style.cursor = 'pointer';
+    reloadGame();
 });
 
 ////////////////////////////////////////
@@ -921,6 +909,17 @@ function getEveryNth(arr, nth) {
 };
 
 //Other
+
+//reloads the Game
+function reloadGame() {
+    DefineValueForStackArray();
+    PlayModeIsNotActive();
+    GameEnd = false;
+
+    pgKarteikarte.style.cursor = 'pointer';
+};
+
+//User can edit the card after it was edit to the stack
 function MakeCardEditPossible() {
     let FirstCard = document.getElementsByClassName('MiniCardInput')[0];
     FirstCard.focus();
@@ -1095,8 +1094,8 @@ function PlayModeIsNotActive() {
     Runde = 0;
     ZuWiederhohlen = 0;
 
-    pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[Runde]}`;
-    pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[Runde]}`;
+    pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
+    pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
 
     //Checks if the front or the back should be shown as default
     CardView();
@@ -1211,14 +1210,20 @@ function ShowOptionsAfterGame() {
 
 //Defines Value for Array and calls shuffle function to shuffle array
 function DefineValueForStackArray() {
-    PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
-    PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+    PlayGround_Cards_VS = [];
+    PlayGround_Cards_RS = [];
+
+    for (i of Karteikarten[`${stackLocation}`].vs) {
+        PlayGround_Cards_VS.push(i);
+    };
+    for (i of Karteikarten[`${stackLocation}`].vr) {
+        PlayGround_Cards_RS.push(i);
+    };
 
     shuffle(PlayGround_Cards_VS, PlayGround_Cards_RS);
 };
 
-
-//Function which shuffles an array
+//Function which shuffles two arrays
 function shuffle(obj1, obj2) {
     var index = obj1.length;
     var rnd, tmp1, tmp2;
