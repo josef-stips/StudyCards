@@ -32,6 +32,8 @@ let SideMenuTable = document.getElementById('sdm-table');
 let SetColorToDefault_Butt = document.getElementById('SetColorToDefault-Butt');
 let ResetApp_Butt = document.getElementById('ResetApp-Butt');
 
+let ColorChangeUI_Area = document.getElementById('color-field-1');
+
 //SideMenuIcons and IconDiv
 let sdm_Icons = document.getElementById('sdm-icons');
 
@@ -93,6 +95,7 @@ let stsTable_Item1 = document.getElementById('stsTable-Item1');
 let stsTable_Item2 = document.getElementById('stsTable-Item2');
 let stsTable_Item3 = document.getElementById('stsTable-Item3');
 let stsTable_Item4 = document.getElementById('stsTable-Item4');
+let stsTable_Item5 = document.getElementById('stsTable-Item5');
 
 let sts_HeadTitle = document.getElementById('sts-head-title');
 
@@ -100,6 +103,7 @@ let sts_FirstContent = document.getElementById('first-content');
 let sts_SecondContent = document.getElementById('sec-content');
 let sts_ThirdContent = document.getElementById('third-content');
 let sts_FourthContent = document.getElementById('fourth-content');
+let sts_FiftContent = document.getElementById('fift-content');
 
 //Small PopUp window 
 let SmallPopUp = document.getElementsByClassName('small-pop-up')[0];
@@ -157,6 +161,9 @@ let pressed_ResetApp_butt = false;
 if (localStorage.getItem('DarkMode')) {
     Darkmode("configurator");
 };
+
+//email elements
+let email_send_btn = document.getElementById("btn");
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -506,7 +513,7 @@ function LightMode() {
 };
 
 function Darkmode(from) {
-    ColorChangeUI_Area.style.backgroundImage = "none"
+    ColorChangeUI_Area.style.backgroundImage = "none";
 
     let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
     let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
@@ -540,6 +547,12 @@ function Darkmode(from) {
 };
 
 // A few button events
+email_send_btn.addEventListener('click' ,  (e) => {
+    e.preventDefault();
+
+    SendMail();
+});
+
 second_md_PopUp_Header_item.addEventListener('click' , () => {
     md_PopUp_TransferCards.style.display = 'none';
     darkContainer.style.display = 'none';
@@ -700,6 +713,7 @@ stsTable_Item1.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item2.addEventListener('click' ,  () => {
@@ -711,6 +725,7 @@ stsTable_Item2.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'block';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item3.addEventListener('click' ,  () => {
@@ -722,6 +737,7 @@ stsTable_Item3.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'block';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item4.addEventListener('click' ,  () => {
@@ -733,7 +749,20 @@ stsTable_Item4.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'block';
+    sts_FiftContent.style.display = 'none';
 })
+
+stsTable_Item5.addEventListener('click' , () => {
+    Settings_tabLocation = stsTable_Item5.textContent;
+
+    sts_HeadTitle.textContent = Settings_tabLocation;
+
+    sts_FirstContent.style.display = 'none';
+    sts_SecondContent.style.display = 'none';
+    sts_ThirdContent.style.display = 'none';
+    sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'block';
+});
 
 //Other
 NavPen.addEventListener('click' , () => {
@@ -1594,4 +1623,24 @@ function ResetApp() {
     darkContainer.style.display = 'none';
 
     SetAppColorsToDefault();
+};
+
+//Sends Mail to developer
+function SendMail() {
+    // let email = document.getElementById('email').value;
+    let subject = document.getElementById('subject').value;
+    let name = document.getElementById('name').value;
+    let message = document.getElementById('message').value;
+    let body = 'name - ' + name + '<br/> subject - ' + subject + '<br/> message: <br/> <br/>' + message;
+
+    Email.send({
+        SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
+        To : 'josefstips@gmx.de',
+        From : 'josefstips@gmx.de',
+        Subject : subject,
+        Body : body
+    })
+    .then(
+      message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
+    );
 };

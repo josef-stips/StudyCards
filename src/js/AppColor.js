@@ -7,7 +7,6 @@ let style2_Input = document.getElementById('style2');
 let saveColorChanges1 = document.getElementById('saveColorChanges-1');
 
 //default Settings
-let ColorChangeUI_Area = document.getElementById('color-field-1');
 
 if (!document.body.classList.contains('dark-mode')) {
 

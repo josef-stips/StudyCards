@@ -17,6 +17,9 @@
 <script defer src="js/timer.js"></script>
 <script defer src="js/MaxTextLength.js"></script>
 
+<script src="https://smtpjs.com/v3/smtp.js">
+</script>
+
 <body>
     <header>
         <a title="index card menu" id="sdm-open-button" href="#" class="fa-solid fa-bars fa-2x"></a>
@@ -83,8 +86,8 @@
             </nav>
         </div>
 
-        <div id="md-PopUp-Content01">
-
+        <div id="md-PopUp-Content01" style="color: white;height:50%;display: flex;align-items: center;justify-content: center;">
+            <h1>Availible soon</h1>
         </div>
     </div>
 
@@ -105,8 +108,8 @@
             </nav>
         </div>
 
-        <div id="md-PopUp-Content02">
-
+        <div id="md-PopUp-Content02" style="color: white;height:50%;display: flex;align-items: center;justify-content: center;">
+            <h1>Availible soon</h1>
         </div>
     </div>
 
@@ -127,8 +130,8 @@
             </nav>
         </div>
 
-        <div id="md-PopUp-Content03">
-
+        <div id="md-PopUp-Content03" style="color: white;height:50%;display: flex;align-items: center;justify-content: center;">
+            <h1>Availible soon</h1>
         </div>
     </div>
 
@@ -217,6 +220,11 @@
                             Info
                         </td>
                     </tr>
+                    <tr>
+                        <td id="stsTable-Item5">
+                            Contact me
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -302,7 +310,19 @@
 
                 <div id="fourth-content">
                     <h3>Created by <a style="text-decoration: underline;" target="_blank" href="https://github.com/josef-stips">josef-stips</a></h3>
-                    Current Version: 1.0.6
+                    Current Version: 1.0.7
+                </div>
+
+                <div id="fift-content">
+                    <div class="form">
+                        <form method="post">
+                            <input id="name" name="name" type="text" class="feedback-input" placeholder="What's your name?" autocomplete="off" />
+                            <input style="display:none;" id="email" name="email" type="email" class="feedback-input" placeholder="YOUR Email" autocomplete="off" />
+                            <input id="subject" name="subject" type="text" class="feedback-input" placeholder="Subject" autocomplete="off" />
+                            <textarea id="message" name="text" class="feedback-input" placeholder="Message"></textarea>
+                            <button id="btn">Send</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
