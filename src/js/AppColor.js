@@ -8,6 +8,13 @@ let saveColorChanges1 = document.getElementById('saveColorChanges-1');
 
 //default Settings
 
+if (!document.body.classList.contains('dark-mode')) {
+
+    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+    EmailUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+
+} else {};
+
 //Checks if the User already saved costum colors 
 //If not , the default colors are shown 
 //If the user saved costum colors the saved colors are shown
@@ -47,13 +54,29 @@ if (localStorage.getItem('secondBackground')) {
 style1_Input.addEventListener('input', () => {
     ColorField_1.textContent = style1_Input.value;
 
-    r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`)
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-01', `${style1_Input.value}`);
+        r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`);
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-01', `${style1_Input.value}`);
+    };
 });
 
 style2_Input.addEventListener('input', () => {
     ColorField_2.textContent = style2_Input.value;
 
-    r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`)
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-02', `${style2_Input.value}`);
+        r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`);
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-02', `${style2_Input.value}`);
+    };
 });
 
 //Save Colors
