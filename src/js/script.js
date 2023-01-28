@@ -33,6 +33,7 @@ let SetColorToDefault_Butt = document.getElementById('SetColorToDefault-Butt');
 let ResetApp_Butt = document.getElementById('ResetApp-Butt');
 
 let ColorChangeUI_Area = document.getElementById('color-field-1');
+let EmailUI_Area = document.getElementsByClassName('form')[0];
 
 //SideMenuIcons and IconDiv
 let sdm_Icons = document.getElementById('sdm-icons');
@@ -156,6 +157,7 @@ let pressed_DeleteAllStacks_butt = false;
 let pressed_DeleteCurrStack_butt = false;
 let pressed_ResetColors_butt = false;
 let pressed_ResetApp_butt = false;
+let pressed_SendMail_butt = false;
 
 //Darkmode configuration
 if (localStorage.getItem('DarkMode')) {
@@ -164,6 +166,9 @@ if (localStorage.getItem('DarkMode')) {
 
 //email elements
 let email_send_btn = document.getElementById("btn");
+
+let mail_name_field = document.getElementById('name');
+let mail_message_field = document.getElementById('message');
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -439,7 +444,12 @@ function CreateMiniCardListLoop() {
 
 //Generall Shortcuts
 document.onkeydown = (e) => {
-    if (document.activeElement !== NeuerStapel_RS && document.activeElement !== NeuerStapel_VS) {
+    if (document.activeElement !== NeuerStapel_RS && 
+        document.activeElement !== NeuerStapel_VS && 
+        document.activeElement !== CTE_ContenteditableField && 
+        document.activeElement !== mail_name_field && 
+        document.activeElement !== mail_message_field
+        ) {
         if(e.ctrlKey && e.which == 77) {
 
             SideMenu.style.width = '35vh';
@@ -492,6 +502,7 @@ function ToggleDarkMode() {
 
 function LightMode() {
     ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+    EmailUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
 
     document.body.classList.remove('dark-mode');
 
@@ -514,6 +525,7 @@ function LightMode() {
 
 function Darkmode(from) {
     ColorChangeUI_Area.style.backgroundImage = "none";
+    EmailUI_Area.style.backgroundImage = "none";
 
     let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
     let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
@@ -551,6 +563,8 @@ email_send_btn.addEventListener('click' ,  (e) => {
     e.preventDefault();
 
     SendMail();
+
+    pressed_SendMail_butt = true;
 });
 
 second_md_PopUp_Header_item.addEventListener('click' , () => {
@@ -629,7 +643,13 @@ spu_YesButton.addEventListener('click' , () => {
 
         PlayMode = false;
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
+    } else if(PlayMode == false && 
+        pressed_DeleteAllStacks_butt == false && 
+        pressed_DeleteCurrStack_butt == false && 
+        pressed_ResetColors_butt == false && 
+        pressed_ResetApp_butt == false && 
+        pressed_SendMail_butt == false) {
+
         darkContainer.style.display = 'none';
 
     } else if(pressed_DeleteAllStacks_butt == true) {
@@ -655,6 +675,13 @@ spu_YesButton.addEventListener('click' , () => {
         ResetApp();
 
         pressed_ResetApp_butt = false;
+
+    }  else if(pressed_SendMail_butt == true) {
+
+        pressed_SendMail_butt = false;
+
+        //Clears Formular
+        clearFormular();
     };
 })
 
@@ -662,7 +689,12 @@ spu_NoButton.addEventListener('click' , () => {
     if (PlayMode == true) {
         SmallPopUp.style.display = 'none';
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
+    } else if(PlayMode == false && 
+        pressed_DeleteAllStacks_butt == false && 
+        pressed_DeleteCurrStack_butt == false && 
+        pressed_ResetColors_butt == false && 
+        pressed_ResetApp_butt == false && 
+        pressed_SendMail_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -691,6 +723,14 @@ spu_NoButton.addEventListener('click' , () => {
 
         SmallPopUp.style.display = 'none';
         pressed_ResetApp_butt = false;
+
+    }  else if(pressed_SendMail_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_SendMail_butt = false;
+
+        //Clears Formular 
+        clearFormular();
     };
 })
 
@@ -1627,20 +1667,28 @@ function ResetApp() {
 
 //Sends Mail to developer
 function SendMail() {
-    // let email = document.getElementById('email').value;
-    let subject = document.getElementById('subject').value;
+    // let email = document.getElementById('email').value; //display = none;
+    // let subject = document.getElementById('subject').value; //display = none;
     let name = document.getElementById('name').value;
-    let message = document.getElementById('message').value;
-    let body = 'name - ' + name + '<br/> subject - ' + subject + '<br/> message: <br/> <br/>' + message;
+    let user_message = document.getElementById('message').value;
+    let body = `name - ${name}<br/>message:<br/><br/>${user_message}`;
 
     Email.send({
         SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
-        To : 'josefstips@gmx.de',
+        To : 'stipsjosef@gmail.com',
         From : 'josefstips@gmx.de',
-        Subject : subject,
+        Subject : 'Sended from User',
         Body : body
     })
     .then(
       message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
     );
+
+    // clearFormular();
 };
+
+//clears the formular after the email was sended 
+function clearFormular() {
+    mail_name_field.value = "";
+    mail_message_field.value = "";
+}
