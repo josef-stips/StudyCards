@@ -3,8 +3,8 @@ input1 = document.getElementsByClassName('NeuerStapel_UserShortInput')[1];
 input2 = document.getElementById('input2');
 
 settings = {
-    maxLen: 20,
-    maxCardLen: 30,
+    maxLen: 29,
+    maxCardLen: 37,
 }
 
 keys = {

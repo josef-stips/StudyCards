@@ -32,6 +32,9 @@ let SideMenuTable = document.getElementById('sdm-table');
 let SetColorToDefault_Butt = document.getElementById('SetColorToDefault-Butt');
 let ResetApp_Butt = document.getElementById('ResetApp-Butt');
 
+let ColorChangeUI_Area = document.getElementById('color-field-1');
+let EmailUI_Area = document.getElementsByClassName('form')[0];
+
 //SideMenuIcons and IconDiv
 let sdm_Icons = document.getElementById('sdm-icons');
 
@@ -93,6 +96,7 @@ let stsTable_Item1 = document.getElementById('stsTable-Item1');
 let stsTable_Item2 = document.getElementById('stsTable-Item2');
 let stsTable_Item3 = document.getElementById('stsTable-Item3');
 let stsTable_Item4 = document.getElementById('stsTable-Item4');
+let stsTable_Item5 = document.getElementById('stsTable-Item5');
 
 let sts_HeadTitle = document.getElementById('sts-head-title');
 
@@ -100,12 +104,26 @@ let sts_FirstContent = document.getElementById('first-content');
 let sts_SecondContent = document.getElementById('sec-content');
 let sts_ThirdContent = document.getElementById('third-content');
 let sts_FourthContent = document.getElementById('fourth-content');
+let sts_FiftContent = document.getElementById('fift-content');
 
 //Small PopUp window 
 let SmallPopUp = document.getElementsByClassName('small-pop-up')[0];
 let spu_YesButton = document.getElementById('PopUp-yes-button');
 let spu_NoButton = document.getElementById('PopUp-no-button');
 let spu_text = document.getElementById('spu-text');
+
+//Middle-Big PopUp and stuff
+let md_PopUp_TransferCards = document.getElementById('md-PopUp-TransferCards');
+let md_PopUp_DownloadCards = document.getElementById('md-PopUp-DownlaodCards');
+let md_PopUp_TimesProgress = document.getElementById('md-PopUp-TimesProgress');
+
+let sn_transferCards_butt = document.getElementById('sn-transferCards-butt');
+let sn_saveStack_butt = document.getElementById('sn-saveStack-butt');
+let sn_timeChart_butt = document.getElementById('sn-timeChart-butt');
+
+let second_md_PopUp_Header_item = document.getElementById('second-md-PopUp-Header-item');
+let second_DownloadCards_Header_item = document.getElementById('second-DownloadCards-Header-item');
+let second_TimesProgress_Header_item = document.getElementById('second-TimesProgress-Header-item');
 
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
@@ -139,6 +157,18 @@ let pressed_DeleteAllStacks_butt = false;
 let pressed_DeleteCurrStack_butt = false;
 let pressed_ResetColors_butt = false;
 let pressed_ResetApp_butt = false;
+let pressed_SendMail_butt = false;
+
+//Darkmode configuration
+if (localStorage.getItem('DarkMode')) {
+    Darkmode("configurator");
+};
+
+//email elements
+let email_send_btn = document.getElementById("btn");
+
+let mail_name_field = document.getElementById('name');
+let mail_message_field = document.getElementById('message');
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -224,8 +254,7 @@ if (TableCells.length >= 1) {
 
     //Defines new Array for front and back cards from the original array.
     //When the user clicks on the stack field to start the game , this two arrays get mixed by a funtion
-    let PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
-    let PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+    DefineValueForStackArray();
 
 } else {
  
@@ -415,36 +444,41 @@ function CreateMiniCardListLoop() {
 
 //Generall Shortcuts
 document.onkeydown = (e) => {
+    if (document.activeElement !== NeuerStapel_RS && 
+        document.activeElement !== NeuerStapel_VS && 
+        document.activeElement !== CTE_ContenteditableField && 
+        document.activeElement !== mail_name_field && 
+        document.activeElement !== mail_message_field
+        ) {
+        if(e.ctrlKey && e.which == 77) {
 
-    if(e.ctrlKey && e.which == 77) {
-
-        SideMenu.style.width = '35vh';
-
-    } else if( e.shiftKey && e.which == 77) {
-
-        SideMenu.style.width = '0';
-
-    } else if(e.shiftKey && e.which == 68) {
-
-        Darkmode();
-
-    }  else if(e.shiftKey && e.which == 76) {
-
-        LightMode();
-
-    }  else if(e.shiftKey && e.which == 84) {
-
-        ToggleDarkMode();
-
-    } else if(e.shiftKey && e.which == 80) {
-
-        OpenPlayGround();
-
-    }  else if(e.shiftKey && e.which == 71) {
-
-        ClosePlayGround();
-
-    }
+            SideMenu.style.width = '35vh';
+    
+        } else if( e.shiftKey && e.which == 77) {
+    
+            SideMenu.style.width = '0';
+    
+        } else if(e.shiftKey && e.which == 68) {
+    
+            Darkmode("user_event");
+    
+        }  else if(e.shiftKey && e.which == 76) {
+    
+            LightMode();
+    
+        }  else if(e.shiftKey && e.which == 84) {
+    
+            ToggleDarkMode();
+    
+        } else if(e.shiftKey && e.which == 80) {
+    
+            OpenPlayGround();
+    
+        }  else if(e.shiftKey && e.which == 71) {
+    
+            ClosePlayGround();
+        }
+    };
 };
 
 //Button in the header (moon)
@@ -458,35 +492,24 @@ function ToggleDarkMode() {
 
     if(document.body.classList == 'dark-mode') {
 
-        if(CheckButton_Blur == true) {
-
-            r.style.setProperty('--button-blur' , 'rgba(0,0,0,0.4)');
-            r.style.setProperty('--button-hover-color-special' , 'rgba(0,0,0,0.4)');
-    
-        } else if(CheckButton_Blur == false) {
-    
-            r.style.setProperty('--button-blur' , 'rgba(0,0,0,1)');
-            r.style.setProperty('--button-hover-color-special' , '#5070d6');
-        };
+        Darkmode("user_event");
 
     } else if(document.body.classList != 'dark-mode') {
 
-        if(CheckButton_Blur == true) {
-
-            r.style.setProperty('--button-blur' , 'rgba(255,255,255,0.6)');
-            r.style.setProperty('--button-hover-color-special' , 'rgba(0,0,0,0.6)');
-    
-        } else if(CheckButton_Blur == false) {
-    
-            r.style.setProperty('--button-blur' , 'rgba(255,255,255,1)');
-            r.style.setProperty('--button-hover-color-special' , '#5070d6');
-        };
-
-    }
+        LightMode();
+    };
 };
 
 function LightMode() {
-    document.body.classList.add('dark-mode');
+    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+    EmailUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+
+    document.body.classList.remove('dark-mode');
+
+    localStorage.removeItem('DarkMode');
+
+    r.style.setProperty('--bg-div-gardiant-01' , `rgb(25, 32, 35)`);
+    r.style.setProperty('--bg-div-gardiant-02' , `rgb(35, 41, 47)`);
 
     if(CheckButton_Blur == true) {
 
@@ -500,8 +523,28 @@ function LightMode() {
     };
 };
 
-function Darkmode() {
-    document.body.classList.remove('dark-mode');
+function Darkmode(from) {
+    ColorChangeUI_Area.style.backgroundImage = "none";
+    EmailUI_Area.style.backgroundImage = "none";
+
+    let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
+    let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
+
+    let firstBasicBG_Storage = localStorage.getItem('firstBackground');
+    let secondBasicBG_Storage = localStorage.getItem('secondBackground');
+
+    if (from == "configurator") {
+        r.style.setProperty('--bg-div-gardiant-01' , `${firstBasicBG_Storage}`);
+        r.style.setProperty('--bg-div-gardiant-02' , `${secondBasicBG_Storage}`);
+
+    } else {
+        r.style.setProperty('--bg-div-gardiant-01' , `${firstBasicBG}`);
+        r.style.setProperty('--bg-div-gardiant-02' , `${secondBasicBG}`);
+    }
+
+    document.body.classList.add('dark-mode');
+
+    localStorage.setItem('DarkMode' , true);
 
     if(CheckButton_Blur == true) {
 
@@ -516,6 +559,46 @@ function Darkmode() {
 };
 
 // A few button events
+email_send_btn.addEventListener('click' ,  (e) => {
+    e.preventDefault();
+
+    SendMail();
+
+    pressed_SendMail_butt = true;
+});
+
+second_md_PopUp_Header_item.addEventListener('click' , () => {
+    md_PopUp_TransferCards.style.display = 'none';
+    darkContainer.style.display = 'none';
+});
+
+second_DownloadCards_Header_item.addEventListener('click' , () => {
+    md_PopUp_DownloadCards.style.display = 'none';
+    darkContainer.style.display = 'none';
+});
+
+second_TimesProgress_Header_item.addEventListener('click' , () => {
+    md_PopUp_TimesProgress.style.display = 'none';
+
+    darkContainer.style.display = 'none';
+});
+
+sn_transferCards_butt.addEventListener('click' , () => {
+    md_PopUp_TransferCards.style.display = 'block';
+    darkContainer.style.display = 'block';
+});
+
+sn_saveStack_butt.addEventListener('click' , () => {
+    md_PopUp_DownloadCards.style.display = 'block';
+    darkContainer.style.display = 'block';
+});
+
+sn_timeChart_butt.addEventListener('click' , () => {
+    md_PopUp_TimesProgress.style.display = 'block';
+
+    darkContainer.style.display = 'block';
+});
+
 ResetApp_Butt.addEventListener('click' , () => {
     spu_text.style.fontSize = "23px";
 
@@ -560,7 +643,13 @@ spu_YesButton.addEventListener('click' , () => {
 
         PlayMode = false;
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
+    } else if(PlayMode == false && 
+        pressed_DeleteAllStacks_butt == false && 
+        pressed_DeleteCurrStack_butt == false && 
+        pressed_ResetColors_butt == false && 
+        pressed_ResetApp_butt == false && 
+        pressed_SendMail_butt == false) {
+
         darkContainer.style.display = 'none';
 
     } else if(pressed_DeleteAllStacks_butt == true) {
@@ -586,6 +675,13 @@ spu_YesButton.addEventListener('click' , () => {
         ResetApp();
 
         pressed_ResetApp_butt = false;
+
+    }  else if(pressed_SendMail_butt == true) {
+
+        pressed_SendMail_butt = false;
+
+        //Clears Formular
+        clearFormular();
     };
 })
 
@@ -593,7 +689,12 @@ spu_NoButton.addEventListener('click' , () => {
     if (PlayMode == true) {
         SmallPopUp.style.display = 'none';
 
-    } else if(PlayMode == false && pressed_DeleteAllStacks_butt == false && pressed_DeleteCurrStack_butt == false && pressed_ResetColors_butt == false && pressed_ResetApp_butt == false) {
+    } else if(PlayMode == false && 
+        pressed_DeleteAllStacks_butt == false && 
+        pressed_DeleteCurrStack_butt == false && 
+        pressed_ResetColors_butt == false && 
+        pressed_ResetApp_butt == false && 
+        pressed_SendMail_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -622,6 +723,14 @@ spu_NoButton.addEventListener('click' , () => {
 
         SmallPopUp.style.display = 'none';
         pressed_ResetApp_butt = false;
+
+    }  else if(pressed_SendMail_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_SendMail_butt = false;
+
+        //Clears Formular 
+        clearFormular();
     };
 })
 
@@ -644,6 +753,7 @@ stsTable_Item1.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item2.addEventListener('click' ,  () => {
@@ -655,6 +765,7 @@ stsTable_Item2.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'block';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item3.addEventListener('click' ,  () => {
@@ -666,6 +777,7 @@ stsTable_Item3.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'block';
     sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'none';
 })
 
 stsTable_Item4.addEventListener('click' ,  () => {
@@ -677,7 +789,20 @@ stsTable_Item4.addEventListener('click' ,  () => {
     sts_SecondContent.style.display = 'none';
     sts_ThirdContent.style.display = 'none';
     sts_FourthContent.style.display = 'block';
+    sts_FiftContent.style.display = 'none';
 })
+
+stsTable_Item5.addEventListener('click' , () => {
+    Settings_tabLocation = stsTable_Item5.textContent;
+
+    sts_HeadTitle.textContent = Settings_tabLocation;
+
+    sts_FirstContent.style.display = 'none';
+    sts_SecondContent.style.display = 'none';
+    sts_ThirdContent.style.display = 'none';
+    sts_FourthContent.style.display = 'none';
+    sts_FiftContent.style.display = 'block';
+});
 
 //Other
 NavPen.addEventListener('click' , () => {
@@ -693,16 +818,10 @@ ShowAllCardsWind_OpenButton.addEventListener('click' , () => {
 
 ShowAllCardsWind_ClsButton.addEventListener('click' , () => {
     ShowAllcardsWind.style.display = 'none';
-
-    pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
-    pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
 });
 
 pgNochmalButton.addEventListener('click' , () => {
-    PlayModeIsNotActive();
-    GameEnd = false;
-
-    pgKarteikarte.style.cursor = 'pointer';
+    reloadGame();
 });
 
 pgSpaeterButton.addEventListener('click' , () => {
@@ -742,12 +861,7 @@ pgNavClickEl_2.addEventListener('click', () => {
 });
 
 pgNavClickEl_3.addEventListener('click' , () => {
-    PlayModeIsNotActive();
-    // DefineValueForStackArray();
-
-    GameEnd = false;
-
-    pgKarteikarte.style.cursor = 'pointer';
+    reloadGame();
 });
 
 ////////////////////////////////////////
@@ -864,6 +978,17 @@ function getEveryNth(arr, nth) {
 };
 
 //Other
+
+//reloads the Game
+function reloadGame() {
+    DefineValueForStackArray();
+    PlayModeIsNotActive();
+    GameEnd = false;
+
+    pgKarteikarte.style.cursor = 'pointer';
+};
+
+//User can edit the card after it was edit to the stack
 function MakeCardEditPossible() {
     let FirstCard = document.getElementsByClassName('MiniCardInput')[0];
     FirstCard.focus();
@@ -1038,8 +1163,8 @@ function PlayModeIsNotActive() {
     Runde = 0;
     ZuWiederhohlen = 0;
 
-    pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[Runde]}`;
-    pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[Runde]}`;
+    pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
+    pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
 
     //Checks if the front or the back should be shown as default
     CardView();
@@ -1154,14 +1279,20 @@ function ShowOptionsAfterGame() {
 
 //Defines Value for Array and calls shuffle function to shuffle array
 function DefineValueForStackArray() {
-    PlayGround_Cards_VS = Karteikarten[`${stackLocation}`].vs;
-    PlayGround_Cards_RS = Karteikarten[`${stackLocation}`].vr;
+    PlayGround_Cards_VS = [];
+    PlayGround_Cards_RS = [];
+
+    for (i of Karteikarten[`${stackLocation}`].vs) {
+        PlayGround_Cards_VS.push(i);
+    };
+    for (i of Karteikarten[`${stackLocation}`].vr) {
+        PlayGround_Cards_RS.push(i);
+    };
 
     shuffle(PlayGround_Cards_VS, PlayGround_Cards_RS);
 };
 
-
-//Function which shuffles an array
+//Function which shuffles two arrays
 function shuffle(obj1, obj2) {
     var index = obj1.length;
     var rnd, tmp1, tmp2;
@@ -1474,6 +1605,7 @@ function SetUpSmallPopUp(butt1_Inner , butt2_Inner , SmallPopUpDisplay , darkCon
 //Bug fix
 ShowCards_SideContent.textContent = ``;
 
+//Other
 function ClearStorage() {
     localStorage.removeItem('UserTable');
     localStorage.removeItem('timesArray');
@@ -1486,11 +1618,21 @@ function ClearStorage() {
 };
 
 function SetAppColorsToDefault() {
-    if(localStorage.getItem('firstBackground')) localStorage.removeItem('firstBackground');
-    if(localStorage.getItem('secondBackground')) localStorage.removeItem('secondBackground');
+    localStorage.setItem('firstBackground' , "#528bff");
+    localStorage.setItem('secondBackground' , "#8575ff");
 
-    r.style.setProperty('--bg-gardiant-01', "#528bff");
-    r.style.setProperty('--bg-gardiant-02', "#8575ff");
+    if (document.body.classList.contains('dark-mode')) {
+
+        r.style.setProperty('--bg-div-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-div-gardiant-02', "#8575ff");
+        r.style.setProperty('--bg-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-gardiant-02', "#8575ff");
+
+    } else {
+
+        r.style.setProperty('--bg-gardiant-01', "#528bff");
+        r.style.setProperty('--bg-gardiant-02', "#8575ff");
+    };
 
     setColor(style1_Input, '--bg-gardiant-01', ColorField_1);
     setColor(style2_Input, '--bg-gardiant-02', ColorField_2);
@@ -1522,3 +1664,31 @@ function ResetApp() {
 
     SetAppColorsToDefault();
 };
+
+//Sends Mail to developer
+function SendMail() {
+    // let email = document.getElementById('email').value; //display = none;
+    // let subject = document.getElementById('subject').value; //display = none;
+    let name = document.getElementById('name').value;
+    let user_message = document.getElementById('message').value;
+    let body = `name - ${name}<br/>message:<br/><br/>${user_message}`;
+
+    Email.send({
+        SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
+        To : 'stipsjosef@gmail.com',
+        From : 'josefstips@gmx.de',
+        Subject : 'Sended from User',
+        Body : body
+    })
+    .then(
+      message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
+    );
+
+    // clearFormular();
+};
+
+//clears the formular after the email was sended 
+function clearFormular() {
+    mail_name_field.value = "";
+    mail_message_field.value = "";
+}
