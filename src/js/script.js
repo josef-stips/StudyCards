@@ -1673,13 +1673,16 @@ function SendMail() {
     let user_message = document.getElementById('message').value;
     let body = `name - ${name}<br/>message:<br/><br/>${user_message}`;
 
-    if (mail_name_field.value != "" && mail_message_field.value != "") {
+    if (mail_name_field.value != "" && 
+        mail_message_field.value != "") {
+
         Email.send({
             SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
             To : 'josef.stips@sgw-schule.de',
             From : 'josefstips@gmx.de',
             Subject : 'Sended from User',
             Body : body
+
         })
         .then(
           message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'Email was successfully send to the developer')
@@ -1694,3 +1697,13 @@ function clearFormular() {
     mail_name_field.value = "";
     mail_message_field.value = "";
 };
+
+function FetchPreload() {
+    let version_field = document.getElementById('info-version_field');
+
+    let node = document.createTextNode(`Version ${window.myAPI.version}`);
+
+    version_field.appendChild(node);
+};
+
+FetchPreload();
