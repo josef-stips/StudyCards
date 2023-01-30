@@ -1683,7 +1683,6 @@ function SendMail() {
     .then(
       message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
     );
-
     // clearFormular();
 };
 
