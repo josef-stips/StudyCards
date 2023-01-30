@@ -576,8 +576,8 @@ header a {
 /*********************SETTINGS-POP-UP-MENU*********************/
 
 #sts-popup {
-    width: 80%;
-    height: 900px;
+    width: 85%;
+    height: 85vh;
     background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
     z-index: 21200;
     left: 0;
@@ -1500,8 +1500,6 @@ textarea {
         margin-left: 16.5em;
     }
     #sts-popup {
-        width: 80%;
-        height: 700px;
         background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
         position: absolute;
         z-index: 21200;
