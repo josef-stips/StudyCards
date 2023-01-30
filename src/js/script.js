@@ -1683,12 +1683,10 @@ function SendMail() {
     .then(
       message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
     );
-
-    // clearFormular();
 };
 
 //clears the formular after the email was sended 
 function clearFormular() {
     mail_name_field.value = "";
     mail_message_field.value = "";
-}
+};
