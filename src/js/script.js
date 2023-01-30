@@ -1673,16 +1673,20 @@ function SendMail() {
     let user_message = document.getElementById('message').value;
     let body = `name - ${name}<br/>message:<br/><br/>${user_message}`;
 
-    Email.send({
-        SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
-        To : 'stipsjosef@gmail.com',
-        From : 'josefstips@gmx.de',
-        Subject : 'Sended from User',
-        Body : body
-    })
-    .then(
-      message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'email was successfully send to the developer')
-    );
+    if (mail_name_field.value != "" && mail_message_field.value != "") {
+        Email.send({
+            SecureToken : "50ae5256-e4e9-4700-b42b-fafc3cd150ec",
+            To : 'josef.stips@sgw-schule.de',
+            From : 'josefstips@gmx.de',
+            Subject : 'Sended from User',
+            Body : body
+        })
+        .then(
+          message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'Email was successfully send to the developer')
+        );
+    } else {
+        SetUpSmallPopUp('okay' , 'oh!' , 'block' , 'block' , 'Fill out the text fields!');
+    };
 };
 
 //clears the formular after the email was sended 
