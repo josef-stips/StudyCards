@@ -1690,3 +1690,6 @@ function clearFormular() {
     mail_name_field.value = "";
     mail_message_field.value = "";
 };
+
+
+console.log("fhsdfuighsuiof");
