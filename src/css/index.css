@@ -496,6 +496,37 @@ header a {
     color: var(--mini-button-hover);
 }
 
+/* Parent Element */
+#md-PopUp-Content01 {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Current Stack DIV */
+#currentStack-window {
+
+}
+
+#currStack-winTitle {
+
+}
+
+#currStack-tabl {
+
+}
+
+/* All Stacks DIV */
+#allStacks-windows {
+
+}
+
+#allStacks-winTitle {
+
+}
+
+#allStacks-table {
+
+}
 
 /* Second PopUp */
 
