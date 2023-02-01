@@ -1701,7 +1701,7 @@ function clearFormular() {
 function FetchPreload() {
     let version_field = document.getElementById('info-version_field');
 
-    let node = document.createTextNode(`Version ${window.myAPI.version}`);
+    let node = document.createTextNode(`Version ${window.App.version}`);
 
     version_field.appendChild(node);
 };

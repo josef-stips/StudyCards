@@ -4,6 +4,6 @@ const { contextBridge } = require('electron');
 
 const data = require(`${__dirname}/../package.json`);
 
-contextBridge.exposeInMainWorld('myAPI', {
+contextBridge.exposeInMainWorld('App', {
     version: data.version
 });
