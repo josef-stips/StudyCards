@@ -83,7 +83,8 @@ let pgSpaeterButton = document.getElementsByClassName('pg-spaeter-div')[0];
 
 let ShowAllCardsWind_ClsButton = document.getElementById('showCards-WindButt');
 let ShowAllcardsWind = document.getElementById('allCardsWindow');
-let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[0];
+let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[1];
+let AllCardsListWrapper_PopUp_Wind = document.getElementsByClassName('AllCardsList_popUp-window')[0];
 
 let deleteAllCards_Button = document.getElementById('deleteAllCards_Button');
 let EditCard_Button = document.getElementById('EditCard_Button');
@@ -124,6 +125,8 @@ let sn_timeChart_butt = document.getElementById('sn-timeChart-butt');
 let second_md_PopUp_Header_item = document.getElementById('second-md-PopUp-Header-item');
 let second_DownloadCards_Header_item = document.getElementById('second-DownloadCards-Header-item');
 let second_TimesProgress_Header_item = document.getElementById('second-TimesProgress-Header-item');
+
+let selectedCards_Counter = document.getElementById('selectedCards-counter');
 
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
@@ -415,7 +418,7 @@ function CreateListMiniCard(numb) {
     aEl.className = 'fa-solid fa-trash fa-1x';
     aEl.href = '#';
     aEl.title = 'delete';
-    aEl.addEventListener('click' , deleteSingleIndexCard)
+    aEl.addEventListener('click' , deleteSingleIndexCard);
 
     DivEl.appendChild(DivEl2);
     DivEl.appendChild(DivEl3);
@@ -437,6 +440,67 @@ function CreateMiniCardListLoop() {
     for (i of Karteikarten[`${stackLocation}`].vs) {
         
         CreateListMiniCard(numb);
+
+        numb++;
+    };
+};
+
+//Cretaes list element for other window
+function CreateListMiniCard_2(numb) {
+    let liEl = document.createElement('li');
+    liEl.setAttribute('list-index' , `${numb}`)
+
+    let DivEl = document.createElement('div');
+    DivEl.className = 'Einzel_Stapel_2';
+
+    let DivEl2 = document.createElement('div');
+    DivEl2.className = 'ministapel-Vorderseite';
+
+    let DivEl3 = document.createElement('div');
+    DivEl3.className = 'ministapel-Rückseite';
+
+    let h3_El1 = document.createElement('h3');
+    let h3_El1_text = document.createTextNode(`${Karteikarten[`${stackLocation}`].vs[numb]}`);
+
+    h3_El1.className = 'MiniCardInput';
+    h3_El1.style.margin = '3.9% 4% 0 4%';
+    h3_El1.style.fontSize = "15px"
+
+    let h3_El2 = document.createElement('h3');
+    let h3_El2_text = document.createTextNode(`${Karteikarten[`${stackLocation}`].vr[numb]}`);
+
+    h3_El2.className = 'MiniCardInput';
+    h3_El2.style.margin = '3.9% 4% 0 4%';
+    h3_El2.style.fontSize = "15px"
+
+    let aEl = document.createElement('a');
+    aEl.id = 'Cardmini-SelectionMark';
+    aEl.className = 'fa-solid fa-check fa-1x';
+    aEl.href = '#';
+    aEl.title = 'select';
+    aEl.setAttribute('IsSelected' , 'false')
+    aEl.addEventListener('click' , selectSingleIndexCard);
+
+    DivEl.appendChild(DivEl2);
+    DivEl.appendChild(DivEl3);
+    DivEl3.appendChild(h3_El2);
+    h3_El1.appendChild(h3_El1_text);
+    h3_El2.appendChild(h3_El2_text);
+    DivEl.appendChild(aEl);
+    DivEl2.appendChild(h3_El1);
+    liEl.appendChild(DivEl);
+
+    AllCardsListWrapper_PopUp_Wind.appendChild(liEl);
+};
+
+//decides how often the function above needs to call
+function CreateMiniCardListLoop_2() {
+    AllCardsListWrapper_PopUp_Wind.textContent = null;
+
+    let numb = 0;
+    for (i of Karteikarten[`${stackLocation}`].vs) {
+        
+        CreateListMiniCard_2(numb);
 
         numb++;
     };
@@ -570,6 +634,9 @@ email_send_btn.addEventListener('click' ,  (e) => {
 second_md_PopUp_Header_item.addEventListener('click' , () => {
     md_PopUp_TransferCards.style.display = 'none';
     darkContainer.style.display = 'none';
+
+    selected_cards_int = 0;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
 });
 
 second_DownloadCards_Header_item.addEventListener('click' , () => {
@@ -586,6 +653,8 @@ second_TimesProgress_Header_item.addEventListener('click' , () => {
 sn_transferCards_butt.addEventListener('click' , () => {
     md_PopUp_TransferCards.style.display = 'block';
     darkContainer.style.display = 'block';
+
+    CreateMiniCardListLoop_2();
 });
 
 sn_saveStack_butt.addEventListener('click' , () => {
@@ -1463,6 +1532,55 @@ function deleteSingleIndexCard() {
     stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
 };
 
+//when user clicks to a study card in the "copy cards from one stack to the other stack" window 
+//The Card gets selected by this function
+let selected_cards_int = 0;
+
+function selectSingleIndexCard() {
+    switch (this.getAttribute('IsSelected')) {
+
+        case 'false':
+            //Change Attribute font awesome item
+            this.className = "fa-solid fa-x fa-1x";
+            this.setAttribute('IsSelected' , 'true');
+
+            //Style
+            this.style.color = "var(--Font_Is_Selected)";
+            this.parentNode.style.backgroundColor = "var(--Card_Is_Selected)";
+
+            this.previousElementSibling.previousElementSibling.style.borderRight = "var(--Font_Is_Selected) solid 1px";
+            this.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--Font_Is_Selected)";
+            this.previousElementSibling.childNodes[0].style.color = "var(--Font_Is_Selected)";
+
+            //Increase selected_cards variable
+            selected_cards_int++;
+
+            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}`;
+
+            break;
+
+        case 'true':
+            //Change Attribute font awesome item
+            this.className = "fa-solid fa-check fa-1x";
+            this.setAttribute('IsSelected' , 'false');
+
+            //Style
+            this.style.color = "var(--front-color)";
+            this.parentNode.style.backgroundColor = "";
+
+            this.previousElementSibling.previousElementSibling.style.borderRight = "var(--front-color) solid 1px";
+            this.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+            this.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+            
+            //Decrease selected_cards variable
+            if (selected_cards_int > 0) selected_cards_int--;
+
+            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}`;
+
+            break;
+    };
+};
+
 //Deletes all index cards of the current stack
 function deleteAllCards() {
     AllCardsListWrapper.textContent = '';
@@ -1682,7 +1800,6 @@ function SendMail() {
             From : 'josefstips@gmx.de',
             Subject : 'Sended from User',
             Body : body
-
         })
         .then(
           message => SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'Email was successfully send to the developer')
