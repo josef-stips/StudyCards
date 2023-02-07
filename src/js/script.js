@@ -495,14 +495,20 @@ function CreateListMiniCard_2(numb) {
 
 //decides how often the function above needs to call
 function CreateMiniCardListLoop_2() {
-    AllCardsListWrapper_PopUp_Wind.textContent = null;
-
-    let numb = 0;
-    for (i of Karteikarten[`${stackLocation}`].vs) {
+    if (Karteikarten[stackLocation].vs.length > 0) {
         
-        CreateListMiniCard_2(numb);
+        AllCardsListWrapper_PopUp_Wind.textContent = null;
 
-        numb++;
+        let numb = 0;
+        for (i of Karteikarten[`${stackLocation}`].vs) {
+            
+            CreateListMiniCard_2(numb);
+    
+            numb++;
+        };
+
+    } else {
+        SetInitialText_TransferCardsWindow();
     };
 };
 
@@ -1579,6 +1585,11 @@ function selectSingleIndexCard() {
 
             break;
     };
+};
+
+//
+function SetInitialText_TransferCardsWindow() {
+  AllCardsListWrapper_PopUp_Wind.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Card first</h2>`;
 };
 
 //Deletes all index cards of the current stack
