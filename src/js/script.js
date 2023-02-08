@@ -83,7 +83,7 @@ let pgSpaeterButton = document.getElementsByClassName('pg-spaeter-div')[0];
 
 let ShowAllCardsWind_ClsButton = document.getElementById('showCards-WindButt');
 let ShowAllcardsWind = document.getElementById('allCardsWindow');
-let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[1];
+let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[0];
 let AllCardsListWrapper_PopUp_Wind = document.getElementsByClassName('AllCardsList_popUp-window')[0];
 
 let deleteAllCards_Button = document.getElementById('deleteAllCards_Button');
@@ -127,6 +127,13 @@ let second_DownloadCards_Header_item = document.getElementById('second-DownloadC
 let second_TimesProgress_Header_item = document.getElementById('second-TimesProgress-Header-item');
 
 let selectedCards_Counter = document.getElementById('selectedCards-counter');
+let selectedStacks_Counter = document.getElementById('selectedStacks-counter');
+let AllStacks_tableWrapper = document.getElementById('allStacks-table-wrapper');
+let allStacks_table = document.getElementById('allStacks-table');
+
+let abort_transfer_btn = document.getElementById('abort-transfer-cards-btn');
+let copy_cards_btn = document.getElementById('copy-cards-btn');
+let transfer_cards_btn = document.getElementById('transfer-cards-btn');
 
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
@@ -161,6 +168,8 @@ let pressed_DeleteCurrStack_butt = false;
 let pressed_ResetColors_butt = false;
 let pressed_ResetApp_butt = false;
 let pressed_SendMail_butt = false;
+let pressed_transferCards_butt = false;
+let pressed_copyCards_butt = false;
 
 //Darkmode configuration
 if (localStorage.getItem('DarkMode')) {
@@ -495,21 +504,21 @@ function CreateListMiniCard_2(numb) {
 
 //decides how often the function above needs to call
 function CreateMiniCardListLoop_2() {
-    if (Karteikarten[stackLocation].vs.length > 0) {
+        if (Karteikarten[stackLocation].vs.length > 0) {
         
-        AllCardsListWrapper_PopUp_Wind.textContent = null;
-
-        let numb = 0;
-        for (i of Karteikarten[`${stackLocation}`].vs) {
-            
-            CreateListMiniCard_2(numb);
+            AllCardsListWrapper_PopUp_Wind.textContent = null;
     
-            numb++;
+            let numb = 0;
+            for (i of Karteikarten[`${stackLocation}`].vs) {
+                
+                CreateListMiniCard_2(numb);
+        
+                numb++;
+            };
+    
+        } else {
+            SetInitialText_TransferCardsWindow();
         };
-
-    } else {
-        SetInitialText_TransferCardsWindow();
-    };
 };
 
 //Generall Shortcuts
@@ -629,6 +638,37 @@ function Darkmode(from) {
 };
 
 // A few button events
+copy_cards_btn.addEventListener('click' , () => {
+    if (Karteikarten.lenght != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
+
+        SetUpSmallPopUp('yes' , 'actually not' , 'block' , 'block' , `Are you sure you want to copy ${selected_cards_int} cards in ${selected_stacks_int} stacks?`);
+        pressed_copyCards_butt = true;
+
+    } else {
+        pressed_copyCards_butt = true;
+        SetUpSmallPopUp('oh ok' , 'sensible' , 'block' , 'block' , `You first need to select a card and a stack if there is one.`);
+    };
+});
+
+transfer_cards_btn.addEventListener('click' , () => {
+    if (Karteikarten.lenght != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
+
+        SetUpSmallPopUp('yes' , 'actually not' , 'block' , 'block' , `Are you sure you want to transfer ${selected_cards_int} cards in ${selected_stacks_int} stacks?`);
+        pressed_transferCards_butt = true;
+
+    } else {
+        pressed_transferCards_butt = true;
+        SetUpSmallPopUp('oh ok' , 'sensible' , 'block' , 'block' , `You first need to select a card and a stack if there is one.`);
+    };
+});
+
+abort_transfer_btn.addEventListener('click' , () => {
+    selected_cards_int = 0;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+
+    DeselectAllCards();
+});
+
 email_send_btn.addEventListener('click' ,  (e) => {
     e.preventDefault();
 
@@ -642,6 +682,9 @@ second_md_PopUp_Header_item.addEventListener('click' , () => {
     darkContainer.style.display = 'none';
 
     selected_cards_int = 0;
+    selected_stacks_int = 0;
+
+    selectedStacks_Counter.textContent = `selected stacks to push cards in: ${selected_stacks_int}`;
     selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
 });
 
@@ -660,7 +703,10 @@ sn_transferCards_butt.addEventListener('click' , () => {
     md_PopUp_TransferCards.style.display = 'block';
     darkContainer.style.display = 'block';
 
-    CreateMiniCardListLoop_2();
+    if(TableCells[0] != null) {
+        CreateMiniCardListLoop_2();
+        GetStackTable();
+    };
 });
 
 sn_saveStack_butt.addEventListener('click' , () => {
@@ -723,7 +769,9 @@ spu_YesButton.addEventListener('click' , () => {
         pressed_DeleteCurrStack_butt == false && 
         pressed_ResetColors_butt == false && 
         pressed_ResetApp_butt == false && 
-        pressed_SendMail_butt == false) {
+        pressed_SendMail_butt == false &&
+        pressed_transferCards_butt == false &&
+        pressed_copyCards_butt == false) {
 
         darkContainer.style.display = 'none';
 
@@ -757,6 +805,17 @@ spu_YesButton.addEventListener('click' , () => {
 
         //Clears Formular
         clearFormular();
+    } else if(pressed_transferCards_butt == true && selected_cards_int != 0 && selected_stacks_int != 0) {
+
+        pressed_transferCards_butt = false;
+
+        TransferCards();
+
+    } else if(pressed_copyCards_butt == true && selected_cards_int != 0 && selected_stacks_int != 0) {
+
+        pressed_copyCards_butt = false;
+
+        CopyCards();
     };
 })
 
@@ -769,7 +828,9 @@ spu_NoButton.addEventListener('click' , () => {
         pressed_DeleteCurrStack_butt == false && 
         pressed_ResetColors_butt == false && 
         pressed_ResetApp_butt == false && 
-        pressed_SendMail_butt == false) {
+        pressed_SendMail_butt == false &&
+        pressed_transferCards_butt == false &&
+        pressed_copyCards_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -806,6 +867,16 @@ spu_NoButton.addEventListener('click' , () => {
 
         //Clears Formular 
         clearFormular();
+
+    } else if(pressed_transferCards_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_transferCards_butt = false;
+
+    }  else if(pressed_copyCards_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_copyCards_butt = false;
     };
 })
 
@@ -1587,9 +1658,174 @@ function selectSingleIndexCard() {
     };
 };
 
-//
+//Deselects all selected cards
+function DeselectAllCards() {
+    let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
+
+    console.log(cardList)
+    
+    for (let i = 0; i < cardList.length; i++) {
+        const el = cardList[i];
+        
+        for (let i = 0; i < el.children.length; i++) {
+            const e = el.children[i];
+            
+            e.querySelector('#Cardmini-SelectionMark').setAttribute('Isselected' , 'false')
+
+            ResetStyleOfCard(e.querySelector('#Cardmini-SelectionMark'));
+        };
+    };
+};
+
+//Resets the style to default from the selected cards that get deselect by the function above
+function ResetStyleOfCard(cell) {
+    cell.className = "fa-solid fa-check fa-1x";
+
+    cell.style.color = "var(--front-color)";
+    cell.parentNode.style.backgroundColor = "";
+
+    cell.previousElementSibling.previousElementSibling.style.borderRight = "var(--front-color) solid 1px";
+    cell.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+    cell.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+};
+
+//If in the current stack there is no card , this function sets a replacement text
 function SetInitialText_TransferCardsWindow() {
-  AllCardsListWrapper_PopUp_Wind.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Card first</h2>`;
+    AllCardsListWrapper_PopUp_Wind.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Card first</h2>`;
+};
+
+//Copies the table from the side menu to the pop up window and modifies the copied table
+function GetStackTable() {
+    let Stacks = SideMenuTable.querySelector('tbody');
+
+    //Copy Stacks from SideMenu to pop up window
+    allStacks_table.textContent = null;
+    allStacks_table.appendChild(Stacks.cloneNode(true));
+
+    //pushes all cells in one array
+    let table_cells = [...allStacks_table.querySelector('tbody').children];
+
+    //remove className from all td elements
+    for (let i = 0; i < table_cells.length; i++) {
+        const e = table_cells[i];
+
+        for (let i = 0; i < e.children.length; i++) {
+            const ele = e.children[i];
+            
+            ele.classList.remove(`tableCell`);
+            ele.setAttribute('CellIsSelected' , 'false')
+
+            //Adds Eventlistener to cell
+            addEventListenerToStackTable(ele); 
+
+            //removes padding from first cell
+            if(ele.getAttribute('data-table-index') == 1) {
+                ele.style.padding = "0 0 0 0";
+            };
+        };
+    };
+};
+
+//Adds Eventlistener to cell
+function addEventListenerToStackTable(e) {
+    e.addEventListener('click' , () => {
+        ToggleSelectOfCell(e);
+    });
+};
+
+//Toggles the Select Bool of Cell
+let selected_stacks_int = 0;
+
+function ToggleSelectOfCell(cell) {
+    switch (cell.getAttribute('CellIsSelected')) {
+        case 'false':
+    
+        cell.setAttribute('CellIsSelected' , 'true');
+        cell.style.backgroundImage = "linear-gradient(to bottom right, var(--bg-table-gardiant-01), var(--bg-table-gardiant-02))";
+        
+        //Inccrease selected_cards variable
+        selected_stacks_int++;
+
+        selectedStacks_Counter.textContent = `selected stacks to push cards in: ${selected_stacks_int}`;
+
+        break;
+
+    case 'true':
+        
+        cell.setAttribute('CellIsSelected' , 'false');
+        cell.style.backgroundImage = "";
+
+        //Decrease selected_cards variable
+        if (selected_stacks_int > 0) selected_stacks_int--;
+
+        selectedStacks_Counter.textContent = `selected stacks to push cards in: ${selected_stacks_int}`;
+
+        break;
+  };  
+};
+
+//Copies card from current stack to other stacks
+function CopyCards() {
+    let stacks = [];
+    let cardsHTML = [];
+    let card_vs = [];
+    let card_rs = [];
+
+    //get selected stacks
+    let table_cells = [...allStacks_table.querySelector('tbody').children];
+
+    for (let i = 0; i < table_cells.length; i++) {
+        const e = table_cells[i];
+
+        for (let i = 0; i < e.children.length; i++) {
+            const ele = e.children[i];
+
+            if(ele.getAttribute('cellisselected') == 'true') {
+                // console.log(ele.parentElement)
+                stacks.push(ele.parentElement)
+            };
+        };
+    };
+
+    //get selected cards
+    let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
+    
+    for (let i = 0; i < cardList.length; i++) {
+        const el = cardList[i];
+        
+        for (let i = 0; i < el.children.length; i++) {
+            const e = el.children[i];
+            
+            if(e.children[2].getAttribute('isselected') == 'true') {
+                cardsHTML.push(e.parentElement);
+
+                card_vs.push(e.children[0].textContent);
+                card_rs.push(e.children[1].textContent);
+            };
+        };
+    };
+
+    for (let i = 0; i < card_vs.length; i++) {
+        const e = card_vs[i];
+
+        Karteikarten[stacks[0].textContent].vs.push(e);
+    };
+
+    for (let i = 0; i < card_rs.length; i++) {
+        const e = card_rs[i];
+
+        Karteikarten[stacks[0].textContent].vr.push(e);
+    };
+
+    localStorage.setItem(`${stacks[0].textContent}_stapel_VS` , JSON.stringify(Karteikarten[`${stacks[0].textContent}`].vs));
+    localStorage.setItem(`${stacks[0].textContent}_stapel_RS` , JSON.stringify(Karteikarten[`${stacks[0].textContent}`].vr));
+
+    console.log(card_rs , card_vs)
+};
+
+//Transfers card from current stack to other stacks
+function TransferCards() {
+    console.log('cards are transfered')
 };
 
 //Deletes all index cards of the current stack
