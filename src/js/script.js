@@ -1713,7 +1713,7 @@ function GetStackTable() {
             const ele = e.children[i];
             
             ele.classList.remove(`tableCell`);
-            ele.setAttribute('CellIsSelected' , 'false')
+            ele.setAttribute('cellisselected' , 'false')
 
             //Adds Eventlistener to cell
             addEventListenerToStackTable(ele); 
@@ -1767,7 +1767,6 @@ function ToggleSelectOfCell(cell) {
 //Copies card from current stack to other stacks
 function CopyCards() {
     let stacks = [];
-    let cardsHTML = [];
     let card_vs = [];
     let card_rs = [];
 
@@ -1784,6 +1783,8 @@ function CopyCards() {
                 // console.log(ele.parentElement)
                 stacks.push(ele.parentElement)
             };
+
+            ToggleSelectOfCell(ele);
         };
     };
 
@@ -1797,30 +1798,46 @@ function CopyCards() {
             const e = el.children[i];
             
             if(e.children[2].getAttribute('isselected') == 'true') {
-                cardsHTML.push(e.parentElement);
-
                 card_vs.push(e.children[0].textContent);
                 card_rs.push(e.children[1].textContent);
             };
+
+            ResetStyleOfCard(e.children[2]);
         };
     };
+    //With this code you can copy cards to only ONE stack
+    //
+    // for (let i = 0; i < card_vs.length; i++) {
+    //     const e = card_vs[i];
+    //     Karteikarten[stacks[0].textContent].vs.push(e);
+    // };
+    // for (let i = 0; i < card_rs.length; i++) {
+    //     const e = card_rs[i];
+    //     Karteikarten[stacks[0].textContent].vr.push(e);
+    // };
 
-    for (let i = 0; i < card_vs.length; i++) {
-        const e = card_vs[i];
+    //With this code you can copy cards to MULTIPLE stacks
+    for (var k of stacks) {
+        for (let i = 0; i < card_vs.length; i++) {
+            const e = card_vs[i];
+            Karteikarten[k.children[0].textContent].vs.push(e);
+        };
 
-        Karteikarten[stacks[0].textContent].vs.push(e);
+        //saves the current stack
+        localStorage.setItem(`${k.children[0].textContent}_stapel_VS` , JSON.stringify(Karteikarten[`${k.children[0].textContent}`].vs));
+    };
+    for (var k of stacks) {
+        for (let i = 0; i < card_rs.length; i++) {
+            const e = card_rs[i];
+            Karteikarten[k.children[0].textContent].vr.push(e);
+        };
+
+        //saves the current stack
+        localStorage.setItem(`${k.children[0].textContent}_stapel_RS` , JSON.stringify(Karteikarten[`${k.children[0].textContent}`].vr));
     };
 
-    for (let i = 0; i < card_rs.length; i++) {
-        const e = card_rs[i];
-
-        Karteikarten[stacks[0].textContent].vr.push(e);
-    };
-
-    localStorage.setItem(`${stacks[0].textContent}_stapel_VS` , JSON.stringify(Karteikarten[`${stacks[0].textContent}`].vs));
-    localStorage.setItem(`${stacks[0].textContent}_stapel_RS` , JSON.stringify(Karteikarten[`${stacks[0].textContent}`].vr));
-
-    console.log(card_rs , card_vs)
+    //When the user copies cards to the current stack he is in , the html needs to update to show the new amount of cards
+    stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
 };
 
 //Transfers card from current stack to other stacks
