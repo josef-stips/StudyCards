@@ -1662,8 +1662,6 @@ function selectSingleIndexCard() {
 function DeselectAllCards() {
     let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
 
-    console.log(cardList)
-    
     for (let i = 0; i < cardList.length; i++) {
         const el = cardList[i];
         
