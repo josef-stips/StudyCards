@@ -505,21 +505,21 @@ function CreateListMiniCard_2(numb) {
 
 //decides how often the function above needs to call
 function CreateMiniCardListLoop_2() {
-        if (Karteikarten[stackLocation].vs.length > 0) {
+    if (Karteikarten[stackLocation].vs.length > 0) {
         
-            AllCardsListWrapper_PopUp_Wind.textContent = null;
+        AllCardsListWrapper_PopUp_Wind.textContent = null;
     
-            let numb = 0;
-            for (i of Karteikarten[`${stackLocation}`].vs) {
+        let numb = 0;
+        for (i of Karteikarten[`${stackLocation}`].vs) {
                 
-                CreateListMiniCard_2(numb);
+            CreateListMiniCard_2(numb);
         
-                numb++;
-            };
-    
-        } else {
-            SetInitialText_TransferCardsWindow();
+            numb++;
         };
+    
+    } else {
+            SetInitialText_TransferCardsWindow();
+    };
 };
 
 //Generall Shortcuts
@@ -687,7 +687,7 @@ second_md_PopUp_Header_item.addEventListener('click' , () => {
     selected_stacks_int = 0;
 
     selectedStacks_Counter.textContent = `selected stacks to push cards in: ${selected_stacks_int}`;
-    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
 });
 
 second_DownloadCards_Header_item.addEventListener('click' , () => {
@@ -708,6 +708,8 @@ sn_transferCards_butt.addEventListener('click' , () => {
     if(TableCells[0] != null) {
         CreateMiniCardListLoop_2();
         GetStackTable();
+
+        selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
 
     } else {
         SetInIText_TransferWin();
@@ -1619,6 +1621,8 @@ function deleteSingleIndexCard() {
 let selected_cards_int = 0;
 
 function selectSingleIndexCard() {
+    let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
+
     switch (this.getAttribute('IsSelected')) {
 
         case 'false':
@@ -1637,7 +1641,7 @@ function selectSingleIndexCard() {
             //Increase selected_cards variable
             selected_cards_int++;
 
-            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}`;
+            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}/${cardList.length}`;
 
             break;
 
@@ -1657,7 +1661,7 @@ function selectSingleIndexCard() {
             //Decrease selected_cards variable
             if (selected_cards_int > 0) selected_cards_int--;
 
-            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}`;
+            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}/${cardList.length}`;
 
             break;
     };
@@ -1680,10 +1684,10 @@ function ToggleSelectOppositecards() {
 
 //Deselects all selected cards
 function DeselectAllCards() {
-    selected_cards_int = 0;
-    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
-
     let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
+
+    selected_cards_int = 0;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
 
     for (let i = 0; i < cardList.length; i++) {
         const el = cardList[i];
@@ -1728,7 +1732,7 @@ function ChangeStyleOfCard(cell , cardList) {
 
             //Amount of selected cards is equal to the length of the array with all cards
             selected_cards_int = cardList.length;
-            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
             break;
     
         case 'true':
@@ -1746,7 +1750,7 @@ function ChangeStyleOfCard(cell , cardList) {
 
             //Amount of selected cards is equal 0
             selected_cards_int = 0;
-            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
             break;
     };
 };
@@ -1996,6 +2000,8 @@ function SaveAndUpdate() {
         
     //When the user transfers cards to the current stack he is in , the html needs to update to show the new amount of cards
     stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
+
 };
 
 //Deletes all index cards of the current stack
