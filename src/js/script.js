@@ -134,6 +134,7 @@ let allStacks_table = document.getElementById('allStacks-table');
 let abort_transfer_btn = document.getElementById('abort-transfer-cards-btn');
 let copy_cards_btn = document.getElementById('copy-cards-btn');
 let transfer_cards_btn = document.getElementById('transfer-cards-btn');
+let selectOppo_cards_btn = document.getElementById('selectOppo-cards-btn');
 
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
@@ -638,8 +639,12 @@ function Darkmode(from) {
 };
 
 // A few button events
+selectOppo_cards_btn.addEventListener('click' , () => {
+    ToggleSelectOppositecards();
+});
+
 copy_cards_btn.addEventListener('click' , () => {
-    if (Karteikarten.lenght != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
+    if (Karteikarten.length != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
 
         SetUpSmallPopUp('yes' , 'actually not' , 'block' , 'block' , `Are you sure you want to copy ${selected_cards_int} cards in ${selected_stacks_int} stacks?`);
         pressed_copyCards_butt = true;
@@ -651,7 +656,7 @@ copy_cards_btn.addEventListener('click' , () => {
 });
 
 transfer_cards_btn.addEventListener('click' , () => {
-    if (Karteikarten.lenght != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
+    if (Karteikarten.length != {} && selected_stacks_int != 0 && selected_cards_int != 0) {
 
         SetUpSmallPopUp('yes' , 'actually not' , 'block' , 'block' , `Are you sure you want to transfer ${selected_cards_int} cards in ${selected_stacks_int} stacks?`);
         pressed_transferCards_butt = true;
@@ -1655,6 +1660,21 @@ function selectSingleIndexCard() {
     };
 };
 
+//Selects Opposite Cards in the pop up window "copy cards from one stack to the other stack"
+function ToggleSelectOppositecards() {
+    let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
+
+    for (let i = 0; i < cardList.length; i++) {
+        const el = cardList[i];
+        
+        for (let i = 0; i < el.children.length; i++) {
+            const e = el.children[i];
+
+            ChangeStyleOfCard(e.querySelector('#Cardmini-SelectionMark') , cardList);
+        };
+    };
+};
+
 //Deselects all selected cards
 function DeselectAllCards() {
     selected_cards_int = 0;
@@ -1685,6 +1705,47 @@ function ResetStyleOfCard(cell) {
     cell.previousElementSibling.previousElementSibling.style.borderRight = "var(--front-color) solid 1px";
     cell.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
     cell.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+};
+
+//Toggles the Style of a Card
+function ChangeStyleOfCard(cell , cardList) {
+    switch (cell.getAttribute('Isselected')) {
+        case 'false':
+        
+            cell.setAttribute('Isselected' , 'true');
+
+            cell.className = "fa-solid fa-x fa-1x";
+
+            cell.style.color = "var(--Font_Is_Selected)";
+            cell.parentNode.style.backgroundColor = "var(--Card_Is_Selected)";
+        
+            cell.previousElementSibling.previousElementSibling.style.borderRight = "var(--Font_Is_Selected) solid 1px";
+            cell.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--Font_Is_Selected)";
+            cell.previousElementSibling.childNodes[0].style.color = "var(--Font_Is_Selected)";
+
+            //Amount of selected cards is equal to the length of the array with all cards
+            selected_cards_int = cardList.length;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+            break;
+    
+        case 'true':
+
+            cell.setAttribute('Isselected' , 'false');
+
+            cell.className = "fa-solid fa-check fa-1x";
+
+            cell.style.color = "var(--front-color)";
+            cell.parentNode.style.backgroundColor = "";
+        
+            cell.previousElementSibling.previousElementSibling.style.borderRight = "var(--front-color) solid 1px";
+            cell.previousElementSibling.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+            cell.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
+
+            //Amount of selected cards is equal 0
+            selected_cards_int = 0;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}`;
+            break;
+    };
 };
 
 //If in the current stack there is no card , this function sets a replacement text
