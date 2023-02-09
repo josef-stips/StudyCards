@@ -708,6 +708,9 @@ sn_transferCards_butt.addEventListener('click' , () => {
     if(TableCells[0] != null) {
         CreateMiniCardListLoop_2();
         GetStackTable();
+
+    } else {
+        SetInIText_TransferWin();
     };
 });
 
@@ -1753,6 +1756,12 @@ function SetInitialText_TransferCardsWindow() {
     AllCardsListWrapper_PopUp_Wind.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Card first</h2>`;
 };
 
+//If there are no stacks , this function sets a replacement text
+function SetInIText_TransferWin() {
+    allStacks_table.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Stack first</h2>`;
+    AllCardsListWrapper_PopUp_Wind.innerHTML = `<h2 id='PopUp_Win-iniText'>Add a Card first</h2>`;
+};
+
 //Copies the table from the side menu to the pop up window and modifies the copied table
 function GetStackTable() {
     let Stacks = SideMenuTable.querySelector('tbody');
@@ -2027,6 +2036,8 @@ function DeleteAllStacks() {
     MainCon_InitialText.style.display = 'block';
 
     StackNameTitle.textContent = 'Your stack name';
+
+    SetInIText_TransferWin();
 };
 
 //Deletes the current stack
