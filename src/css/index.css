@@ -34,7 +34,7 @@
     --Card_Is_Selectable: rgb(74, 155, 93);
     --Card_Is_Selected: rgba(75, 104, 166, 0.555);
     --Font_Is_Selected: rgba(255, 255, 255, 0.555);
-    --focus-on-btn-tab01: rgb(255, 255, 255);
+    --focus-on-btn-tab01: #4568dc;
     --focus-on-btn-tab02: rgb(255, 255, 255);
 }
 
@@ -826,7 +826,7 @@ header a {
 
 #md03-underheader {
     width: 80%;
-    height: 2.3em;
+    height: 2.8em;
     border-bottom: solid 1px var(--front-color);
 }
 
@@ -856,6 +856,38 @@ header a {
     cursor: pointer;
 }
 
+#md03-underheader02 {
+    width: 80%;
+    height: 2.8em;
+    border-bottom: solid 1px var(--front-color);
+}
+
+#md03-underheader-items02 {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    padding: 0;
+}
+
+#md03-underheader-items02 li {
+    color: var(--front-color);
+    font-size: 17px;
+    margin: 0 0 0 1em;
+    height: 30px;
+    width: 30px;
+    transition: all 0.13s ease-out;
+    background-color: var(--mini-button-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#md03-underheader-items02 li:hover {
+    transition: all 0.13s ease-in-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
 #md03-main-content {}
 
 
@@ -864,16 +896,20 @@ header a {
 #Chart-wrapper {
     width: 75vh;
     height: 45vh;
+    margin-left: 2em;
 }
 
 #md03-first-chart-content {
     /* display: none; */
     width: 70%;
-    margin: 1em 0 0 2em;
+    margin: 1em 0 0 0;
 }
 
 #first-chart-header {
     color: var(--front-color);
+    margin-left: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 #ProgressionChart-times {}
@@ -884,16 +920,20 @@ header a {
 #Chart-wrapper2 {
     width: 75vh;
     height: 45vh;
+    margin-left: 2em;
 }
 
 #md03-second-chart-content {
     display: none;
     width: 70%;
-    margin: 1em 0 0 2em;
+    margin: 1em 0 0 0;
 }
 
 #second-chart-header {
     color: var(--front-color);
+    margin-left: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 #ProgressionChart-correctness {}

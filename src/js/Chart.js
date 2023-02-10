@@ -7,7 +7,14 @@ let LineChart_btn = document.getElementById('LineChart-btn');
 let BarChart_btn = document.getElementById('BarChart-btn');
 let PieChart_btn = document.getElementById('PieChart-btn');
 let PolarChart_btn = document.getElementById('PolarChart-btn');
-let RadarChart_btn = document.getElementById('RadarChart_btn');
+let RadarChart_btn = document.getElementById('RadarChart-btn');
+
+//Second Chart
+let LineChart_btn02 = document.getElementById('LineChart-btn02');
+let BarChart_btn02 = document.getElementById('BarChart-btn02');
+let PieChart_btn02 = document.getElementById('PieChart-btn02');
+let PolarChart_btn02 = document.getElementById('PolarChart-btn02');
+let RadarChart_btn02 = document.getElementById('RadarChart-btn02');
 
 //Main Content with Chart and other stuff
 let md03_MainContent = document.getElementById('md03-main-content');
@@ -24,6 +31,7 @@ let ctx = document.getElementById('ProgressionChart-times');
 let ctx_2 = document.getElementById('ProgressionChart-correctness');
 
 //EventListener 
+
 TimesChart_btn.addEventListener('click', () => {
     FirstChart_Content.style.display = 'block';
     SecondChart_Content.style.display = 'none';
@@ -43,16 +51,19 @@ ProgressChart_btn.addEventListener('click', () => {
 //Main
 
 //First Chart (times)
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-        }]
-    },
+const data = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+    }]
+};
+
+//Config for first Chart 
+const FirstChart_config01 = {
+    type: 'line',
+    data: data,
     options: {
         scales: {
             y: {
@@ -61,6 +72,74 @@ new Chart(ctx, {
         },
         maintainAspectRatio: false
     }
+};
+
+const FirstChart_config02 = {
+    type: 'bar',
+    data: data,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        maintainAspectRatio: false
+    }
+};
+
+const FirstChart_config03 = {
+    type: 'pie',
+    data: data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+const FirstChart_config04 = {
+    type: 'polarArea',
+    data: data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+const FirstChart_config05 = {
+    type: 'doughnut',
+    data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+let FirstChart = new Chart(ctx, FirstChart_config01);
+
+LineChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config01);
+});
+
+BarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config02);
+
+});
+
+PieChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config03);
+
+});
+
+PolarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config04);
+
+});
+
+RadarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config05);
+
 });
 
 //Second Chart (general progression)
