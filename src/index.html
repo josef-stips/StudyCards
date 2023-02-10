@@ -17,8 +17,8 @@
 <script defer src="js/timer.js"></script>
 <script defer src="js/MaxTextLength.js"></script>
 
-<script src="https://smtpjs.com/v3/smtp.js">
-</script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
     <header>
@@ -184,7 +184,7 @@
                         <i id="first-TimesProgress-Header-item" class="fa-solid fa-chart-simple fa-2x"></i>
                     </li>
                     <li>
-                        <h2 id="first-TimesProgress-Header-title">Check your times</h2>
+                        <h2 id="first-TimesProgress-Header-title">Track your Progress</h2>
                     </li>
                     <li>
                         <i id="second-TimesProgress-Header-item" class="fa-solid fa-x fa-2x"></i>
@@ -193,8 +193,52 @@
             </nav>
         </div>
 
-        <div id="md-PopUp-Content03" style="color: white;height:50%;display: flex;align-items: center;justify-content: center;">
-            <h1>Availible soon</h1>
+        <div id="md-PopUp-Content03">
+            <div id="md03-content-header">
+                <nav>
+                    <ul id="md03-header-items">
+                        <li>
+                            <i class="fa-solid fa-stopwatch"></i>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-rocket"></i>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div id="md03-underheader">
+                <nav>
+                    <ul id="md03-underheader-items">
+                        <li>
+                            <i class="fa-solid fa-chart-line" title="Line Chart" id="LineChart-btn"></i>
+                            <!-- Line Chart -->
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-chart-column" title="Bar Chart" id="BarChart-btn"></i>
+                            <!-- Bar Chart -->
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-chart-pie" title="Pie Chart" id="PieChart-btn"></i>
+                            <!-- Pie Chart -->
+                        </li>
+                        <li>
+                            <i class="fas fa-compass" title="Polar Chart" id="PolarChart-btn"></i>
+                            <!-- polar chart -->
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-nodes" title="Radar Chart" id="RadarChart-btn"></i>
+                            <!-- radar chart -->
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div id="md03-main-content">
+                <div id="Chart-wrapper">
+
+                </div>
+            </div>
         </div>
     </div>
 

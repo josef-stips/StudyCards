@@ -775,6 +775,74 @@ header a {
     color: var(--mini-button-hover);
 }
 
+#md03-content-header {
+    width: 90%;
+    height: 3.15em;
+    border-bottom: solid 1px var(--front-color);
+}
+
+#md03-header-items {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    padding: 0;
+}
+
+#md03-header-items li {
+    color: var(--front-color);
+    font-size: 21px;
+    margin: 0 0 0 0.7em;
+    height: 40px;
+    width: 40px;
+    transition: all 0.13s ease-out;
+    background-color: var(--mini-button-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#md03-header-items li:hover {
+    transition: all 0.13s ease-in-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#md03-underheader {
+    width: 80%;
+    height: 2.3em;
+    border-bottom: solid 1px var(--front-color);
+}
+
+#md03-underheader-items {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    padding: 0;
+}
+
+#md03-underheader-items li {
+    color: var(--front-color);
+    font-size: 17px;
+    margin: 0 0 0 1em;
+    height: 30px;
+    width: 30px;
+    transition: all 0.13s ease-out;
+    background-color: var(--mini-button-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#md03-underheader-items li:hover {
+    transition: all 0.13s ease-in-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#md03-main-content {}
+
+#Chart-wrapper {}
+
 
 /*********************SETTINGS-POP-UP-MENU*********************/
 
