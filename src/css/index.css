@@ -34,6 +34,8 @@
     --Card_Is_Selectable: rgb(74, 155, 93);
     --Card_Is_Selected: rgba(75, 104, 166, 0.555);
     --Font_Is_Selected: rgba(255, 255, 255, 0.555);
+    --focus-on-btn-tab01: rgb(255, 255, 255);
+    --focus-on-btn-tab02: rgb(255, 255, 255);
 }
 
 .dark-mode {
@@ -789,7 +791,6 @@ header a {
 }
 
 #md03-header-items li {
-    color: var(--front-color);
     font-size: 21px;
     margin: 0 0 0 0.7em;
     height: 40px;
@@ -801,7 +802,23 @@ header a {
     align-items: center;
 }
 
-#md03-header-items li:hover {
+#times-chart-btn {
+    transition: all 0.13s ease-in-out;
+    color: var(--focus-on-btn-tab01);
+}
+
+#progression-chart-btn {
+    transition: all 0.13s ease-in-out;
+    color: var(--focus-on-btn-tab02);
+}
+
+#times-chart-btn:hover {
+    transition: all 0.13s ease-in-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#progression-chart-btn:hover {
     transition: all 0.13s ease-in-out;
     color: var(--button-hover-color);
     cursor: pointer;
@@ -841,7 +858,45 @@ header a {
 
 #md03-main-content {}
 
-#Chart-wrapper {}
+
+/* first Chart */
+
+#Chart-wrapper {
+    width: 75vh;
+    height: 45vh;
+}
+
+#md03-first-chart-content {
+    /* display: none; */
+    width: 70%;
+    margin: 1em 0 0 2em;
+}
+
+#first-chart-header {
+    color: var(--front-color);
+}
+
+#ProgressionChart-times {}
+
+
+/* Second Chart */
+
+#Chart-wrapper2 {
+    width: 75vh;
+    height: 45vh;
+}
+
+#md03-second-chart-content {
+    display: none;
+    width: 70%;
+    margin: 1em 0 0 2em;
+}
+
+#second-chart-header {
+    color: var(--front-color);
+}
+
+#ProgressionChart-correctness {}
 
 
 /*********************SETTINGS-POP-UP-MENU*********************/

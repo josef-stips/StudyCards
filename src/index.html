@@ -12,13 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Press+Start+2P&family=Readex+Pro:wght@200;300;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Secular+One&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
         rel="stylesheet">
 </head>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script defer src="js/script.js"></script>
 <script defer src="js/AppColor.js"></script>
 <script defer src="js/timer.js"></script>
 <script defer src="js/MaxTextLength.js"></script>
+<script defer src="js/Chart.js"></script>
 
 <script src="https://smtpjs.com/v3/smtp.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
     <header>
@@ -198,10 +200,10 @@
                 <nav>
                     <ul id="md03-header-items">
                         <li>
-                            <i class="fa-solid fa-stopwatch"></i>
+                            <i class="fa-solid fa-stopwatch" id="times-chart-btn"></i>
                         </li>
                         <li>
-                            <i class="fa-solid fa-rocket"></i>
+                            <i class="fa-solid fa-rocket" id="progression-chart-btn"></i>
                         </li>
                     </ul>
                 </nav>
@@ -235,8 +237,22 @@
             </div>
 
             <div id="md03-main-content">
-                <div id="Chart-wrapper">
+                <div id="md03-first-chart-content">
+                    <div id="first-chart-header">
+                        <h2>Monitor your times</h2>
+                    </div>
+                    <div id="Chart-wrapper">
+                        <canvas id="ProgressionChart-times" width="800px" height="440px" role="img"></canvas>
+                    </div>
+                </div>
 
+                <div id="md03-second-chart-content">
+                    <div id="second-chart-header">
+                        <h2>Trial and Error</h2>
+                    </div>
+                    <div id="Chart-wrapper2">
+                        <canvas id="ProgressionChart-correctness" width="800px" height="440px" role="img"></canvas>
+                    </div>
                 </div>
             </div>
         </div>

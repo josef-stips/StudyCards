@@ -136,18 +136,6 @@ let copy_cards_btn = document.getElementById('copy-cards-btn');
 let transfer_cards_btn = document.getElementById('transfer-cards-btn');
 let selectOppo_cards_btn = document.getElementById('selectOppo-cards-btn');
 
-//From Progress Window the chart-btn's
-let LineChart_btn = document.getElementById('LineChart-btn');
-let BarChart_btn = document.getElementById('BarChart-btn');
-let PieChart_btn = document.getElementById('PieChart-btn');
-let PolarChart_btn = document.getElementById('PolarChart-btn');
-let RadarChart_btn = document.getElementById('RadarChart_btn');
-
-//Main Content with Chart and other stuff
-let md03_MainContent = document.getElementById('md03-main-content');
-//In this div the chart is displayed
-let Chart_Wrapper = document.getElementById('Chart-wrapper');
-
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
