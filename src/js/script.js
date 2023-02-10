@@ -1641,7 +1641,7 @@ function selectSingleIndexCard() {
             //Increase selected_cards variable
             selected_cards_int++;
 
-            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}/${cardList.length}`;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
 
             break;
 
@@ -1661,7 +1661,7 @@ function selectSingleIndexCard() {
             //Decrease selected_cards variable
             if (selected_cards_int > 0) selected_cards_int--;
 
-            selectedCards_Counter.textContent = `selected Cards: ${selected_cards_int}/${cardList.length}`;
+            selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
 
             break;
     };
@@ -1731,7 +1731,7 @@ function ChangeStyleOfCard(cell , cardList) {
             cell.previousElementSibling.childNodes[0].style.color = "var(--Font_Is_Selected)";
 
             //Amount of selected cards is equal to the length of the array with all cards
-            selected_cards_int = cardList.length;
+            selected_cards_int++;
             selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
             break;
     
@@ -1749,7 +1749,7 @@ function ChangeStyleOfCard(cell , cardList) {
             cell.previousElementSibling.childNodes[0].style.color = "var(--front-color)";
 
             //Amount of selected cards is equal 0
-            selected_cards_int = 0;
+            selected_cards_int--;
             selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
             break;
     };
