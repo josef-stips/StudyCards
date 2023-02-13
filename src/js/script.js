@@ -2283,8 +2283,9 @@ function toggleDropDownMenu() {
             
                 a.className = 'DropMenuItem';
                 a.append(stackName);
+                a.addEventListener('click' , UpdateToNextStackData);
             
-                 DropDownContent.appendChild(a);
+                DropDownContent.appendChild(a);
             };
 
             break;
@@ -2299,4 +2300,9 @@ function toggleDropDownMenu() {
             DropDownIsOpen = false;
             break;
     };
+};
+
+function UpdateToNextStackData() {
+    toggleDropDownMenu();
+    stackInfoText.textContent = `Current Stack - ${this.textContent}`;
 };
