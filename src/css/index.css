@@ -828,6 +828,7 @@ header a {
     width: 80%;
     height: 2.8em;
     border-bottom: solid 1px var(--front-color);
+    display: flex;
 }
 
 #md03-underheader-items {
@@ -860,6 +861,7 @@ header a {
     width: 80%;
     height: 2.8em;
     border-bottom: solid 1px var(--front-color);
+    display: flex;
 }
 
 #md03-underheader-items02 {
@@ -937,6 +939,13 @@ header a {
 }
 
 #ProgressionChart-correctness {}
+
+.graph-info-text {
+    color: var(--front-color);
+    font-size: 21px;
+    margin: 0.325em 0 0 0;
+    padding: 0;
+}
 
 
 /*********************SETTINGS-POP-UP-MENU*********************/

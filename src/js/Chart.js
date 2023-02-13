@@ -28,7 +28,11 @@ let SecondChart_Content = document.getElementById('md03-second-chart-content');
 
 //Chart Canvas
 let ctx = document.getElementById('ProgressionChart-times');
-let ctx_2 = document.getElementById('ProgressionChart-correctness');
+let ctx02 = document.getElementById('ProgressionChart-correctness');
+
+//Small Info Graph text
+let graphInfoText = document.getElementsByClassName('graph-info-text')[0];
+let graphInfoText02 = document.getElementsByClassName('graph-info-text')[1];
 
 //EventListener 
 
@@ -111,48 +115,10 @@ const FirstChart_config05 = {
     }
 };
 
-let FirstChart = new Chart(ctx, FirstChart_config01);
-
-LineChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config01);
-});
-
-BarChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config02);
-
-});
-
-PieChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config03);
-
-});
-
-PolarChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config04);
-
-});
-
-RadarChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config05);
-
-});
-
-//Second Chart (general progression)
-new Chart(ctx_2, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-        }]
-    },
+//config for second chart
+const SecChart_config01 = {
+    type: 'line',
+    data: data,
     options: {
         scales: {
             y: {
@@ -161,4 +127,119 @@ new Chart(ctx_2, {
         },
         maintainAspectRatio: false
     }
+};
+
+const SecChart_config02 = {
+    type: 'bar',
+    data: data,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        maintainAspectRatio: false
+    }
+};
+
+const SecChart_config03 = {
+    type: 'pie',
+    data: data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+const SecChart_config04 = {
+    type: 'polarArea',
+    data: data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+const SecChart_config05 = {
+    type: 'doughnut',
+    data,
+    options: {
+        maintainAspectRatio: false
+    }
+};
+
+let FirstChart = new Chart(ctx, FirstChart_config01);
+
+LineChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config01);
+
+    ChangeChartInfo(FirstChart_config01.type, graphInfoText);
 });
+
+BarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config02);
+
+    ChangeChartInfo(FirstChart_config02.type, graphInfoText);
+});
+
+PieChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config03);
+
+    ChangeChartInfo(FirstChart_config03.type, graphInfoText);
+});
+
+PolarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config04);
+
+    ChangeChartInfo(FirstChart_config04.type, graphInfoText);
+});
+
+RadarChart_btn.addEventListener('click', () => {
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config05);
+
+    ChangeChartInfo(FirstChart_config05.type, graphInfoText);
+});
+
+//Second Chart (general progression)
+let SecondChart = new Chart(ctx02, SecChart_config01);
+
+LineChart_btn02.addEventListener('click', () => {
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config01);
+
+    ChangeChartInfo(SecChart_config01.type, graphInfoText02);
+});
+
+BarChart_btn02.addEventListener('click', () => {
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config02);
+
+    ChangeChartInfo(SecChart_config02.type, graphInfoText02);
+});
+
+PieChart_btn02.addEventListener('click', () => {
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config03);
+
+    ChangeChartInfo(SecChart_config03.type, graphInfoText02);
+});
+
+PolarChart_btn02.addEventListener('click', () => {
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config04);
+
+    ChangeChartInfo(SecChart_config04.type, graphInfoText02);
+});
+
+RadarChart_btn02.addEventListener('click', () => {
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config05);
+
+    ChangeChartInfo(SecChart_config05.type, graphInfoText02);
+});
+
+//Changes the InnerHTML of graphInfoText 
+const ChangeChartInfo = (Type, To) => { To.textContent = `/ ${Type} Chart`; };
