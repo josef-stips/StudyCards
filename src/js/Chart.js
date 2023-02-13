@@ -54,8 +54,21 @@ ProgressChart_btn.addEventListener('click', () => {
 
 //Main
 
-//First Chart (times)
+//First Chart (times) data
+let Times = [];
+let Labels = [];
+
 const data = {
+    labels: Labels,
+    datasets: [{
+        label: 'How fast do you got?',
+        data: Times,
+        borderWidth: 1
+    }]
+};
+
+//Second Chart (progress) data
+const data02 = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [{
         label: '# of Votes',
@@ -118,7 +131,7 @@ const FirstChart_config05 = {
 //config for second chart
 const SecChart_config01 = {
     type: 'line',
-    data: data,
+    data: data02,
     options: {
         scales: {
             y: {
@@ -131,7 +144,7 @@ const SecChart_config01 = {
 
 const SecChart_config02 = {
     type: 'bar',
-    data: data,
+    data: data02,
     options: {
         scales: {
             y: {
@@ -144,7 +157,7 @@ const SecChart_config02 = {
 
 const SecChart_config03 = {
     type: 'pie',
-    data: data,
+    data: data02,
     options: {
         maintainAspectRatio: false
     }
@@ -152,7 +165,7 @@ const SecChart_config03 = {
 
 const SecChart_config04 = {
     type: 'polarArea',
-    data: data,
+    data: data02,
     options: {
         maintainAspectRatio: false
     }
@@ -160,7 +173,7 @@ const SecChart_config04 = {
 
 const SecChart_config05 = {
     type: 'doughnut',
-    data,
+    data: data02,
     options: {
         maintainAspectRatio: false
     }
@@ -243,3 +256,31 @@ RadarChart_btn02.addEventListener('click', () => {
 
 //Changes the InnerHTML of graphInfoText 
 const ChangeChartInfo = (Type, To) => { To.textContent = `/ ${Type} Chart`; };
+
+//Gets and Updates TimeData
+function GetTimeData() {
+    if (Times.length != 0 || Labels.length != 0) {
+        Times.length = 0;
+        Labels.length = 0;
+    };
+
+    const CurrStack = CurrChartStack;
+    console.log(CurrChartStack)
+    let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimes`));
+
+    for (let i = 0; i < CurrStackData['user_times'].length; i++) {
+        const e = CurrStackData['user_times'][i];
+
+        Times.push(e);
+        Labels.push(e);
+    };
+
+    //Update Chart
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config01);
+
+    ChangeChartInfo(FirstChart_config01.type, graphInfoText);
+
+    console.log(Times, Labels)
+};
+GetTimeData();

@@ -156,6 +156,7 @@ let GameEnd = false; //Is nur true wenn man sich im EndScreen des Spiels befinde
 
 //Other importaant stuff
 let stackLocation = "";
+let CurrChartStack = "";
 
 let TableCells = [];
 
@@ -254,6 +255,7 @@ for (i = 0; i < TableCells.length; i++) {
 if (TableCells.length >= 1) {
 
     stackLocation = TableCells[0].innerText;
+    CurrChartStack = stackLocation;
 
     StackNameTitle.textContent = stackLocation
 
@@ -1572,6 +1574,9 @@ function TableCellEvent() {
             StackNameTitle.textContent = stackLocation;
 
             stackInfoText.textContent = `Current Stack - ${stackLocation}`;
+
+            CurrChartStack = stackLocation;
+            GetTimeData();
         });
     };
 };
@@ -2269,8 +2274,8 @@ FetchPreload();
 function toggleDropDownMenu() {
     //Changes item
     switch (DropDownIsOpen) {
-        case false:
-                
+        case false:     
+
             DropDownContent.style.display = 'block';
 
             toggleDropDownMenu_btn.classList = 'fa-solid fa-sort-down';
@@ -2305,4 +2310,8 @@ function toggleDropDownMenu() {
 function UpdateToNextStackData() {
     toggleDropDownMenu();
     stackInfoText.textContent = `Current Stack - ${this.textContent}`;
+
+    CurrChartStack = this.textContent;   
+
+    GetTimeData();
 };
