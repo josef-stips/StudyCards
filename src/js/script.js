@@ -183,6 +183,11 @@ let email_send_btn = document.getElementById("btn");
 let mail_name_field = document.getElementById('name');
 let mail_message_field = document.getElementById('message');
 
+//Small Info Text about stack in progression window
+let stackInfoText = document.getElementsByClassName('stack-info-text')[0];
+let toggleDropDownMenu_btn = document.getElementById('toggle-dropDown-menu');
+let DropDownContent = document.getElementById('dropdown-con');
+
 //KarteiKarten Object
 let Karteikarten = {
     // 'Example0': {
@@ -251,6 +256,9 @@ if (TableCells.length >= 1) {
     stackLocation = TableCells[0].innerText;
 
     StackNameTitle.textContent = stackLocation
+
+    //Shows the right stack name in the progress window
+    stackInfoText.textContent = `Current Stack - ${stackLocation}`
 
 } else {
     StackNameTitle.textContent = 'Your stack name';
@@ -638,7 +646,12 @@ function Darkmode(from) {
     };
 };
 
+let DropDownIsOpen = false;
 // A few button events
+toggleDropDownMenu_btn.addEventListener('click' , () => {
+    toggleDropDownMenu();
+});
+
 selectOppo_cards_btn.addEventListener('click' , () => {
     ToggleSelectOppositecards();
 });
@@ -697,7 +710,8 @@ second_DownloadCards_Header_item.addEventListener('click' , () => {
 
 second_TimesProgress_Header_item.addEventListener('click' , () => {
     md_PopUp_TimesProgress.style.display = 'none';
-
+    DropDownIsOpen = true;
+    toggleDropDownMenu();
     darkContainer.style.display = 'none';
 });
 
@@ -1556,6 +1570,8 @@ function TableCellEvent() {
             pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
 
             StackNameTitle.textContent = stackLocation;
+
+            stackInfoText.textContent = `Current Stack - ${stackLocation}`;
         });
     };
 };
@@ -2249,3 +2265,38 @@ function FetchPreload() {
 };
 
 FetchPreload();
+
+function toggleDropDownMenu() {
+    //Changes item
+    switch (DropDownIsOpen) {
+        case false:
+                
+            DropDownContent.style.display = 'block';
+
+            toggleDropDownMenu_btn.classList = 'fa-solid fa-sort-down';
+            toggleDropDownMenu_btn.style.marginBottom = '0.5em';
+            DropDownIsOpen = true;
+
+            for (const i of TableCells) {
+                let stackName = document.createTextNode(`${i.textContent}`);
+                let a = document.createElement('a');
+            
+                a.className = 'DropMenuItem';
+                a.append(stackName);
+            
+                 DropDownContent.appendChild(a);
+            };
+
+            break;
+        
+        case true:
+    
+            DropDownContent.style.display = 'none';
+            DropDownContent.textContent = null;
+            
+            toggleDropDownMenu_btn.classList = 'fa-solid fa-caret-right';
+            toggleDropDownMenu_btn.style.marginBottom = '0';
+            DropDownIsOpen = false;
+            break;
+    };
+};

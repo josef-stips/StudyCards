@@ -30,7 +30,7 @@ let SecondChart_Content = document.getElementById('md03-second-chart-content');
 let ctx = document.getElementById('ProgressionChart-times');
 let ctx02 = document.getElementById('ProgressionChart-correctness');
 
-//Small Info Graph text
+//Small Info Chart text
 let graphInfoText = document.getElementsByClassName('graph-info-text')[0];
 let graphInfoText02 = document.getElementsByClassName('graph-info-text')[1];
 
