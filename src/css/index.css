@@ -780,8 +780,9 @@ header a {
 #md03-content-header {
     width: 90%;
     height: 3.15em;
-    border-bottom: solid 1px var(--front-color);
     display: flex;
+    border-bottom: solid 1px var(--front-color);
+    padding-bottom: 0.5em;
 }
 
 #md03-header-items {
