@@ -56,18 +56,101 @@ ProgressChart_btn.addEventListener('click', () => {
 let Times = [];
 let Labels = [];
 
+//Second Chart (Progress) data
+let Accuracy = [22000, 12000, 15000, 10000, 30000];
+let Labels02 = ['some', 'thing', 'should', 'upgrade', 'lel'];
+
 const data = {
     labels: Labels,
     datasets: [{
         label: 'Your Time',
         data: Times,
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+            'rgba(75, 192, 192, 1)',
+        ],
+        yAxisID: 'y',
+    }, {
+        type: 'line',
+        label: 'Learning Accuracy in %',
+        data: Accuracy,
+        backgroundColor: [
+            'rgba(185, 126, 131,0.2)',
+        ],
+        borderColor: [
+            'rgba(185, 126, 131,1)',
+        ],
+        yAxisID: 'LearningAccuracy',
+    }],
+};
+
+const FirstChartdata02 = {
+    labels: Labels,
+    datasets: [{
+        label: 'Your Time',
+        data: Times,
+        borderWidth: 1,
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+            'rgba(75, 192, 192, 1)',
+        ],
+        yAxisID: 'y',
+    }],
+};
+
+//Second Chart (progress) data
+const data02 = {
+    labels: Labels02,
+    datasets: [{
+        label: 'Learning Accuracy',
+        data: Accuracy,
+        borderWidth: 1,
+        backgroundColor: [
+            'rgba(185, 126, 131,0.2)',
+        ],
+        borderColor: [
+            'rgba(185, 126, 131,1)',
+        ],
+    }, {
+        type: 'line',
+        label: 'Your Time',
+        data: Times,
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+            'rgba(75, 192, 192, 1)',
+        ],
+        yAxisID: 'Times',
     }]
+};
+
+const SecChartdata02 = {
+    labels: Labels02,
+    datasets: [{
+        label: 'Learning Accuracy',
+        data: Accuracy,
+        borderWidth: 1,
+        backgroundColor: [
+            'rgba(185, 126, 131,0.2)',
+        ],
+        borderColor: [
+            'rgba(185, 126, 131,1)',
+        ],
+        yAxisID: 'y',
+    }],
 };
 
 const scales = {
     y: {
         beginAtZero: true,
+        position: 'left',
+        type: 'linear',
         title: {
             color: '#4568dc',
             display: true,
@@ -81,22 +164,54 @@ const scales = {
             text: 'Learning Passsages'
         }
     },
+    LearningAccuracy: {
+        display: false,
+        beginAtZero: true,
+        position: 'right',
+        type: 'linear',
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Learning Accuracy in %'
+        },
+    },
 };
 
-//Second Chart (progress) data
-const data02 = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-        label: 'Learning progress',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-    }]
+const scales02 = {
+    y: {
+        beginAtZero: true,
+        position: 'left',
+        type: 'linear',
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Learning Accuracy in %'
+        }
+    },
+    x: {
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Learning Passsages'
+        }
+    },
+    Times: {
+        display: false,
+        beginAtZero: true,
+        position: 'right',
+        type: 'linear',
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Time'
+        },
+    },
 };
 
 //Config for first Chart 
 const FirstChart_config01 = {
     type: 'line',
-    data: data,
+    data: FirstChartdata02,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -105,10 +220,7 @@ const FirstChart_config01 = {
 
 const FirstChart_config02 = {
     type: 'bar',
-    data: data,
-    backgroundColor: [
-        'rgb(255,255,255)',
-    ],
+    data: FirstChartdata02,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -117,7 +229,7 @@ const FirstChart_config02 = {
 
 const FirstChart_config03 = {
     type: 'pie',
-    data: data,
+    data: FirstChartdata02,
     options: {
         maintainAspectRatio: false,
     }
@@ -125,7 +237,7 @@ const FirstChart_config03 = {
 
 const FirstChart_config04 = {
     type: 'doughnut',
-    data,
+    data: FirstChartdata02,
     options: {
         maintainAspectRatio: false,
     }
@@ -134,25 +246,25 @@ const FirstChart_config04 = {
 //config for second chart
 const SecChart_config01 = {
     type: 'line',
-    data: data02,
+    data: SecChartdata02,
     options: {
-        scales: scales,
+        scales: scales02,
         maintainAspectRatio: false
     }
 };
 
 const SecChart_config02 = {
     type: 'bar',
-    data: data02,
+    data: SecChartdata02,
     options: {
-        scales: scales,
+        scales: scales02,
         maintainAspectRatio: false
     }
 };
 
 const SecChart_config03 = {
     type: 'pie',
-    data: data02,
+    data: SecChartdata02,
     options: {
         maintainAspectRatio: false
     }
@@ -160,7 +272,7 @@ const SecChart_config03 = {
 
 const SecChart_config04 = {
     type: 'doughnut',
-    data: data02,
+    data: SecChartdata02,
     options: {
         maintainAspectRatio: false,
     }
@@ -257,3 +369,49 @@ function GetTimeData() {
     console.log(Times, Labels)
 };
 GetTimeData();
+
+//For First Chart
+function ActivateMixedChart() {
+    FirstChart_config01.data = data;
+    FirstChart_config02.data = data;
+
+    FirstChart_config01.options.scales.LearningAccuracy.display = true;
+    FirstChart_config02.options.scales.LearningAccuracy.display = true;
+
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config01);
+};
+
+function DeactivateMixedChart() {
+    FirstChart_config01.data = FirstChartdata02;
+    FirstChart_config02.data = FirstChartdata02;
+
+    FirstChart_config01.options.scales.LearningAccuracy.display = false;
+    FirstChart_config02.options.scales.LearningAccuracy.display = false;
+
+    FirstChart.destroy();
+    FirstChart = new Chart(ctx, FirstChart_config01);
+};
+
+//For Second Chart
+function ActivateMixedChart02() {
+    SecChart_config01.data = data02;
+    SecChart_config02.data = data02;
+
+    SecChart_config01.options.scales.Times.display = true;
+    SecChart_config02.options.scales.Times.display = true;
+
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config01);
+};
+
+function DeactivateMixedChart02() {
+    SecChart_config01.data = SecChartdata02;
+    SecChart_config02.data = SecChartdata02;
+
+    SecChart_config01.options.scales.Times.display = false;
+    SecChart_config02.options.scales.Times.display = false;
+
+    SecondChart.destroy();
+    SecondChart = new Chart(ctx02, SecChart_config01);
+};

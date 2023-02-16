@@ -136,6 +136,9 @@ let copy_cards_btn = document.getElementById('copy-cards-btn');
 let transfer_cards_btn = document.getElementById('transfer-cards-btn');
 let selectOppo_cards_btn = document.getElementById('selectOppo-cards-btn');
 
+let chart_firstcheckbox = document.getElementById('chart-first-checkbox');
+let chart_seccheckbox = document.getElementById('chart-sec-checkbox');
+
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
@@ -650,6 +653,49 @@ function Darkmode(from) {
 
 let DropDownIsOpen = false;
 // A few button events
+checkbox_clicked = false;
+chart_firstcheckbox.addEventListener('click' , () => {
+    console.log(checkbox_clicked)
+    switch (checkbox_clicked) {
+        case false:
+            
+            chart_firstcheckbox.className = 'fa-regular fa-square-check';
+            checkbox_clicked = true;
+
+            ActivateMixedChart();
+            break;
+    
+        case true:
+
+            chart_firstcheckbox.className = 'fa-regular fa-square';
+            checkbox_clicked = false;
+
+            DeactivateMixedChart();
+            break;
+    };
+});
+
+checkbox_clicked02 = false;
+chart_seccheckbox.addEventListener('click' , () => {
+    switch (checkbox_clicked02) {
+        case false:
+            
+            chart_seccheckbox.className = 'fa-regular fa-square-check';
+            checkbox_clicked02 = true;
+
+            ActivateMixedChart02();
+            break;
+    
+        case true:
+
+            chart_seccheckbox.className = 'fa-regular fa-square';
+            checkbox_clicked02 = false;
+
+            DeactivateMixedChart02();
+            break;
+    };
+});
+
 toggleDropDownMenu_btn.addEventListener('click' , () => {
     toggleDropDownMenu();
 });

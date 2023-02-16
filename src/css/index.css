@@ -932,6 +932,34 @@ header a {
     cursor: pointer;
 }
 
+.chart-option-wrapper {
+    margin: 0.5em 0 0 1em;
+    color: var(--front-color);
+    display: flex;
+    height: 2em;
+}
+
+.chart-option-text {
+    margin: 0 0 0 0.5em;
+    font-size: 14px
+}
+
+#chart-first-checkbox {
+    font-size: 17px;
+}
+
+#chart-first-checkbox:hover {
+    cursor: pointer;
+}
+
+#chart-sec-checkbox {
+    font-size: 17px;
+}
+
+#chart-sec-checkbox:hover {
+    cursor: pointer;
+}
+
 
 /* first Chart */
 
