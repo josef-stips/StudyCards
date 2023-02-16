@@ -6,15 +6,13 @@ let ProgressChart_btn = document.getElementById('progression-chart-btn');
 let LineChart_btn = document.getElementById('LineChart-btn');
 let BarChart_btn = document.getElementById('BarChart-btn');
 let PieChart_btn = document.getElementById('PieChart-btn');
-let PolarChart_btn = document.getElementById('PolarChart-btn');
-let RadarChart_btn = document.getElementById('RadarChart-btn');
+let DoughnutChart_btn = document.getElementById('DoughnutChart-btn');
 
 //Second Chart
 let LineChart_btn02 = document.getElementById('LineChart-btn02');
 let BarChart_btn02 = document.getElementById('BarChart-btn02');
 let PieChart_btn02 = document.getElementById('PieChart-btn02');
-let PolarChart_btn02 = document.getElementById('PolarChart-btn02');
-let RadarChart_btn02 = document.getElementById('RadarChart-btn02');
+let DoughnutChart_btn02 = document.getElementById('DoughnutChart-btn02');
 
 //Main Content with Chart and other stuff
 let md03_MainContent = document.getElementById('md03-main-content');
@@ -61,17 +59,35 @@ let Labels = [];
 const data = {
     labels: Labels,
     datasets: [{
-        label: 'How fast do you got?',
+        label: 'Your Time',
         data: Times,
         borderWidth: 1
     }]
+};
+
+const scales = {
+    y: {
+        beginAtZero: true,
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Time'
+        }
+    },
+    x: {
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Learning Passsages'
+        }
+    },
 };
 
 //Second Chart (progress) data
 const data02 = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [{
-        label: '# of Votes',
+        label: 'Learning progress',
         data: [12, 19, 3, 5, 2, 3],
         borderWidth: 1
     }]
@@ -82,11 +98,7 @@ const FirstChart_config01 = {
     type: 'line',
     data: data,
     options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+        scales: scales,
         maintainAspectRatio: false
     }
 };
@@ -94,12 +106,11 @@ const FirstChart_config01 = {
 const FirstChart_config02 = {
     type: 'bar',
     data: data,
+    backgroundColor: [
+        'rgb(255,255,255)',
+    ],
     options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+        scales: scales,
         maintainAspectRatio: false
     }
 };
@@ -108,23 +119,15 @@ const FirstChart_config03 = {
     type: 'pie',
     data: data,
     options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
     }
 };
 
 const FirstChart_config04 = {
-    type: 'polarArea',
-    data: data,
-    options: {
-        maintainAspectRatio: false
-    }
-};
-
-const FirstChart_config05 = {
     type: 'doughnut',
     data,
     options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
     }
 };
 
@@ -133,11 +136,7 @@ const SecChart_config01 = {
     type: 'line',
     data: data02,
     options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+        scales: scales,
         maintainAspectRatio: false
     }
 };
@@ -146,11 +145,7 @@ const SecChart_config02 = {
     type: 'bar',
     data: data02,
     options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+        scales: scales,
         maintainAspectRatio: false
     }
 };
@@ -164,18 +159,10 @@ const SecChart_config03 = {
 };
 
 const SecChart_config04 = {
-    type: 'polarArea',
-    data: data02,
-    options: {
-        maintainAspectRatio: false
-    }
-};
-
-const SecChart_config05 = {
     type: 'doughnut',
     data: data02,
     options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
     }
 };
 
@@ -202,18 +189,11 @@ PieChart_btn.addEventListener('click', () => {
     ChangeChartInfo(FirstChart_config03.type, graphInfoText);
 });
 
-PolarChart_btn.addEventListener('click', () => {
+DoughnutChart_btn.addEventListener('click', () => {
     FirstChart.destroy();
     FirstChart = new Chart(ctx, FirstChart_config04);
 
     ChangeChartInfo(FirstChart_config04.type, graphInfoText);
-});
-
-RadarChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config05);
-
-    ChangeChartInfo(FirstChart_config05.type, graphInfoText);
 });
 
 //Second Chart (general progression)
@@ -240,18 +220,11 @@ PieChart_btn02.addEventListener('click', () => {
     ChangeChartInfo(SecChart_config03.type, graphInfoText02);
 });
 
-PolarChart_btn02.addEventListener('click', () => {
+DoughnutChart_btn02.addEventListener('click', () => {
     SecondChart.destroy();
     SecondChart = new Chart(ctx02, SecChart_config04);
 
     ChangeChartInfo(SecChart_config04.type, graphInfoText02);
-});
-
-RadarChart_btn02.addEventListener('click', () => {
-    SecondChart.destroy();
-    SecondChart = new Chart(ctx02, SecChart_config05);
-
-    ChangeChartInfo(SecChart_config05.type, graphInfoText02);
 });
 
 //Changes the InnerHTML of graphInfoText 
