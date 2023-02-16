@@ -760,6 +760,7 @@ second_TimesProgress_Header_item.addEventListener('click' , () => {
     md_PopUp_TimesProgress.style.display = 'none';
     DropDownIsOpen = true;
     toggleDropDownMenu();
+    GetTimeData();
     darkContainer.style.display = 'none';
 });
 
@@ -787,6 +788,8 @@ sn_timeChart_butt.addEventListener('click' , () => {
     md_PopUp_TimesProgress.style.display = 'block';
 
     darkContainer.style.display = 'block';
+
+    GetTimeData();
 });
 
 ResetApp_Butt.addEventListener('click' , () => {
@@ -2221,7 +2224,7 @@ function ClearStorage() {
     localStorage.removeItem('timesArray');
 
     for (k in Karteikarten) {
-        localStorage.removeItem(`${k}_UserTimes`);
+        localStorage.removeItem(`${k}_UserTimesNew`);
         localStorage.removeItem(`${k}_stapel_RS`);
         localStorage.removeItem(`${k}_stapel_VS`);
     };

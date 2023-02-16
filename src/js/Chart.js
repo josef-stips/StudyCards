@@ -32,6 +32,10 @@ let ctx02 = document.getElementById('ProgressionChart-correctness');
 let graphInfoText = document.getElementsByClassName('graph-info-text')[0];
 let graphInfoText02 = document.getElementsByClassName('graph-info-text')[1];
 
+//Checkbox from both Chart Pages
+let Checkbox01 = document.getElementsByClassName('chart-option-wrapper')[0];
+let Checkbox02 = document.getElementsByClassName('chart-option-wrapper')[1];
+
 //EventListener 
 
 TimesChart_btn.addEventListener('click', () => {
@@ -344,29 +348,37 @@ const ChangeChartInfo = (Type, To) => { To.textContent = `/ ${Type} Chart`; };
 
 //Gets and Updates TimeData
 function GetTimeData() {
-    if (Times.length != 0 || Labels.length != 0) {
-        Times.length = 0;
-        Labels.length = 0;
-    };
-
     const CurrStack = CurrChartStack;
-    console.log(CurrChartStack)
-    let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimes`));
 
-    for (let i = 0; i < CurrStackData['user_times'].length; i++) {
-        const e = CurrStackData['user_times'][i];
+    if (localStorage.getItem(`${CurrStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
 
-        Times.push(e);
-        Labels.push(e);
+        //If there was a replace text it gets deleted now 
+        ResetReText();
+
+        if (Times.length != 0 || Labels.length != 0) {
+            Times.length = 0;
+            Labels.length = 0;
+        };
+
+        let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimesNew`));
+
+        for (let i = 0; i < CurrStackData['user_times'].length; i++) {
+            const e = CurrStackData['user_times'][i];
+
+            Times.push(e);
+            Labels.push(e);
+        };
+
+        //Update Chart
+        FirstChart.destroy();
+        FirstChart = new Chart(ctx, FirstChart_config01);
+
+        ChangeChartInfo(FirstChart_config01.type, graphInfoText);
+
+    } else {
+        //Sets Replacement Text when no data can be shown
+        SetReText();
     };
-
-    //Update Chart
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config01);
-
-    ChangeChartInfo(FirstChart_config01.type, graphInfoText);
-
-    console.log(Times, Labels)
 };
 GetTimeData();
 
@@ -414,4 +426,48 @@ function DeactivateMixedChart02() {
 
     SecondChart.destroy();
     SecondChart = new Chart(ctx02, SecChart_config01);
+};
+
+//Shows Replace Text
+function SetReText() {
+    let text = document.createTextNode('There are no data available that can be shown');
+    let h3 = document.createElement('h3');
+    h3.style.color = 'var(--front-color)';
+    h3.id = 'md03-INI-Text';
+
+    h3.appendChild(text);
+
+    if (!Chart_Wrapper.querySelector('#md03-INI-Text')) {
+        Chart_Wrapper.appendChild(h3);
+    };
+
+    if (!Chart_Wrapper2.querySelector('#md03-INI-Text')) {
+        Chart_Wrapper2.appendChild(h3.cloneNode(true));
+    };
+
+    ctx.style.display = 'none';
+    ctx02.style.display = 'none';
+
+    Checkbox01.style.display = 'none';
+    Checkbox02.style.display = 'none';
+};
+
+function ResetReText() {
+    let MD_INIText = document.getElementById('md03-INI-Text');
+
+    if (Chart_Wrapper.contains(MD_INIText)) {
+        Chart_Wrapper.removeChild(MD_INIText);
+    };
+
+    if (Chart_Wrapper2.querySelector('#md03-INI-Text')) {
+        let childToRemove = document.querySelector('#md03-INI-Text')
+
+        Chart_Wrapper2.removeChild(childToRemove);
+    };
+
+    ctx.style.display = 'block';
+    ctx02.style.display = 'block';
+
+    Checkbox01.style.display = 'flex';
+    Checkbox02.style.display = 'flex';
 };

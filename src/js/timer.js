@@ -92,5 +92,5 @@ function save_UserTime(time) {
     };
 
     localStorage.setItem('timesArray', JSON.stringify(times));
-    localStorage.setItem(`${stackLocation}_UserTimes`, JSON.stringify(times[stackLocation]));
+    localStorage.setItem(`${stackLocation}_UserTimesNew`, JSON.stringify(times[stackLocation]));
 };
