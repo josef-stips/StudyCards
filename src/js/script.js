@@ -792,6 +792,12 @@ sn_timeChart_butt.addEventListener('click' , () => {
 
     darkContainer.style.display = 'block';
 
+    if (stackLocation != "") {
+        stackInfoText.textContent = `Current Stack - ${stackLocation}`;
+    } else {
+        stackInfoText.textContent = `Current Stack`;
+    };
+
     GetTimeData();
 });
 
@@ -1760,7 +1766,7 @@ function DeselectAllCards() {
     let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
 
     selected_cards_int = 0;
-    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length -1}`;
 
     for (let i = 0; i < cardList.length; i++) {
         const el = cardList[i];
@@ -2260,6 +2266,8 @@ function ResetApp() {
     Karteikarten = {};
     TableCells = [];
 
+    stackLocation = "";
+
     setTimeout(() => {
         SideMenu.style.width = '0';
     } , 10);
@@ -2277,6 +2285,8 @@ function ResetApp() {
 
     SettingsWindow.style.display = 'none';
     darkContainer.style.display = 'none';
+
+    stackInfoText.textContent = 'Current Stack';
 
     SetAppColorsToDefault();
 };
