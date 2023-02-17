@@ -61,8 +61,8 @@ let Times = [];
 let Labels = [];
 
 //Second Chart (Progress) data
-let Accuracy = [22000, 12000, 15000, 10000, 30000];
-let Labels02 = ['some', 'thing', 'should', 'upgrade', 'lel'];
+let Accuracy = [];
+let Labels02 = [];
 
 const data = {
     labels: Labels,
@@ -401,6 +401,45 @@ function GetTimeData() {
     };
 };
 GetTimeData();
+
+function GetRepsData() {
+    const CurrStack = CurrChartStack;
+
+    if (localStorage.getItem(`${CurrStack}_UserRepsNew`)) {
+
+        //If there was a replace text it gets deleted now 
+        ResetReText();
+
+        if (Accuracy.length != 0 || Labels02.length != 0) {
+            Accuracy.length = 0;
+            Labels02.length = 0;
+        };
+
+        let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserRepsNew`));
+        console.log(CurrStackData)
+        if (CurrStackData != null) {
+            console.log(CurrStackData)
+            for (let i = 0; i < CurrStackData['user_repsNew'].length; i++) {
+                const e = CurrStackData['user_repsNew'][i];
+
+                console.log(e, Times)
+                Accuracy.push(e);
+                Labels02.push(todayDate);
+            };
+        };
+
+        //Update Chart
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config01);
+
+        ChangeChartInfo(SecChart_config01.type, graphInfoText02);
+
+    } else {
+        //Sets Replacement Text when no data can be shown
+        SetReText();
+    };
+};
+GetRepsData();
 
 //For First Chart
 function ActivateMixedChart() {

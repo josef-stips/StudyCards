@@ -11,6 +11,9 @@ let timerIsOn = false;
 
 let times = {};
 
+//How often the user don't knew the vocabulray/phrase of the index card?
+let ToRepeat = {};
+
 //Deletes old localstorageItem
 if (localStorage.getItem('timesArray')) {
     localStorage.removeItem('timesArray');
@@ -20,6 +23,12 @@ if (localStorage.getItem('timesArrayNew')) {
     let ArrayTimes = JSON.parse(localStorage.getItem('timesArrayNew'));
 
     times = ArrayTimes;
+};
+
+if (localStorage.getItem('RepsItem')) {
+    let RepsObject = JSON.parse(localStorage.getItem('RepsItem'));
+
+    ToRepeat = RepsObject;
 };
 
 function start_Timer() {
@@ -77,13 +86,12 @@ function clear_Timer() {
     playTimer.textContent = `${secs}.${msecs}${misecs}`;
 };
 
-
 let currentLocation;
 
 function save_UserTime(time) {
     if (stackLocation == currentLocation) {
 
-        times[stackLocation].user_timesNew.push(time)
+        times[stackLocation].user_timesNew.push(time);
 
     } else {
 
@@ -91,11 +99,34 @@ function save_UserTime(time) {
             times[stackLocation] = { 'user_timesNew': [] };
         };
 
-        times[stackLocation].user_timesNew.push(time)
+        times[stackLocation].user_timesNew.push(time);
 
         currentLocation = stackLocation;
     };
 
     localStorage.setItem('timesArrayNew', JSON.stringify(times));
     localStorage.setItem(`${stackLocation}_UserTimesNew`, JSON.stringify(times[stackLocation]));
+};
+
+let currentLocation02;
+
+//Saves the user reps
+function save_UserReps(reps) {
+    if (stackLocation == currentLocation02) {
+
+        ToRepeat[stackLocation].user_repsNew.push(reps);
+
+    } else {
+
+        if (ToRepeat[stackLocation] == null) {
+            ToRepeat[stackLocation] = { 'user_repsNew': [] };
+        };
+
+        ToRepeat[stackLocation].user_repsNew.push(reps);
+
+        currentLocation02 = stackLocation;
+    };
+
+    localStorage.setItem('RepsItem', JSON.stringify(ToRepeat));
+    localStorage.setItem(`${stackLocation}_UserRepsNew`, JSON.stringify(ToRepeat[stackLocation]));
 };

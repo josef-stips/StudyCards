@@ -299,22 +299,37 @@ if (TableCells.length >= 1) {
 
 //Fügt eine Karte einem Stapel hinzu
 stappel_RueckSeite.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
+    //Text von der karteikarte
+    StInner = stappel_RueckSeite.children[0].textContent;
+    StInner_vs = stappel_VorderSeite.children[0].textContent;
+
+    if (e.key === 'Enter' && StInner != "" && StInner_vs != "") {
 
         e.preventDefault();
 
         AddCardToStack();
 
         ResetPlaceHolderToDefault();
+
+    };
+
+    if(e.key === 'Enter' && StInner_vs == "" || 
+        e.key === 'Enter' && StInner == "" || 
+        e.key === 'Enter' && StInner != "" && StInner_vs == "" || 
+        e.key === 'Enter' && StInner != "" && StInner_vs == "front") {
+
+        e.preventDefault();
+
+        NeuerStapel_VS.focus();
     };
 });
 
 //Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
 function AddCardToStack() {
-    let StInner = stappel_RueckSeite.innerText;
-    let StInner_vs = stappel_VorderSeite.innerText;
 
-    if (StInner != 'back' && StInner_vs != 'front' && StInner != '') {
+    console.log(StInner,StInner_vs)
+
+    if (StInner != 'back' && StInner_vs != 'front' && StInner != '' && StInner_vs != '') {
 
         Karteikarten[`${stackLocation}`].vr.push(StInner);
         Karteikarten[`${stackLocation}`].vs.push(StInner_vs);
@@ -807,6 +822,7 @@ sn_timeChart_butt.addEventListener('click' , () => {
     };
 
     GetTimeData();
+    GetRepsData();
 });
 
 ResetApp_Butt.addEventListener('click' , () => {
@@ -1061,6 +1077,7 @@ pgNochmalButton.addEventListener('click' , () => {
 
 pgSpaeterButton.addEventListener('click' , () => {
     ExitGame();
+    PlayModeIsNotActive();
 
     pgKarteikarte.style.cursor = 'pointer';
 });
@@ -1368,7 +1385,9 @@ function AcceptUserStackName() {
         CTE_ContenteditableField.textContent = null;
 
         CurrChartStack = stackLocation;
+
         GetTimeData();
+        GetRepsData();
     };
 };
 
@@ -1397,7 +1416,8 @@ function PlayModeIsNotActive() {
         pgKarteikarte.removeChild(pgKarteikarte.lastElementChild);
     };
 
-    console.log(ZuWiederhohlen)
+    save_UserReps(ZuWiederhohlen);
+
     EndScreen_Boolean = false;
     Runde = 0;
     ZuWiederhohlen = 0;
@@ -1428,7 +1448,6 @@ function PlayModeIsNotActive() {
 
 function ExitGame() {
     if(Runde < Karteikarten[`${stackLocation}`].vs.length || EndScreen_Boolean == true) {
-        PlayModeIsNotActive();
     
         PlayGround.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -1646,7 +1665,9 @@ function TableCellEvent() {
             stackInfoText.textContent = `Current Stack - ${stackLocation}`;
 
             CurrChartStack = stackLocation;
+
             GetTimeData();
+            GetRepsData();
         });
     };
 };
@@ -2389,4 +2410,5 @@ function UpdateToNextStackData() {
     CurrChartStack = this.textContent;   
 
     GetTimeData();
+    GetRepsData();
 };
