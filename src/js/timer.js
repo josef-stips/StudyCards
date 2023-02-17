@@ -11,8 +11,13 @@ let timerIsOn = false;
 
 let times = {};
 
+//Deletes old localstorageItem
 if (localStorage.getItem('timesArray')) {
-    let ArrayTimes = JSON.parse(localStorage.getItem('timesArray'));
+    localStorage.removeItem('timesArray');
+};
+
+if (localStorage.getItem('timesArrayNew')) {
+    let ArrayTimes = JSON.parse(localStorage.getItem('timesArrayNew'));
 
     times = ArrayTimes;
 };
@@ -78,19 +83,19 @@ let currentLocation;
 function save_UserTime(time) {
     if (stackLocation == currentLocation) {
 
-        times[stackLocation].user_times.push(time)
+        times[stackLocation].user_timesNew.push(time)
 
     } else {
 
         if (times[stackLocation] == null) {
-            times[stackLocation] = { 'user_times': [] };
+            times[stackLocation] = { 'user_timesNew': [] };
         };
 
-        times[stackLocation].user_times.push(time)
+        times[stackLocation].user_timesNew.push(time)
 
         currentLocation = stackLocation;
     };
 
-    localStorage.setItem('timesArray', JSON.stringify(times));
+    localStorage.setItem('timesArrayNew', JSON.stringify(times));
     localStorage.setItem(`${stackLocation}_UserTimesNew`, JSON.stringify(times[stackLocation]));
 };

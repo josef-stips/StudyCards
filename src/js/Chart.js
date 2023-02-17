@@ -169,7 +169,7 @@ const scales = {
         }
     },
     LearningAccuracy: {
-        display: false,
+        display: true,
         beginAtZero: true,
         position: 'right',
         type: 'linear',
@@ -200,7 +200,7 @@ const scales02 = {
         }
     },
     Times: {
-        display: false,
+        display: true,
         beginAtZero: true,
         position: 'right',
         type: 'linear',
@@ -215,7 +215,7 @@ const scales02 = {
 //Config for first Chart 
 const FirstChart_config01 = {
     type: 'line',
-    data: FirstChartdata02,
+    data: data,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -224,7 +224,7 @@ const FirstChart_config01 = {
 
 const FirstChart_config02 = {
     type: 'bar',
-    data: FirstChartdata02,
+    data: data,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -250,7 +250,7 @@ const FirstChart_config04 = {
 //config for second chart
 const SecChart_config01 = {
     type: 'line',
-    data: SecChartdata02,
+    data: data02,
     options: {
         scales: scales02,
         maintainAspectRatio: false
@@ -259,7 +259,7 @@ const SecChart_config01 = {
 
 const SecChart_config02 = {
     type: 'bar',
-    data: SecChartdata02,
+    data: data02,
     options: {
         scales: scales02,
         maintainAspectRatio: false
@@ -362,11 +362,13 @@ function GetTimeData() {
 
         let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimesNew`));
 
-        for (let i = 0; i < CurrStackData['user_times'].length; i++) {
-            const e = CurrStackData['user_times'][i];
+        if (CurrStackData != null) {
+            for (let i = 0; i < CurrStackData['user_timesNew'].length; i++) {
+                const e = CurrStackData['user_timesNew'][i];
 
-            Times.push(e);
-            Labels.push(e);
+                Times.push(e);
+                Labels.push(e);
+            };
         };
 
         //Update Chart

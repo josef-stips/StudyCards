@@ -653,7 +653,7 @@ function Darkmode(from) {
 
 let DropDownIsOpen = false;
 // A few button events
-checkbox_clicked = false;
+checkbox_clicked = true;
 chart_firstcheckbox.addEventListener('click' , () => {
     console.log(checkbox_clicked)
     switch (checkbox_clicked) {
@@ -675,7 +675,7 @@ chart_firstcheckbox.addEventListener('click' , () => {
     };
 });
 
-checkbox_clicked02 = false;
+checkbox_clicked02 = true;
 chart_seccheckbox.addEventListener('click' , () => {
     switch (checkbox_clicked02) {
         case false:
@@ -748,7 +748,10 @@ second_md_PopUp_Header_item.addEventListener('click' , () => {
     selected_stacks_int = 0;
 
     selectedStacks_Counter.textContent = `selected stacks to push cards in: ${selected_stacks_int}`;
-    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
+    
+    if (Karteikarten[stackLocation] != undefined) {
+        selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
+    };
 });
 
 second_DownloadCards_Header_item.addEventListener('click' , () => {
@@ -2221,7 +2224,7 @@ ShowCards_SideContent.textContent = ``;
 //Other
 function ClearStorage() {
     localStorage.removeItem('UserTable');
-    localStorage.removeItem('timesArray');
+    localStorage.removeItem('timesArrayNew');
 
     for (k in Karteikarten) {
         localStorage.removeItem(`${k}_UserTimesNew`);
