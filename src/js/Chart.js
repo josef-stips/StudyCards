@@ -285,62 +285,78 @@ const SecChart_config04 = {
 let FirstChart = new Chart(ctx, FirstChart_config01);
 
 LineChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config01);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        FirstChart.destroy();
+        FirstChart = new Chart(ctx, FirstChart_config01);
 
-    ChangeChartInfo(FirstChart_config01.type, graphInfoText);
+        ChangeChartInfo(FirstChart_config01.type, graphInfoText);
+    };
 });
 
 BarChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config02);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        FirstChart.destroy();
+        FirstChart = new Chart(ctx, FirstChart_config02);
 
-    ChangeChartInfo(FirstChart_config02.type, graphInfoText);
+        ChangeChartInfo(FirstChart_config02.type, graphInfoText);
+    };
 });
 
 PieChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config03);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        FirstChart.destroy();
+        FirstChart = new Chart(ctx, FirstChart_config03);
 
-    ChangeChartInfo(FirstChart_config03.type, graphInfoText);
+        ChangeChartInfo(FirstChart_config03.type, graphInfoText);
+    };
 });
 
 DoughnutChart_btn.addEventListener('click', () => {
-    FirstChart.destroy();
-    FirstChart = new Chart(ctx, FirstChart_config04);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        FirstChart.destroy();
+        FirstChart = new Chart(ctx, FirstChart_config04);
 
-    ChangeChartInfo(FirstChart_config04.type, graphInfoText);
+        ChangeChartInfo(FirstChart_config04.type, graphInfoText);
+    };
 });
 
 //Second Chart (general progression)
 let SecondChart = new Chart(ctx02, SecChart_config01);
 
 LineChart_btn02.addEventListener('click', () => {
-    SecondChart.destroy();
-    SecondChart = new Chart(ctx02, SecChart_config01);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config01);
 
-    ChangeChartInfo(SecChart_config01.type, graphInfoText02);
+        ChangeChartInfo(SecChart_config01.type, graphInfoText02);
+    };
 });
 
 BarChart_btn02.addEventListener('click', () => {
-    SecondChart.destroy();
-    SecondChart = new Chart(ctx02, SecChart_config02);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config02);
 
-    ChangeChartInfo(SecChart_config02.type, graphInfoText02);
+        ChangeChartInfo(SecChart_config02.type, graphInfoText02);
+    };
 });
 
 PieChart_btn02.addEventListener('click', () => {
-    SecondChart.destroy();
-    SecondChart = new Chart(ctx02, SecChart_config03);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config03);
 
-    ChangeChartInfo(SecChart_config03.type, graphInfoText02);
+        ChangeChartInfo(SecChart_config03.type, graphInfoText02);
+    };
 });
 
 DoughnutChart_btn02.addEventListener('click', () => {
-    SecondChart.destroy();
-    SecondChart = new Chart(ctx02, SecChart_config04);
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config04);
 
-    ChangeChartInfo(SecChart_config04.type, graphInfoText02);
+        ChangeChartInfo(SecChart_config04.type, graphInfoText02);
+    };
 });
 
 //Changes the InnerHTML of graphInfoText 
@@ -350,7 +366,7 @@ const ChangeChartInfo = (Type, To) => { To.textContent = `/ ${Type} Chart`; };
 function GetTimeData() {
     const CurrStack = CurrChartStack;
 
-    if (localStorage.getItem(`${CurrStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrStack}_UserTimesNew`)) {
 
         //If there was a replace text it gets deleted now 
         ResetReText();
@@ -361,13 +377,15 @@ function GetTimeData() {
         };
 
         let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimesNew`));
-
+        console.log(CurrStackData)
         if (CurrStackData != null) {
+            console.log(CurrStackData)
             for (let i = 0; i < CurrStackData['user_timesNew'].length; i++) {
                 const e = CurrStackData['user_timesNew'][i];
 
+                console.log(e, Times)
                 Times.push(e);
-                Labels.push(e);
+                Labels.push(todayDate);
             };
         };
 

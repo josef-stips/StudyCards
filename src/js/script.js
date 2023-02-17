@@ -176,6 +176,13 @@ let pressed_SendMail_butt = false;
 let pressed_transferCards_butt = false;
 let pressed_copyCards_butt = false;
 
+//Create todays date
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const day = String(today.getDate()).padStart(2, '0');
+const todayDate = `${month}-${day}-${year}`;
+console.log(todayDate);
 //Darkmode configuration
 if (localStorage.getItem('DarkMode')) {
     Darkmode("configurator");
@@ -763,7 +770,6 @@ second_TimesProgress_Header_item.addEventListener('click' , () => {
     md_PopUp_TimesProgress.style.display = 'none';
     DropDownIsOpen = true;
     toggleDropDownMenu();
-    GetTimeData();
     darkContainer.style.display = 'none';
 });
 
@@ -792,10 +798,12 @@ sn_timeChart_butt.addEventListener('click' , () => {
 
     darkContainer.style.display = 'block';
 
-    if (stackLocation != "") {
-        stackInfoText.textContent = `Current Stack - ${stackLocation}`;
-    } else {
+    if (CurrChartStack != "") {
+        stackInfoText.textContent = `Current Stack - ${CurrChartStack}`;
+    } else if(CurrChartStack == "" && stackLocation == "") {
         stackInfoText.textContent = `Current Stack`;
+    } else if(CurrChartStack == "" && stackLocation != "") {
+        stackInfoText.textContent = `Current Stack - ${stackLocation}`;
     };
 
     GetTimeData();
@@ -1358,7 +1366,10 @@ function AcceptUserStackName() {
         CreateTableElWindow.style.display = 'none';
         darkContainer.style.display = 'none'; 
         CTE_ContenteditableField.textContent = null;
-    }
+
+        CurrChartStack = stackLocation;
+        GetTimeData();
+    };
 };
 
 //That functons are called while the game
@@ -1386,6 +1397,7 @@ function PlayModeIsNotActive() {
         pgKarteikarte.removeChild(pgKarteikarte.lastElementChild);
     };
 
+    console.log(ZuWiederhohlen)
     EndScreen_Boolean = false;
     Runde = 0;
     ZuWiederhohlen = 0;
@@ -2267,6 +2279,7 @@ function ResetApp() {
     TableCells = [];
 
     stackLocation = "";
+    CurrChartStack = "";
 
     setTimeout(() => {
         SideMenu.style.width = '0';
