@@ -394,7 +394,6 @@ function GetTimeData() {
         FirstChart = new Chart(ctx, FirstChart_config01);
 
         ChangeChartInfo(FirstChart_config01.type, graphInfoText);
-
     } else {
         //Sets Replacement Text when no data can be shown
         SetReText();
@@ -434,6 +433,7 @@ function GetRepsData() {
 
         ChangeChartInfo(SecChart_config01.type, graphInfoText02);
 
+        GetTimeData();
     } else {
         //Sets Replacement Text when no data can be shown
         SetReText();
