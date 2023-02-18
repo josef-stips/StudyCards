@@ -2434,5 +2434,7 @@ function UpdateToNextStackData() {
     GetRepsData();
 
     //Bug Fix
-    reloadAllCharts();
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
+        reloadAllCharts();
+    };
 };

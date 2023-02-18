@@ -15,6 +15,8 @@ let times = {};
 let ToRepeat = {};
 //The date where the data was created
 let FromUserDate = {};
+//How many Cards were existing on this date/point of time
+let CardsAmount = {};
 
 //Deletes old localstorageItem
 if (localStorage.getItem('timesArray')) {
@@ -37,6 +39,12 @@ if (localStorage.getItem('DateItem')) {
     let DateItem = JSON.parse(localStorage.getItem('DateItem'));
 
     FromUserDate = DateItem;
+};
+
+if (localStorage.getItem('AmountOfCards')) {
+    let CardAm = JSON.parse(localStorage.getItem('AmountOfCards'));
+
+    CardsAmount = CardAm;
 };
 
 //Real Stuff
@@ -163,4 +171,29 @@ function save_UserDate() {
 
     localStorage.setItem('DateItem', JSON.stringify(FromUserDate));
     localStorage.setItem(`${stackLocation}_UserDateNew`, JSON.stringify(FromUserDate[stackLocation]));
+
+    save_UserCardAmount();
+};
+
+let currentLocation04;
+
+//Svaes the user card amount on a certain point of time
+function save_UserCardAmount() {
+    if (stackLocation == currentLocation04) {
+
+        CardsAmount[stackLocation].user_cardAmountNew.push(Karteikarten[stackLocation].vs.length);
+
+    } else {
+
+        if (CardsAmount[stackLocation] == null) {
+            CardsAmount[stackLocation] = { 'user_cardAmountNew': [] };
+        };
+
+        CardsAmount[stackLocation].user_cardAmountNew.push(Karteikarten[stackLocation].vs.length);
+
+        currentLocation04 = stackLocation;
+    };
+
+    localStorage.setItem('AmountOfCards', JSON.stringify(CardsAmount));
+    localStorage.setItem(`${stackLocation}_UserCardAmountNew`, JSON.stringify(CardsAmount[stackLocation]));
 };

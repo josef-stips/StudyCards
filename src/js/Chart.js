@@ -157,7 +157,7 @@ const scales = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Learning Passsages'
+            text: 'Date'
         }
     },
     LearningAccuracy: {
@@ -168,7 +168,7 @@ const scales = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Learning Accuracy in %'
+            text: 'How often you clicked "repeat"'
         },
         ticks: {
             color: 'rgba(185, 126, 131,1)'
@@ -198,7 +198,7 @@ const scales02 = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Learning Accuracy in %'
+            text: 'How often you clicked "repeat"'
         },
         ticks: {
             color: 'rgba(185, 126, 131,1)'
@@ -208,7 +208,7 @@ const scales02 = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Learning Passsages'
+            text: 'Date'
         }
     },
     Times: {
@@ -227,13 +227,28 @@ const scales02 = {
     },
 };
 
+const plugin01 = {
+    tooltip: {
+        callbacks: {
+            label: ((tooltipItem) => {
+                if (tooltipItem.dataset.label == `How often you clicked "repeat"`) {
+                    return `${tooltipItem.dataset.label} : ${tooltipItem.formattedValue}/${CardsAmount[CurrChartStack]['user_cardAmountNew'][tooltipItem.dataIndex]} Cards`;
+                } else {
+                    return `${tooltipItem.dataset.label}:${tooltipItem.formattedValue}`;
+                };
+            })
+        }
+    }
+}
+
 //Config for first Chart 
 const FirstChart_config01 = {
     type: 'line',
     data: FirstChartMixed_data,
     options: {
         scales: scales,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -242,7 +257,8 @@ const FirstChart_config02 = {
     data: FirstChartMixed_data,
     options: {
         scales: scales,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -251,6 +267,7 @@ const FirstChart_config03 = {
     data: FirstChartdata02,
     options: {
         maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -259,6 +276,7 @@ const FirstChart_config04 = {
     data: FirstChartdata02,
     options: {
         maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -268,7 +286,8 @@ const SecChart_config01 = {
     data: data02,
     options: {
         scales: scales02,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -277,7 +296,8 @@ const SecChart_config02 = {
     data: data02,
     options: {
         scales: scales02,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -285,7 +305,8 @@ const SecChart_config03 = {
     type: 'pie',
     data: SecChartdata02,
     options: {
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
@@ -294,13 +315,14 @@ const SecChart_config04 = {
     data: SecChartdata02,
     options: {
         maintainAspectRatio: false,
+        plugins: plugin01
     }
 };
 
 let FirstChart = new Chart(ctx, FirstChart_config01);
 
 LineChart_btn.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         FirstChart.destroy();
         FirstChart = new Chart(ctx, FirstChart_config01);
 
@@ -309,7 +331,7 @@ LineChart_btn.addEventListener('click', () => {
 });
 
 BarChart_btn.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         FirstChart.destroy();
         FirstChart = new Chart(ctx, FirstChart_config02);
 
@@ -318,7 +340,7 @@ BarChart_btn.addEventListener('click', () => {
 });
 
 PieChart_btn.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         FirstChart.destroy();
         FirstChart = new Chart(ctx, FirstChart_config03);
 
@@ -327,7 +349,7 @@ PieChart_btn.addEventListener('click', () => {
 });
 
 DoughnutChart_btn.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         FirstChart.destroy();
         FirstChart = new Chart(ctx, FirstChart_config04);
 
@@ -339,7 +361,7 @@ DoughnutChart_btn.addEventListener('click', () => {
 let SecondChart = new Chart(ctx02, SecChart_config01);
 
 LineChart_btn02.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         SecondChart.destroy();
         SecondChart = new Chart(ctx02, SecChart_config01);
 
@@ -348,7 +370,7 @@ LineChart_btn02.addEventListener('click', () => {
 });
 
 BarChart_btn02.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         SecondChart.destroy();
         SecondChart = new Chart(ctx02, SecChart_config02);
 
@@ -357,7 +379,7 @@ BarChart_btn02.addEventListener('click', () => {
 });
 
 PieChart_btn02.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         SecondChart.destroy();
         SecondChart = new Chart(ctx02, SecChart_config03);
 
@@ -366,7 +388,7 @@ PieChart_btn02.addEventListener('click', () => {
 });
 
 DoughnutChart_btn02.addEventListener('click', () => {
-    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`) || localStorage.getItem(`${stackLocation}_UserTimesNew`)) {
+    if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         SecondChart.destroy();
         SecondChart = new Chart(ctx02, SecChart_config04);
 

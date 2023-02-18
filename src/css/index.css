@@ -965,7 +965,7 @@ header a {
 /* first Chart */
 
 #Chart-wrapper {
-    width: 75vh;
+    width: 100vh;
     height: 45vh;
     margin-left: 2em;
 }
@@ -989,7 +989,7 @@ header a {
 /* Second Chart */
 
 #Chart-wrapper2 {
-    width: 75vh;
+    width: 100vh;
     height: 45vh;
     margin-left: 2em;
 }
