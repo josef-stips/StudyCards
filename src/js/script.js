@@ -178,11 +178,12 @@ let pressed_copyCards_butt = false;
 
 //Create todays date
 const today = new Date();
-const year = today.getFullYear();
+const year = today.getFullYear().toString().slice(-2);
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
-const todayDate = `${month}-${day}-${year}`;
+const todayDate = `${day}.${month}.${year}`;
 console.log(todayDate);
+
 //Darkmode configuration
 if (localStorage.getItem('DarkMode')) {
     Darkmode("configurator");
@@ -677,7 +678,6 @@ let DropDownIsOpen = false;
 // A few button events
 checkbox_clicked = true;
 chart_firstcheckbox.addEventListener('click' , () => {
-    console.log(checkbox_clicked)
     switch (checkbox_clicked) {
         case false:
             
@@ -785,6 +785,18 @@ second_TimesProgress_Header_item.addEventListener('click' , () => {
     md_PopUp_TimesProgress.style.display = 'none';
     DropDownIsOpen = true;
     toggleDropDownMenu();
+
+    //Bug Fix: When the user turns off the mixed chart leave and opens the window again , an error message returns.
+    //This piece of code first calls two functions. These functions turn on the mixed chart again and the code below makes the icon a checked check-box
+    ActivateMixedChart();
+    ActivateMixedChart02();
+
+    chart_firstcheckbox.className = 'fa-regular fa-square-check';
+    checkbox_clicked = true;
+    chart_seccheckbox.className = 'fa-regular fa-square-check';
+    checkbox_clicked02 = true;
+
+    //So the app is no longer darker
     darkContainer.style.display = 'none';
 });
 
@@ -821,8 +833,8 @@ sn_timeChart_butt.addEventListener('click' , () => {
         stackInfoText.textContent = `Current Stack - ${stackLocation}`;
     };
 
-    GetTimeData();
     GetRepsData();
+    GetTimeData();
 });
 
 ResetApp_Butt.addEventListener('click' , () => {
@@ -1416,11 +1428,9 @@ function PlayModeIsNotActive() {
         pgKarteikarte.removeChild(pgKarteikarte.lastElementChild);
     };
 
-    save_UserReps(ZuWiederhohlen);
-
+    ZuWiederhohlen = 0;
     EndScreen_Boolean = false;
     Runde = 0;
-    ZuWiederhohlen = 0;
 
     pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
     pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
@@ -1472,6 +1482,7 @@ function ShowNextCard() {
         ShowOptionsAfterGame();
 
         stop_Timer();//Timer function of 'timer.js' file
+        save_UserReps(ZuWiederhohlen)//save data for analysis function of 'timer.js' file
 
     }  else {
         Runde++;
@@ -2409,6 +2420,19 @@ function UpdateToNextStackData() {
 
     CurrChartStack = this.textContent;   
 
+    //Bug Fix: When the user turns off the mixed chart leave and opens the window again , an error message returns.
+    //This piece of code first calls two functions. These functions turn on the mixed chart again and the code below makes the icon a checked check-box
+    ActivateMixedChart();
+    ActivateMixedChart02();
+    
+    chart_firstcheckbox.className = 'fa-regular fa-square-check';
+    checkbox_clicked = true;
+    chart_seccheckbox.className = 'fa-regular fa-square-check';
+    checkbox_clicked02 = true;
+
     GetTimeData();
     GetRepsData();
+
+    //Bug Fix
+    reloadAllCharts();
 };

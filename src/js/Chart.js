@@ -64,23 +64,13 @@ let Labels = [];
 let Accuracy = [];
 let Labels02 = [];
 
-const data = {
+const FirstChartMixed_data = {
     labels: Labels,
     datasets: [{
-        label: 'Your Time',
-        data: Times,
-        borderWidth: 1,
-        backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
-            'rgba(75, 192, 192, 1)',
-        ],
-        yAxisID: 'y',
-    }, {
         type: 'line',
-        label: 'Learning Accuracy in %',
+        label: 'How often you clicked "repeat"',
         data: Accuracy,
+        borderWidth: 1,
         backgroundColor: [
             'rgba(185, 126, 131,0.2)',
         ],
@@ -88,15 +78,26 @@ const data = {
             'rgba(185, 126, 131,1)',
         ],
         yAxisID: 'LearningAccuracy',
+    }, {
+        label: 'The Time you needed',
+        data: Times,
+        borderWidth: 3,
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+            'rgba(75, 192, 192, 1)',
+        ],
+        yAxisID: 'y',
     }],
 };
 
 const FirstChartdata02 = {
     labels: Labels,
     datasets: [{
-        label: 'Your Time',
+        label: 'The Time you needed',
         data: Times,
-        borderWidth: 1,
+        borderWidth: 3,
         backgroundColor: [
             'rgba(75, 192, 192, 0.2)',
         ],
@@ -111,9 +112,9 @@ const FirstChartdata02 = {
 const data02 = {
     labels: Labels02,
     datasets: [{
-        label: 'Learning Accuracy',
+        label: 'How often you clicked "repeat"',
         data: Accuracy,
-        borderWidth: 1,
+        borderWidth: 3,
         backgroundColor: [
             'rgba(185, 126, 131,0.2)',
         ],
@@ -122,7 +123,7 @@ const data02 = {
         ],
     }, {
         type: 'line',
-        label: 'Your Time',
+        label: 'The Time you needed',
         data: Times,
         backgroundColor: [
             'rgba(75, 192, 192, 0.2)',
@@ -131,36 +132,27 @@ const data02 = {
             'rgba(75, 192, 192, 1)',
         ],
         yAxisID: 'Times',
+        borderWidth: 1
     }]
 };
 
 const SecChartdata02 = {
     labels: Labels02,
     datasets: [{
-        label: 'Learning Accuracy',
+        label: 'How often you clicked "repeat"',
         data: Accuracy,
-        borderWidth: 1,
+        borderWidth: 3,
         backgroundColor: [
             'rgba(185, 126, 131,0.2)',
         ],
         borderColor: [
             'rgba(185, 126, 131,1)',
         ],
-        yAxisID: 'y',
+        yAxisID: 'y'
     }],
 };
 
 const scales = {
-    y: {
-        beginAtZero: true,
-        position: 'left',
-        type: 'linear',
-        title: {
-            color: '#4568dc',
-            display: true,
-            text: 'Time'
-        }
-    },
     x: {
         title: {
             color: '#4568dc',
@@ -178,6 +170,23 @@ const scales = {
             display: true,
             text: 'Learning Accuracy in %'
         },
+        ticks: {
+            color: 'rgba(185, 126, 131,1)'
+        }
+    },
+    y: {
+        display: true,
+        beginAtZero: true,
+        position: 'left',
+        type: 'linear',
+        title: {
+            color: '#4568dc',
+            display: true,
+            text: 'Time'
+        },
+        ticks: {
+            color: 'rgba(75, 192, 192, 1)'
+        },
     },
 };
 
@@ -190,6 +199,9 @@ const scales02 = {
             color: '#4568dc',
             display: true,
             text: 'Learning Accuracy in %'
+        },
+        ticks: {
+            color: 'rgba(185, 126, 131,1)'
         }
     },
     x: {
@@ -209,13 +221,16 @@ const scales02 = {
             display: true,
             text: 'Time'
         },
+        ticks: {
+            color: 'rgba(75, 192, 192, 1)'
+        }
     },
 };
 
 //Config for first Chart 
 const FirstChart_config01 = {
     type: 'line',
-    data: data,
+    data: FirstChartMixed_data,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -224,7 +239,7 @@ const FirstChart_config01 = {
 
 const FirstChart_config02 = {
     type: 'bar',
-    data: data,
+    data: FirstChartMixed_data,
     options: {
         scales: scales,
         maintainAspectRatio: false
@@ -362,6 +377,52 @@ DoughnutChart_btn02.addEventListener('click', () => {
 //Changes the InnerHTML of graphInfoText 
 const ChangeChartInfo = (Type, To) => { To.textContent = `/ ${Type} Chart`; };
 
+function GetRepsData() {
+    const CurrStack = CurrChartStack;
+
+    if (localStorage.getItem(`${CurrStack}_UserRepsNew`)) {
+
+        //If there was a replace text it gets deleted now 
+        ResetReText();
+
+        if (Accuracy.length != 0 || Labels02.length != 0) {
+            Accuracy.length = 0;
+            Labels02.length = 0;
+        };
+
+        let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserRepsNew`));
+
+        //Date
+        let CurrDate = JSON.parse(localStorage.getItem(`${CurrStack}_UserDateNew`));
+
+        if (CurrStackData != null) {
+            for (let i = 0; i < CurrStackData['user_repsNew'].length; i++) {
+                const e = CurrStackData['user_repsNew'][i];
+
+                Accuracy.push(e);
+            };
+
+            //Gets Date
+            for (let i = 0; i < CurrDate['user_dateNew'].length; i++) {
+                const el = CurrDate['user_dateNew'][i];
+
+                Labels02.push(el);
+            };
+        };
+
+        //Update Chart
+        SecondChart.destroy();
+        SecondChart = new Chart(ctx02, SecChart_config01);
+
+        ChangeChartInfo(SecChart_config01.type, graphInfoText02);
+
+    } else {
+        //Sets Replacement Text when no data can be shown
+        SetReText();
+    };
+};
+GetRepsData();
+
 //Gets and Updates TimeData
 function GetTimeData() {
     const CurrStack = CurrChartStack;
@@ -377,15 +438,23 @@ function GetTimeData() {
         };
 
         let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserTimesNew`));
-        console.log(CurrStackData)
+
+        //Date
+        let CurrDate = JSON.parse(localStorage.getItem(`${CurrStack}_UserDateNew`));
+
         if (CurrStackData != null) {
-            console.log(CurrStackData)
             for (let i = 0; i < CurrStackData['user_timesNew'].length; i++) {
                 const e = CurrStackData['user_timesNew'][i];
 
                 console.log(e, Times)
                 Times.push(e);
-                Labels.push(todayDate);
+            };
+
+            //Gets Date
+            for (let i = 0; i < CurrDate['user_dateNew'].length; i++) {
+                const el = CurrDate['user_dateNew'][i];
+
+                Labels.push(el);
             };
         };
 
@@ -394,6 +463,9 @@ function GetTimeData() {
         FirstChart = new Chart(ctx, FirstChart_config01);
 
         ChangeChartInfo(FirstChart_config01.type, graphInfoText);
+
+        //Calls Function of second Chart again so it gets updated with the information of the first chart
+        GetRepsData();
     } else {
         //Sets Replacement Text when no data can be shown
         SetReText();
@@ -401,50 +473,10 @@ function GetTimeData() {
 };
 GetTimeData();
 
-function GetRepsData() {
-    const CurrStack = CurrChartStack;
-
-    if (localStorage.getItem(`${CurrStack}_UserRepsNew`)) {
-
-        //If there was a replace text it gets deleted now 
-        ResetReText();
-
-        if (Accuracy.length != 0 || Labels02.length != 0) {
-            Accuracy.length = 0;
-            Labels02.length = 0;
-        };
-
-        let CurrStackData = JSON.parse(localStorage.getItem(`${CurrStack}_UserRepsNew`));
-        console.log(CurrStackData)
-        if (CurrStackData != null) {
-            console.log(CurrStackData)
-            for (let i = 0; i < CurrStackData['user_repsNew'].length; i++) {
-                const e = CurrStackData['user_repsNew'][i];
-
-                console.log(e, Times)
-                Accuracy.push(e);
-                Labels02.push(todayDate);
-            };
-        };
-
-        //Update Chart
-        SecondChart.destroy();
-        SecondChart = new Chart(ctx02, SecChart_config01);
-
-        ChangeChartInfo(SecChart_config01.type, graphInfoText02);
-
-        GetTimeData();
-    } else {
-        //Sets Replacement Text when no data can be shown
-        SetReText();
-    };
-};
-GetRepsData();
-
 //For First Chart
 function ActivateMixedChart() {
-    FirstChart_config01.data = data;
-    FirstChart_config02.data = data;
+    FirstChart_config01.data = FirstChartMixed_data;
+    FirstChart_config02.data = FirstChartMixed_data;
 
     FirstChart_config01.options.scales.LearningAccuracy.display = true;
     FirstChart_config02.options.scales.LearningAccuracy.display = true;
@@ -529,4 +561,14 @@ function ResetReText() {
 
     Checkbox01.style.display = 'flex';
     Checkbox02.style.display = 'flex';
+};
+
+//Just for Bug Fixes and other uses 
+function reloadAllCharts() {
+    //Reloads (updates) all charts
+    FirstChart.destroy();
+    SecondChart.destroy();
+
+    FirstChart = new Chart(ctx, FirstChart_config01);
+    SecondChart = new Chart(ctx02, SecChart_config01);
 };

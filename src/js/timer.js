@@ -13,6 +13,8 @@ let times = {};
 
 //How often the user don't knew the vocabulray/phrase of the index card?
 let ToRepeat = {};
+//The date where the data was created
+let FromUserDate = {};
 
 //Deletes old localstorageItem
 if (localStorage.getItem('timesArray')) {
@@ -31,6 +33,13 @@ if (localStorage.getItem('RepsItem')) {
     ToRepeat = RepsObject;
 };
 
+if (localStorage.getItem('DateItem')) {
+    let DateItem = JSON.parse(localStorage.getItem('DateItem'));
+
+    FromUserDate = DateItem;
+};
+
+//Real Stuff
 function start_Timer() {
     if (!timerIsOn) {
         timer = setInterval(function() { update_Timer() }, 10);
@@ -129,4 +138,29 @@ function save_UserReps(reps) {
 
     localStorage.setItem('RepsItem', JSON.stringify(ToRepeat));
     localStorage.setItem(`${stackLocation}_UserRepsNew`, JSON.stringify(ToRepeat[stackLocation]));
+
+    save_UserDate();
+};
+
+let currentLocation03;
+
+//Svaes the user date
+function save_UserDate() {
+    if (stackLocation == currentLocation03) {
+
+        FromUserDate[stackLocation].user_dateNew.push(todayDate);
+
+    } else {
+
+        if (FromUserDate[stackLocation] == null) {
+            FromUserDate[stackLocation] = { 'user_dateNew': [] };
+        };
+
+        FromUserDate[stackLocation].user_dateNew.push(todayDate);
+
+        currentLocation03 = stackLocation;
+    };
+
+    localStorage.setItem('DateItem', JSON.stringify(FromUserDate));
+    localStorage.setItem(`${stackLocation}_UserDateNew`, JSON.stringify(FromUserDate[stackLocation]));
 };
