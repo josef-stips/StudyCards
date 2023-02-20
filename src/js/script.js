@@ -2617,13 +2617,13 @@ function GetUpdatedStackTable(UpdatedChilds) {
     let HTMLreceiver = document.createElement('table');
     HTMLreceiver.innerHTML = TableHTML;
 
-if (HTMLreceiver.querySelector('tbody') !== null) {
-    let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
+    if (HTMLreceiver.querySelector('tbody') !== null) {
+        let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
 
-    for (const k of UpdatedTableList) {
-        UpdatedChilds.push(k.children[0])
+        for (const k of UpdatedTableList) {
+            UpdatedChilds.push(k.children[0])
+        };
     };
-};
 };
 
 //Close the header drop down
