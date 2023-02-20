@@ -140,6 +140,8 @@ let selectOppo_cards_btn = document.getElementById('selectOppo-cards-btn');
 let chart_firstcheckbox = document.getElementById('chart-first-checkbox');
 let chart_seccheckbox = document.getElementById('chart-sec-checkbox');
 
+let CardsOfMaxCardstext = document.getElementById('CardsOfMaxCards-text');
+
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
@@ -283,6 +285,7 @@ if (TableCells.length >= 1) {
     PlayGroundHeader.textContent = stackLocation;
     stappelHeader.textContent = `your ${stackLocation} stack`;
     stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
 
     MainCon_InitialText.style.display = 'none';
     MainContent.style.display = 'flex';
@@ -1375,6 +1378,8 @@ function OpenPlayGround() {
             pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[0];
             pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[0];
 
+            CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
+
             //If User clicked "view below" button or "view_above" button.
             CardView();
 
@@ -1457,6 +1462,8 @@ function PlayModeIsNotActive() {
     pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
     pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
 
+    CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
+
     //Checks if the front or the back should be shown as default
     CardView();
 
@@ -1500,6 +1507,9 @@ function ShowNextCard() {
 
         EndScreen_Boolean = true;
 
+        //HTML Counter shows the reps 
+        CardsOfMaxCardstext.textContent = `${Karteikarten[`${stackLocation}`].vs.length}/${Karteikarten[`${stackLocation}`].vs.length}`;
+
         ShowEndText();
         ShowOptionsAfterGame();
 
@@ -1522,6 +1532,9 @@ function ShowNextCard() {
             pgKarteiKarteRS.style.color = 'var(--front-color)';
             pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)';
         };
+
+        //HTML Counter shows the reps 
+        CardsOfMaxCardstext.textContent = `${Runde}/${Karteikarten[`${stackLocation}`].vs.length}`;
     };
 };
 

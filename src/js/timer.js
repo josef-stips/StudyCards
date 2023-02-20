@@ -108,7 +108,18 @@ let currentLocation;
 function save_UserTime(time) {
     if (stackLocation == currentLocation) {
 
-        times[stackLocation].user_timesNew.push(time);
+        if (time.includes(':')) {
+            let timeInSec = parseInt(time.split(':')[0]) * 60 + parseFloat(time.split(':')[1]);
+
+            times[stackLocation].user_timesNew.push(timeInSec);
+
+            console.log(timeInSec)
+
+        } else {
+            times[stackLocation].user_timesNew.push(time);
+
+            console.log(time)
+        };
 
     } else {
 
@@ -116,7 +127,18 @@ function save_UserTime(time) {
             times[stackLocation] = { 'user_timesNew': [] };
         };
 
-        times[stackLocation].user_timesNew.push(time);
+        if (time.includes(':')) {
+            let timeInSec = parseInt(time.split(':')[0]) * 60 + parseFloat(time.split(':')[1]);
+
+            times[stackLocation].user_timesNew.push(timeInSec);
+
+            console.log(timeInSec)
+
+        } else {
+            times[stackLocation].user_timesNew.push(time);
+
+            console.log(time)
+        };
 
         currentLocation = stackLocation;
     };

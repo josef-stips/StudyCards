@@ -182,7 +182,7 @@ const scales = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Time'
+            text: 'Time in seconds'
         },
         ticks: {
             color: 'rgba(75, 192, 192, 1)'
@@ -219,7 +219,7 @@ const scales02 = {
         title: {
             color: '#4568dc',
             display: true,
-            text: 'Time'
+            text: 'Time in seconds'
         },
         ticks: {
             color: 'rgba(75, 192, 192, 1)'
@@ -468,7 +468,6 @@ function GetTimeData() {
             for (let i = 0; i < CurrStackData['user_timesNew'].length; i++) {
                 const e = CurrStackData['user_timesNew'][i];
 
-                console.log(e, Times)
                 Times.push(e);
             };
 

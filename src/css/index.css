@@ -1432,6 +1432,11 @@ textarea {
     margin: 0.6% 0 0 1.15%;
 }
 
+#CardsOfMaxCards-text {
+    float: left;
+    margin: 0.175em 0 0 6.15%;
+}
+
 #play-timer {
     float: left;
     margin: 0.22% 0 0 5%;
@@ -1445,7 +1450,7 @@ textarea {
 #pg-loc-header {
     font-size: 30px;
     color: var(--third-front-color);
-    margin-left: -12%;
+    margin-left: -19%;
 }
 
 #pg-vl {
