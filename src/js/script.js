@@ -1,6 +1,7 @@
 let stappel = document.getElementById('stappel');
 let stappelHeader = document.getElementById('stappel-header');
 let stappelUnderHead = document.getElementById('stappel-underhead');
+let header_StackDropDownMenu_btn = document.getElementById('header_StackDropDownMenu-btn');
 
 let stappel_RueckSeite = document.getElementById('sr');
 let stappel_VorderSeite = document.getElementById('sv');
@@ -182,7 +183,6 @@ const year = today.getFullYear().toString().slice(-2);
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 const todayDate = `${day}.${month}.${year}`;
-console.log(todayDate);
 
 //Darkmode configuration
 if (localStorage.getItem('DarkMode')) {
@@ -199,6 +199,7 @@ let mail_message_field = document.getElementById('message');
 let stackInfoText = document.getElementsByClassName('stack-info-text')[0];
 let toggleDropDownMenu_btn = document.getElementById('toggle-dropDown-menu');
 let DropDownContent = document.getElementById('dropdown-con');
+let Header_DropDownContent = document.getElementById('header-dropdown-con');
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -674,8 +675,15 @@ function Darkmode(from) {
     };
 };
 
+//variable
 let DropDownIsOpen = false;
+
 // A few button events
+header_btn_clicked = false;
+header_StackDropDownMenu_btn.addEventListener('click' , () => {
+    toggleHeaderDropDownMenu();
+});
+
 checkbox_clicked = true;
 chart_firstcheckbox.addEventListener('click' , () => {
     switch (checkbox_clicked) {
@@ -813,11 +821,17 @@ sn_transferCards_butt.addEventListener('click' , () => {
     } else {
         SetInIText_TransferWin();
     };
+
+    //closes the header drop down menu when it's open
+    CloseHeaderDropDown();
 });
 
 sn_saveStack_butt.addEventListener('click' , () => {
     md_PopUp_DownloadCards.style.display = 'block';
     darkContainer.style.display = 'block';
+
+    //closes the header drop down menu when it's open
+    CloseHeaderDropDown();
 });
 
 sn_timeChart_butt.addEventListener('click' , () => {
@@ -835,6 +849,9 @@ sn_timeChart_butt.addEventListener('click' , () => {
 
     GetRepsData();
     GetTimeData();
+
+    //closes the header drop down menu when it's open
+    CloseHeaderDropDown();
 });
 
 ResetApp_Butt.addEventListener('click' , () => {
@@ -1070,6 +1087,8 @@ stsTable_Item5.addEventListener('click' , () => {
 //Other
 NavPen.addEventListener('click' , () => {
     NeuerStapel_VS.focus();
+
+    CloseHeaderDropDown();
 });
 
 ShowAllCardsWind_OpenButton.addEventListener('click' , () => {
@@ -1114,6 +1133,8 @@ pgKarteikarte.addEventListener('click', () => {
 
 stappel.addEventListener('click', () => {
     OpenPlayGround();
+
+    CloseHeaderDropDown();
 })
 
 pgNavClickEl_1.addEventListener('click', () => {
@@ -1183,6 +1204,8 @@ SideMenuAddButton.addEventListener('click', () => {
 
 SideMenuOpenButton.addEventListener('click', () => {
     SideMenu.style.width = '35vh';
+
+    CloseHeaderDropDown();
 });
 
 clsCloseButton.addEventListener('click', () => {
@@ -1192,6 +1215,8 @@ clsCloseButton.addEventListener('click', () => {
 SettingsWindowOpenButton.addEventListener('click', () => {
     SettingsWindow.style.display = 'flex';
     darkContainer.style.display = 'block';
+
+    CloseHeaderDropDown();
 });
 
 SettingCloseButton.addEventListener('click', () => {
@@ -1578,7 +1603,7 @@ function shuffle(obj1, obj2) {
     };
 };
 
-//This function creates a contenteditable table element for the user
+//This function creates a contenteditable table element for the user | user_input is the name of the new stack
 function CreateTableElement(user_input) {
     let LastChildDataSet
 
@@ -1631,6 +1656,10 @@ function CreateTableElement(user_input) {
     TableObjectProperty(Usertd.textContent);
 
     TableCellEvent();
+
+    //Close the DropDownMenu when it's open
+    header_btn_clicked = true;
+    toggleHeaderDropDownMenu();
 };
 
 // Saves the User created table elements in localstorage
@@ -1701,6 +1730,7 @@ function SetFocusToTable(TableCellInner , CardAmount) {
 
     //configuration
     stackLocation = `${TableCellInner}`;
+    CurrChartStack = `${TableCellInner}`;
 
     PlayGroundHeader.textContent = stackLocation;
     stappelHeader.textContent = `your ${stackLocation} stack`;
@@ -2241,6 +2271,9 @@ function SwitchToNextStack(Array) {
     } else if(Array.length <= 0) {
         AllStacksDeleted();
     };
+
+    //Close the DropDownMenu when it's open
+    CloseHeaderDropDown();
 };
 
 
@@ -2381,7 +2414,10 @@ FetchPreload();
 function toggleDropDownMenu() {
     //Changes item
     switch (DropDownIsOpen) {
-        case false:     
+        case false: 
+        
+            let UpdatedChilds = [];
+            GetUpdatedStackTable(UpdatedChilds);    
 
             DropDownContent.style.display = 'block';
 
@@ -2389,7 +2425,7 @@ function toggleDropDownMenu() {
             toggleDropDownMenu_btn.style.marginBottom = '0.5em';
             DropDownIsOpen = true;
 
-            for (const i of TableCells) {
+            for (const i of UpdatedChilds) {
                 let stackName = document.createTextNode(`${i.textContent}`);
                 let a = document.createElement('a');
             
@@ -2412,6 +2448,49 @@ function toggleDropDownMenu() {
             DropDownIsOpen = false;
             break;
     };
+};
+
+function toggleHeaderDropDownMenu() {
+    switch (header_btn_clicked) {
+        case true:
+            
+            header_StackDropDownMenu_btn.className = 'fa-solid fa-caret-right';
+            header_btn_clicked = false;
+
+            Header_DropDownContent.style.display = 'none';
+            Header_DropDownContent.textContent = null;
+            
+            header_StackDropDownMenu_btn.classList = 'fa-solid fa-caret-right';
+            header_StackDropDownMenu_btn.style.marginBottom = '0';
+            break;
+    
+        case false:
+            let UpdatedChilds = [];
+
+            GetUpdatedStackTable(UpdatedChilds);
+
+            for (const i of UpdatedChilds) {
+                let stackName = document.createTextNode(`${i.textContent}`);
+                let a = document.createElement('a');
+            
+                a.className = 'DropMenuItem';
+                a.append(stackName);
+                a.addEventListener('click' , function SendParamToFunc() {
+                    let aEl = this.innerText;
+
+                    SwitchToSelectedStack(aEl);
+                });
+            
+                Header_DropDownContent.appendChild(a);
+            };
+
+            Header_DropDownContent.style.display = 'block';
+
+            header_StackDropDownMenu_btn.style.marginBottom = '0.5em';
+            header_StackDropDownMenu_btn.className = 'fa-solid fa-sort-down';
+            header_btn_clicked = true;
+            break;
+    };  
 };
 
 function UpdateToNextStackData() {
@@ -2437,4 +2516,60 @@ function UpdateToNextStackData() {
     if (localStorage.getItem(`${CurrChartStack}_UserTimesNew`)) {
         reloadAllCharts();
     };
+};
+
+function SwitchToSelectedStack(aEl) {
+    stackLocation = aEl;
+
+    //Gets Data from localstorage and push it into the right array
+    if (localStorage.getItem(`${stackLocation}_stapel_VS`) != null) {
+        if(Karteikarten[`${stackLocation}`].vs.length != JSON.parse(localStorage.getItem(`${stackLocation}_stapel_VS`)).length) {
+    
+            for (k of JSON.parse(localStorage.getItem(`${stackLocation}_stapel_VS`))) {
+                Karteikarten[`${stackLocation}`].vs.push(k)
+            };
+                
+            for (h of JSON.parse(localStorage.getItem(`${stackLocation}_stapel_RS`))) {
+                Karteikarten[`${stackLocation}`].vr.push(h)
+            };
+        };
+
+        PlayGroundHeader.textContent = stackLocation;
+        stappelHeader.textContent = `your ${stackLocation} stack`;
+        stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+        
+        pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
+        pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
+        
+        StackNameTitle.textContent = stackLocation;
+        
+        stackInfoText.textContent = `Current Stack - ${stackLocation}`;
+        
+        CurrChartStack = stackLocation;
+    };
+
+    GetTimeData();
+    GetRepsData();
+
+    CloseHeaderDropDown();
+};
+
+//Gets the updated version of tableCells that only existed in localstorage
+function GetUpdatedStackTable(UpdatedChilds) {
+    let TableHTML = localStorage.getItem('UserTable');
+    let HTMLreceiver = document.createElement('table');
+    HTMLreceiver.innerHTML = TableHTML;
+
+    let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
+
+    for (const k of UpdatedTableList) {
+        console.log(k.children[0])
+        UpdatedChilds.push(k.children[0])
+    };
+};
+
+//Close the header drop down
+function CloseHeaderDropDown() {
+    header_btn_clicked = true;
+    toggleHeaderDropDownMenu();
 };
