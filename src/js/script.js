@@ -328,9 +328,6 @@ stappel_RueckSeite.addEventListener('keydown', (e) => {
 
 //Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
 function AddCardToStack() {
-
-    console.log(StInner,StInner_vs)
-
     if (StInner != 'back' && StInner_vs != 'front' && StInner != '' && StInner_vs != '') {
 
         Karteikarten[`${stackLocation}`].vr.push(StInner);
@@ -2563,7 +2560,6 @@ function GetUpdatedStackTable(UpdatedChilds) {
     let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
 
     for (const k of UpdatedTableList) {
-        console.log(k.children[0])
         UpdatedChilds.push(k.children[0])
     };
 };

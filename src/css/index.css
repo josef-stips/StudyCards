@@ -150,6 +150,15 @@ a:hover {
     z-index: 21100;
 }
 
+.classicbutton {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--front-color);
+    border: none;
+    background-color: var(--bg-mini-div);
+    padding: 5px;
+}
+
 
 /***********************HEADER***********************/
 
@@ -932,8 +941,6 @@ header a {
     cursor: pointer;
 }
 
-#md03-main-content {}
-
 #dropDown-wrapper {
     display: flex;
     justify-content: center;
@@ -1023,8 +1030,6 @@ header a {
     margin-bottom: 1em;
 }
 
-#ProgressionChart-times {}
-
 
 /* Second Chart */
 
@@ -1046,8 +1051,6 @@ header a {
     margin-top: 1em;
     margin-bottom: 1em;
 }
-
-#ProgressionChart-correctness {}
 
 .graph-info-text {
     color: var(--front-color);
@@ -1232,6 +1235,24 @@ header a {
 
 #sec_con-title {
     margin-left: 7px;
+}
+
+#AppColorSettings-dropdown-btn {
+    font-size: 16px;
+}
+
+#OtherSettings-dropdown-btn {
+    font-size: 16px;
+}
+
+#AppColorSettings-dropdown-btn:hover {
+    cursor: pointer;
+    color: var(--button-hover-color);
+}
+
+#OtherSettings-dropdown-btn:hover {
+    cursor: pointer;
+    color: var(--button-hover-color);
 }
 
 
