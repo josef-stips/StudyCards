@@ -203,6 +203,9 @@ let toggleDropDownMenu_btn = document.getElementById('toggle-dropDown-menu');
 let DropDownContent = document.getElementById('dropdown-con');
 let Header_DropDownContent = document.getElementById('header-dropdown-con');
 
+//other
+let DeleteChartData_btn = document.querySelector('#DeleteChartData-btn');
+
 //KarteiKarten Object
 let Karteikarten = {
     // 'Example0': {
@@ -217,8 +220,7 @@ let Karteikarten = {
     //     'vs': []
 
     // },
-}
-
+};
 
 //Contenteditable field from 'CreateTableElWindow'
 
@@ -679,6 +681,10 @@ function Darkmode(from) {
 let DropDownIsOpen = false;
 
 // A few button events
+DeleteChartData_btn.addEventListener('click' , () => {
+    DeleteChartData();
+});
+
 header_btn_clicked = false;
 header_StackDropDownMenu_btn.addEventListener('click' , () => {
     toggleHeaderDropDownMenu();
@@ -2302,6 +2308,17 @@ function AllStacksDeleted() {
     setTimeout(() => {
         SideMenu.style.width = '0';
     } , 10);
+
+    //From timer.js
+    currentLocation = "";
+    currentLocation02 = "";
+    currentLocation03 = "";
+    currentLocation04 = "";
+    
+    times = {};
+    ToRepeat = {};
+    FromUserDate = {};
+    CardsAmount = {};
 };
 
 //Sets up the Contet for the Small Alert PopUp
@@ -2332,6 +2349,17 @@ function ClearStorage() {
 
     stackLocation = "";
     CurrChartStack = "";
+
+    //From timer.js
+    currentLocation = "";
+    currentLocation02 = "";
+    currentLocation03 = "";
+    currentLocation04 = "";
+    
+    times = {};
+    ToRepeat = {};
+    FromUserDate = {};
+    CardsAmount = {};
 };
 
 function SetAppColorsToDefault() {
@@ -2360,6 +2388,17 @@ function ResetApp() {
 
     Karteikarten = {};
     TableCells = [];
+
+    //From timer.js
+    currentLocation = "";
+    currentLocation02 = "";
+    currentLocation03 = "";
+    currentLocation04 = "";
+
+    times = {};
+    ToRepeat = {};
+    FromUserDate = {};
+    CardsAmount = {};
 
     stackLocation = "";
     CurrChartStack = "";
@@ -2591,4 +2630,50 @@ if (HTMLreceiver.querySelector('tbody') !== null) {
 function CloseHeaderDropDown() {
     header_btn_clicked = true;
     toggleHeaderDropDownMenu();
+};
+
+//Deletes Chart Data from curr Stack
+function DeleteChartData() {
+    //Curr Stack
+    let CurrStack = CurrChartStack;
+
+    //Items from localStorage that need to modify
+    let TimesArrayItem = JSON.parse(localStorage.getItem('timesArrayNew'));
+    let AmountOfCardsItem = JSON.parse(localStorage.getItem('AmountOfCards'));
+    let DateItem = JSON.parse(localStorage.getItem('DateItem'));
+    let RepsItem = JSON.parse(localStorage.getItem('RepsItem'));
+
+    //Delete specific item
+    delete TimesArrayItem[CurrStack];
+    delete AmountOfCardsItem[CurrStack];
+    delete DateItem[CurrStack];
+    delete RepsItem[CurrStack];
+
+    //Items from localStorage that need to remove
+    localStorage.setItem('timesArrayNew' , JSON.stringify(TimesArrayItem));
+    localStorage.setItem('AmountOfCards' , JSON.stringify(AmountOfCardsItem));
+    localStorage.setItem('DateItem' , JSON.stringify(DateItem));
+    localStorage.setItem('RepsItem' , JSON.stringify(RepsItem));
+
+    //Removes Items that need to remove
+    localStorage.removeItem(`${CurrStack}_UserRepsNew`);
+    localStorage.removeItem(`${CurrStack}_UserTimesNew`);
+    localStorage.removeItem(`${CurrStack}_UserDateNew`);
+    localStorage.removeItem(`${CurrStack}_UserCardAmountNew`);
+    localStorage.removeItem(`${CurrStack}_UserCardAmountNew`);
+
+    //From timer.js
+    currentLocation = "";
+    currentLocation02 = "";
+    currentLocation03 = "";
+    currentLocation04 = "";
+
+    delete times[CurrStack];
+    delete ToRepeat[CurrStack] ;
+    delete FromUserDate[CurrStack];
+    delete CardsAmount[CurrStack];
+
+    //Sets Replacement Text
+    GetTimeData();
+    GetRepsData();
 };
