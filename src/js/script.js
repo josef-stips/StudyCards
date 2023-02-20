@@ -2289,10 +2289,15 @@ function SwitchToNextStack(Array) {
 
 //When all stacks are deleted , this function shows the right things in the document
 function AllStacksDeleted() {
+    stackLocation = "";
+    CurrChartStack = "";
+
     SideMenuTable.style.display = 'none';
     MainContent.style.display = 'none';
     MainCon_InitialText.style.display = 'block';
     StackNameTitle.textContent = 'Your stack name';
+
+    stackInfoText.textContent = 'Current Stack';
 
     setTimeout(() => {
         SideMenu.style.width = '0';
@@ -2324,6 +2329,9 @@ function ClearStorage() {
         localStorage.removeItem(`${k}_stapel_RS`);
         localStorage.removeItem(`${k}_stapel_VS`);
     };
+
+    stackLocation = "";
+    CurrChartStack = "";
 };
 
 function SetAppColorsToDefault() {
@@ -2570,11 +2578,13 @@ function GetUpdatedStackTable(UpdatedChilds) {
     let HTMLreceiver = document.createElement('table');
     HTMLreceiver.innerHTML = TableHTML;
 
+if (HTMLreceiver.querySelector('tbody') !== null) {
     let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
 
     for (const k of UpdatedTableList) {
         UpdatedChilds.push(k.children[0])
     };
+};
 };
 
 //Close the header drop down

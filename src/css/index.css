@@ -159,6 +159,10 @@ a:hover {
     padding: 5px;
 }
 
+.classicbutton:hover {
+    cursor: pointer;
+}
+
 
 /***********************HEADER***********************/
 
@@ -1006,6 +1010,29 @@ header a {
 
 #chart-sec-checkbox:hover {
     cursor: pointer;
+}
+
+#additional-options-wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 0.2em 0.1em 0 0.5em;
+    color: white;
+    height: 100%;
+    width: 30%;
+}
+
+#DeleteChartData-btn {
+    transition: 0.1s color ease-in-out;
+    margin: 0 0 0 0.75em;
+    width: 5.35em;
+    height: 1.9em;
+    font-size: 16px;
+}
+
+#DeleteChartData-btn:hover {
+    transition: 0.1s color ease-in-out;
+    color: var(--button-hover-color);
 }
 
 
