@@ -205,6 +205,10 @@ let Header_DropDownContent = document.getElementById('header-dropdown-con');
 
 //other
 let DeleteChartData_btn = document.querySelector('#DeleteChartData-btn');
+let scrollToRight_btn = document.querySelector('#scrollToRight-btn');
+let scrollToLeft_btn = document.querySelector('#scrollToLeft-btn');
+let md02_headerbarlist = document.querySelector('#header-bar-list');
+let md02_content_cardsList = document.querySelector('#md02-content-cards-list');
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -561,6 +565,76 @@ function CreateMiniCardListLoop_2() {
     };
 };
 
+//Cretaes list element for other window
+function CreateListMiniCard_3(numb , location) {
+    if (location === undefined) {
+        location = stackLocation
+    };
+
+    let liEl = document.createElement('li');
+    liEl.setAttribute('list-index' , `${numb}`)
+
+    let DivEl = document.createElement('div');
+    DivEl.className = 'Einzel_Stapel_2';
+
+    let DivEl2 = document.createElement('div');
+    DivEl2.className = 'ministapel-Vorderseite';
+
+    let DivEl3 = document.createElement('div');
+    DivEl3.className = 'ministapel-Rückseite';
+
+    let h3_El1 = document.createElement('h3');
+    let h3_El1_text = document.createTextNode(`${Karteikarten[`${location}`].vs[numb]}`);
+
+    h3_El1.className = 'MiniCardInput';
+    h3_El1.style.margin = '3.9% 4% 0 4%';
+    h3_El1.style.fontSize = "15px"
+
+    let h3_El2 = document.createElement('h3');
+    let h3_El2_text = document.createTextNode(`${Karteikarten[`${location}`].vr[numb]}`);
+
+    h3_El2.className = 'MiniCardInput';
+    h3_El2.style.margin = '3.9% 4% 0 4%';
+    h3_El2.style.fontSize = "15px"
+
+    let aEl = document.createElement('a');
+    aEl.id = 'md02-Cardmini-SelectionMark';
+    aEl.className = 'fa-solid fa-check fa-1x';
+    aEl.href = '#';
+    aEl.title = 'select';
+    aEl.setAttribute('md02-IsSelected' , 'false')
+
+    DivEl.appendChild(DivEl2);
+    DivEl.appendChild(DivEl3);
+    DivEl3.appendChild(h3_El2);
+    h3_El1.appendChild(h3_El1_text);
+    h3_El2.appendChild(h3_El2_text);
+    DivEl.appendChild(aEl);
+    DivEl2.appendChild(h3_El1);
+    liEl.appendChild(DivEl);
+
+    md02_content_cardsList.appendChild(liEl);
+};
+
+//decides how often the function above needs to call
+function CreateMiniCardListLoop_3() {
+    if (Karteikarten[stackLocation].vs.length > 0) {
+        
+        md02_content_cardsList.textContent = null;
+    
+        let numb = 0;
+        for (i of Karteikarten[`${stackLocation}`].vs) {
+                
+            CreateListMiniCard_3(numb);
+        
+            numb++;
+        };
+    
+    } else {
+            SetInitialText_DownloadCardsWindow();
+    };
+};
+
 //Generall Shortcuts
 document.onkeydown = (e) => {
     if (document.activeElement !== NeuerStapel_RS && 
@@ -681,6 +755,25 @@ function Darkmode(from) {
 let DropDownIsOpen = false;
 
 // A few button events
+ScrollToLeft = false;
+ScrollToRight = false;
+
+scrollToRight_btn.addEventListener('click' , () => {
+    if (!ScrollToLeft) {
+        ScrollToRight = true;
+        scrollToRightSlowly();
+        ScrollToRight = false;
+    };
+});
+
+scrollToLeft_btn.addEventListener('click' , () => {
+    if (!ScrollToRight) {
+        ScrollToLeft = true;
+        scrollToLeftSlowly();
+        ScrollToLeft = false;
+    };
+});
+
 DeleteChartData_btn.addEventListener('click' , () => {
     DeleteChartData();
 });
@@ -838,6 +931,10 @@ sn_saveStack_butt.addEventListener('click' , () => {
 
     //closes the header drop down menu when it's open
     CloseHeaderDropDown();
+    //Gets stack names for header-bar list 
+    GetStacks();
+    //Create Card List items
+    CreateMiniCardListLoop_3();
 });
 
 sn_timeChart_butt.addEventListener('click' , () => {
@@ -2459,11 +2556,13 @@ function clearFormular() {
 };
 
 function FetchPreload() {
-    let version_field = document.getElementById('info-version_field');
+    if (window.App != undefined) {
+        let version_field = document.getElementById('info-version_field');
 
-    let node = document.createTextNode(`Version ${window.App.version}`);
-
-    version_field.appendChild(node);
+        let node = document.createTextNode(`Version ${window.App.version}`);
+    
+        version_field.appendChild(node);
+    };
 };
 
 FetchPreload();
@@ -2676,4 +2775,84 @@ function DeleteChartData() {
     //Sets Replacement Text
     GetTimeData();
     GetRepsData();
+};
+
+//Scrollt im zweiten Fenster im header (list) bis nach rechts 
+function scrollToRightSlowly() {
+    let scrollAmount = 0;
+
+    let scrollInterval01 = setInterval(function() {
+        md02_headerbarlist.scrollLeft += 20; // anpassen der scroll-Geschwindigkeit
+        scrollAmount += 20;
+        if (scrollAmount >= md02_headerbarlist.scrollWidth) {
+            clearInterval(scrollInterval01);
+        };
+    }, 20); // anpassen der scroll-Frequenz
+};
+
+//Scrollt im zweiten Fenster im header (list) bis nach links
+function scrollToLeftSlowly() {
+    let scrollAmount = 0;
+
+    let scrollInterval02 = setInterval(function() {
+        md02_headerbarlist.scrollBy(-20 , 0); // anpassen der scroll-Geschwindigkeit
+        scrollAmount += 20;
+        if (scrollAmount >= md02_headerbarlist.scrollWidth) {
+            clearInterval(scrollInterval02);
+        };
+    }, 20); // anpassen der scroll-Frequenz
+};
+
+//Gets the names of the stack and calls function that creates list items for md02-header-bar
+function GetStacks() {
+    //Array with all names
+    let stacks = [];
+
+    //pushes all stack names in the array
+    GetUpdatedStackTable(stacks);
+
+    //Creates list element for header-bar-list
+    md02_headerbarlist.textContent = null;
+
+    for (const i of stacks) {
+        let currentStack = i.textContent;
+
+        let li = document.createElement('li');
+
+        li.className = 'header-bar-list-item';
+        li.addEventListener('click' , function ParamHoster() {
+            CreateCardsForHeaderBar(currentStack);
+        });
+
+        let StackName = document.createTextNode(i.textContent);
+
+        li.appendChild(StackName);
+        md02_headerbarlist.appendChild(li);  
+    };
+};
+
+//Is MiniCardListLoop_3 but called out from a different location
+function CreateCardsForHeaderBar(Stack) {
+    if (Karteikarten[Stack].vs.length > 0) {
+        
+        md02_content_cardsList.textContent = null;
+    
+        let numb = 0;
+        for (i of Karteikarten[`${Stack}`].vs) {
+                
+            CreateListMiniCard_3(numb , Stack);
+        
+            numb++;
+        };
+    
+    } else {
+            SetInitialText_DownloadCardsWindow();
+    };
+}
+
+//Sets Replacement Text for md02 pop up 
+function SetInitialText_DownloadCardsWindow() {
+    md02_content_cardsList.textContent = null;
+
+    console.log("fsdggfgsd")
 };

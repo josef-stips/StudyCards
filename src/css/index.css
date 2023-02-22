@@ -759,6 +759,7 @@ header a {
 
 #md-PopUp-DownlaodCards {
     display: none;
+    /* height: 100%; */
 }
 
 #md-PopUp-DownlaodCards-Header-List {
@@ -790,6 +791,114 @@ header a {
     transition: all 0.13s ease-in;
     cursor: pointer;
     color: var(--mini-button-hover);
+}
+
+#md02-header-bar {
+    width: 100%;
+    height: 10%;
+    background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
+    border-bottom: solid 1px var(--front-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#stack-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#md-PopUp-Content02 {
+    height: 75%;
+}
+
+#md-PopUp-Content02 {
+    height: 75%;
+}
+
+#md02-main-content-wrapper {
+    /*giga main div */
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+#cards-area {
+    /*main div*/
+    width: 50%;
+    height: 100%;
+}
+
+#info-and-confi-area {
+    /*main div*/
+    width: 50%;
+    height: 100%;
+}
+
+#cards-wrapper {
+    color: var(--front-color);
+}
+
+
+/* cards-wrapper nav ul */
+
+#header-bar-list {
+    margin: 1em 0 0 4.5em;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    width: 59em;
+    overflow: scroll;
+}
+
+.header-bar-list-item {
+    color: var(--front-color);
+    font-size: 17px;
+    margin: 0 0 0 1em;
+    background-color: var(--mini-button-bg-color);
+    padding: 0.4em;
+    transition: 0.1s all ease-in-out;
+}
+
+.header-bar-list-item:hover {
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+    color: var(--button-hover-color);
+}
+
+#info-and-confi-area {
+    color: var(--front-color);
+}
+
+#scrollToRight-btn {
+    color: var(--front-color);
+    position: absolute;
+    right: 2.5%;
+    top: 10%;
+    font-size: 18px;
+    transition: 0.1s all ease-in-out;
+}
+
+#scrollToRight-btn:hover {
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+    color: var(--button-hover-color);
+}
+
+#scrollToLeft-btn {
+    color: var(--front-color);
+    position: absolute;
+    left: 2.5%;
+    top: 10%;
+    font-size: 18px;
+    transition: 0.1s all ease-in-out;
+}
+
+#scrollToLeft-btn:hover {
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+    color: var(--button-hover-color);
 }
 
 
@@ -1739,6 +1848,7 @@ textarea {
     flex-direction: row;
     border: 1px solid var(--border-color);
     display: none;
+    overflow: hidden;
 }
 
 #ShowCardsWindow-SideCon {
@@ -1760,7 +1870,7 @@ textarea {
 .showCards-Content {
     width: 72.5%;
     height: 100%;
-    background-color: var(--bg-gardiant-01);
+    background-image: linear-gradient(to bottom right, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
     display: flex;
     flex-direction: row;
 }
