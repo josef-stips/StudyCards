@@ -2853,6 +2853,4 @@ function CreateCardsForHeaderBar(Stack) {
 //Sets Replacement Text for md02 pop up 
 function SetInitialText_DownloadCardsWindow() {
     md02_content_cardsList.textContent = null;
-
-    console.log("fsdggfgsd")
 };
