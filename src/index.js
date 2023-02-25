@@ -1,5 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -27,6 +29,8 @@ const createWindow = () => {
             preload: path.join(__dirname, 'preload.js'),
         },
     });
+
+    // mainWindow.setMenu(null);
 
     // and load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -76,4 +80,31 @@ if (isDev) {
     console.log('Running in development');
 } else {
     console.log('Running in production');
-}
+};
+
+//About file and file system
+
+//Save file with data in Roaming Folder
+ipcMain.on('gotData', (event, data) => {
+    //Handle Data from preload.js
+    let FileData = data.FileProper;
+    let SaveData = data.dataToSave;
+
+    //File Data
+    const filename = FileData.name;
+    const filetype = FileData.type;
+    const filePath = `${filename}.${filetype}`;
+
+    //File Path
+    const userPath = app.getPath('userData');
+    let FilePath = path.join(userPath, filePath);
+
+    // save file
+    fs.writeFile(FilePath, JSON.stringify(SaveData), (err) => {
+        //Check if error
+        if (err) {
+            console.error("there is an error josef" + err);
+            return;
+        };
+    });
+});

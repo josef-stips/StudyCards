@@ -209,6 +209,11 @@ let scrollToRight_btn = document.querySelector('#scrollToRight-btn');
 let scrollToLeft_btn = document.querySelector('#scrollToLeft-btn');
 let md02_headerbarlist = document.querySelector('#header-bar-list');
 let md02_content_cardsList = document.querySelector('#md02-content-cards-list');
+let md02_selectedCards_counter = document.querySelector('#md02-selectedCards-counter');
+let md02_deselect_cards_btn = document.querySelector('#md02-deselect-cards-btn');
+let md02_selectOppo_cards_btn = document.querySelector('#md02-selectOppo-cards-btn');
+
+let md02_selected_cards = 0;
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -602,8 +607,9 @@ function CreateListMiniCard_3(numb , location) {
     aEl.className = 'fa-solid fa-check fa-1x';
     aEl.href = '#';
     aEl.title = 'select';
-    aEl.setAttribute('md02-IsSelected' , 'false')
-
+    aEl.setAttribute('md02-IsSelected' , 'false');
+    aEl.addEventListener('click' , md02_SelectCard);
+    
     DivEl.appendChild(DivEl2);
     DivEl.appendChild(DivEl3);
     DivEl3.appendChild(h3_El2);
@@ -625,7 +631,7 @@ function CreateMiniCardListLoop_3() {
         let numb = 0;
         for (i of Karteikarten[`${stackLocation}`].vs) {
                 
-            CreateListMiniCard_3(numb);
+            CreateListMiniCard_3(numb , stackLocation);
         
             numb++;
         };
@@ -755,6 +761,14 @@ function Darkmode(from) {
 let DropDownIsOpen = false;
 
 // A few button events
+md02_selectOppo_cards_btn.addEventListener('click' , () => {
+    md02_select_oppo_cards();
+});
+
+md02_deselect_cards_btn.addEventListener('click' , () => {
+    md02_deselect_all_cards();
+});
+
 ScrollToLeft = false;
 ScrollToRight = false;
 
@@ -931,10 +945,18 @@ sn_saveStack_butt.addEventListener('click' , () => {
 
     //closes the header drop down menu when it's open
     CloseHeaderDropDown();
-    //Gets stack names for header-bar list 
-    GetStacks();
-    //Create Card List items
-    CreateMiniCardListLoop_3();
+
+    md02_selected_cards = 0;
+
+    if(TableCells[0] != null) {
+        CreateMiniCardListLoop_3();
+        GetStacks();
+
+        md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+
+    } else {
+        SetInitialText_DownloadCardsWindow();
+    };
 });
 
 sn_timeChart_butt.addEventListener('click' , () => {
@@ -2777,6 +2799,9 @@ function DeleteChartData() {
     GetRepsData();
 };
 
+//////////////////////MD02-POP-UP AND FILE DATA////////////////////////
+let Stackdata = {};
+
 //Scrollt im zweiten Fenster im header (list) bis nach rechts 
 function scrollToRightSlowly() {
     let scrollAmount = 0;
@@ -2834,8 +2859,11 @@ function GetStacks() {
 //Is MiniCardListLoop_3 but called out from a different location
 function CreateCardsForHeaderBar(Stack) {
     if (Karteikarten[Stack].vs.length > 0) {
+        md02_selected_cards = 0;
         
         md02_content_cardsList.textContent = null;
+
+        md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
     
         let numb = 0;
         for (i of Karteikarten[`${Stack}`].vs) {
@@ -2853,4 +2881,103 @@ function CreateCardsForHeaderBar(Stack) {
 //Sets Replacement Text for md02 pop up 
 function SetInitialText_DownloadCardsWindow() {
     md02_content_cardsList.textContent = null;
+};
+
+function md02_SelectCard() {
+    let li = this.parentElement.parentElement
+
+    //Handle if card is selected
+    if (this.getAttribute('md02-isselected') === 'false') {
+
+            this.setAttribute('md02-isselected' , 'true');
+            this.className = "fa-solid fa-x fa-1x";
+
+            md02_selected_cards++;
+
+            //style
+            li.style.backgroundColor = "rgba(0,0,0,0.8)";
+
+    } else if(this.getAttribute('md02-isselected') === 'true') {
+
+            this.setAttribute('md02-isselected' , 'false');
+            this.className = "fa-solid fa-check fa-1x";
+
+            if(md02_selected_cards > 0) md02_selected_cards--;
+
+            //style
+            li.style.backgroundColor = "";
+    };
+
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+};
+
+//Deselects all Cards in md02 window 
+function md02_deselect_all_cards() {
+    //Gets li Elements
+    let ulChilds = [...md02_content_cardsList.children];
+
+    //Gets children and set all back to default
+    for (const k of ulChilds) {
+        for (let i = 0; i < k.children.length; i++) {
+            const e = k.children[i].lastChild;
+            
+            if(e.getAttribute('md02-isselected') === 'true') {
+                //Sets back to defaut 
+                e.setAttribute('md02-isselected' , 'false');
+                e.className = "fa-solid fa-check fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "";
+            };
+        };
+    };
+
+    //Update html
+    md02_selected_cards = 0;
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+};
+
+//Selects all opposits cards of md02 window. true -> false ; false -> true
+function md02_select_oppo_cards() {
+    //Gets li Elements
+    let ulChilds = [...md02_content_cardsList.children];
+
+    //Gets children and set all back to default
+    for (const k of ulChilds) {
+        for (let i = 0; i < k.children.length; i++) {
+            const e = k.children[i].lastChild;
+
+            if(e.getAttribute('md02-isselected') === 'false') {
+                //Sets back to defaut 
+                e.setAttribute('md02-isselected' , 'true');
+                e.className = "fa-solid fa-x fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "rgba(0 ,0 ,0 ,0.7)";
+
+                md02_selected_cards++;
+
+            } else if(e.getAttribute('md02-isselected') === 'true') {
+                //Sets back to defaut 
+                e.setAttribute('md02-isselected' , 'false');
+                e.className = "fa-solid fa-check fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "";
+
+                if(md02_selected_cards > 0) md02_selected_cards--;
+            };
+        };
+    };
+
+    //Update html
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+};
+
+//All about file system and saving,creating,read,write files
+
+//On button klick the selected data will be saved
+document.querySelector('#save-button').addEventListener('click', SaveStackInSystem);
+
+// Save stack with cards
+function SaveStackInSystem() {
+    //append data
+    Stackdata = { 'vs': JSON.parse(localStorage.getItem(`${stackLocation}_stapel_VS`)), 'rs': JSON.parse(localStorage.getItem(`${stackLocation}_stapel_RS`)) };
+
+    //Sends data to preload.js function    
+    window.App.CreateFile(Stackdata);
 };
