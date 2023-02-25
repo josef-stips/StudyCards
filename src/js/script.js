@@ -2897,6 +2897,9 @@ function md02_SelectCard() {
             //style
             li.style.backgroundColor = "rgba(0,0,0,0.8)";
 
+            //Modifys Data that can be saved as a file later
+            modifyStackData(stackLocation , li.childNodes[0].childNodes[1].textContent , li.childNodes[0].childNodes[0].textContent , true);
+
     } else if(this.getAttribute('md02-isselected') === 'true') {
 
             this.setAttribute('md02-isselected' , 'false');
@@ -2906,6 +2909,9 @@ function md02_SelectCard() {
 
             //style
             li.style.backgroundColor = "";
+
+            //Modifys Data that can be saved as a file later
+            modifyStackData(stackLocation , li.childNodes[0].childNodes[1].textContent , li.childNodes[0].childNodes[0].textContent , false);
     };
 
     md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
@@ -2974,10 +2980,38 @@ function md02_select_oppo_cards() {
 document.querySelector('#save-button').addEventListener('click', SaveStackInSystem);
 
 // Save stack with cards
-function SaveStackInSystem() {
-    //append data
-    Stackdata = { 'vs': JSON.parse(localStorage.getItem(`${stackLocation}_stapel_VS`)), 'rs': JSON.parse(localStorage.getItem(`${stackLocation}_stapel_RS`)) };
+function modifyStackData(stack , data_VS , data_RS , addProp) {
+    switch (addProp) {
+        //If the user wants to add a card
+        case true:
 
-    //Sends data to preload.js function    
+            //Proof if a Card is already saved 
+            if(Stackdata[stack] != undefined && Stackdata[stack] != undefined) {
+                //Adds card
+                Stackdata[stack].vs.push(data_VS);
+                Stackdata[stack].rs.push(data_RS);
+
+            } else {
+                //Builds arrays and adds card
+                Stackdata[stack] = {'vs' : [data_VS]  , 'rs' : [data_RS]};
+            };
+            break;
+    
+        //If the user wants to deselect a card
+        case false:
+            //Proofs if Element that the user wants to delete exists and deletes it
+            let VS_index = Stackdata[stack]['vs'].indexOf(data_VS);
+            let RS_index = Stackdata[stack]['rs'].indexOf(data_RS);
+
+            if(VS_index !== -1 && RS_index !== -1) {
+                //delete
+                Stackdata[stack].vs.splice(VS_index , 1);
+                Stackdata[stack].rs.splice(RS_index , 1);
+            };
+            break;
+    };
+};
+
+function SaveStackInSystem() {   
     window.App.CreateFile(Stackdata);
 };
