@@ -36,7 +36,10 @@
     --Font_Is_Selected: rgba(255, 255, 255, 0.555);
     --focus-on-btn-tab01: #4568dc;
     --focus-on-btn-tab02: rgb(255, 255, 255);
-    --basic-bg-color: rgb(62, 62, 62);
+    --basic-bg-color: #4568dc;
+    --basic-bg-color02: #b06ab3;
+    --basic-bg-color-a0: #4568dc00;
+    --basic-bg-color02-a0: #b16ab300;
 }
 
 .dark-mode {
@@ -67,7 +70,7 @@
     --button-blur: rgba(255, 255, 255, 0.5);
     --button-hover-color-special: rgba(255, 255, 255, 0.5);
     --mini-button-hover: rgb(151, 191, 255);
-    --mini-button-bg-color: #f8f7ff1b;
+    --mini-button-bg-color: #4a4a4a1b;
 }
 
 html,
@@ -171,7 +174,7 @@ a:hover {
 #start-screen {
     position: absolute;
     z-index: 9999;
-    background-color: var(--basic-bg-color);
+    background-image: linear-gradient(to bottom right, var(--basic-bg-color), var(--basic-bg-color02));
     width: 100%;
     height: 100%;
     margin: auto auto auto auto;
@@ -180,7 +183,84 @@ a:hover {
     left: 0;
     right: 0;
     color: var(--front-color);
-    display: none;
+    transition: opacity 0.7s ease-out;
+}
+
+#start-screen.hide {
+    opacity: 0;
+}
+
+#startscreen-title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#startscreen-title {
+    color: rgba(255, 255, 255, 0);
+    font-size: 5.8em;
+    margin-top: 3.5em;
+    margin-right: 11em;
+    font-weight: 400;
+    margin-bottom: 0;
+    animation-play-state: paused;
+    animation-name: title-animation;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+#startscreen-sub-title {
+    color: rgba(255, 255, 255, 0);
+    font-size: 1.75em;
+    margin-left: 0.13em;
+    font-weight: 400;
+    margin-top: 0.3em;
+    animation-play-state: paused;
+    animation-name: subtitle-animation;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+#startscreen-title-seperator {
+    color: var(--front-color);
+    margin-top: 0.1em;
+    width: 100%;
+    animation-name: separator-animation;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+
+/*************************KEY FRAME ANIMATIONS*****************************/
+
+@keyframes separator-animation {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes title-animation {
+    from {
+        color: rgba(255, 255, 255, 0);
+    }
+    to {
+        color: rgba(255, 255, 255, 1);
+    }
+}
+
+@keyframes subtitle-animation {
+    from {
+        color: rgba(255, 255, 255, 0);
+    }
+    to {
+        color: rgba(255, 255, 255, 1);
+    }
 }
 
 
