@@ -2863,7 +2863,7 @@ function CreateCardsForHeaderBar(Stack) {
         
         md02_content_cardsList.textContent = null;
 
-        md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+        md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[Stack].vs.length}`;
     
         let numb = 0;
         for (i of Karteikarten[`${Stack}`].vs) {
@@ -2898,7 +2898,7 @@ function md02_SelectCard() {
             li.style.backgroundColor = "rgba(0,0,0,0.8)";
 
             //Modifys Data that can be saved as a file later
-            modifyStackData(stackLocation , li.childNodes[0].childNodes[1].textContent , li.childNodes[0].childNodes[0].textContent , true);
+            modifyStackData(stackLocation , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , true);
 
     } else if(this.getAttribute('md02-isselected') === 'true') {
 
@@ -2911,7 +2911,7 @@ function md02_SelectCard() {
             li.style.backgroundColor = "";
 
             //Modifys Data that can be saved as a file later
-            modifyStackData(stackLocation , li.childNodes[0].childNodes[1].textContent , li.childNodes[0].childNodes[0].textContent , false);
+            modifyStackData(stackLocation , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , false);
     };
 
     md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;

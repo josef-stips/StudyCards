@@ -21,8 +21,7 @@ let CreateFile = (dataToSave) => {
     };
 
     //Sends message to renderer process
-    ipcRenderer.send('gotData', { FileProper, dataToSave })
-        // ipcRenderer.send('gotData', dataToSave);
+    ipcRenderer.send('gotData', { FileProper, dataToSave });
 };
 
 //Communicate with renderer
