@@ -178,6 +178,7 @@ let pressed_ResetApp_butt = false;
 let pressed_SendMail_butt = false;
 let pressed_transferCards_butt = false;
 let pressed_copyCards_butt = false;
+let pressed_savedFile_butt = false;
 
 //Create todays date
 const today = new Date();
@@ -210,10 +211,18 @@ let scrollToLeft_btn = document.querySelector('#scrollToLeft-btn');
 let md02_headerbarlist = document.querySelector('#header-bar-list');
 let md02_content_cardsList = document.querySelector('#md02-content-cards-list');
 let md02_selectedCards_counter = document.querySelector('#md02-selectedCards-counter');
+let md02_selectedStacks_shower = document.querySelector('#md02-selectedStack-shower');
 let md02_deselect_cards_btn = document.querySelector('#md02-deselect-cards-btn');
 let md02_selectOppo_cards_btn = document.querySelector('#md02-selectOppo-cards-btn');
+let file_namefield = document.querySelector('#file-namefield');
+let file_lastSave_field = document.querySelector('#file-lastSave-field');
+let cards_wrapper_question_mark = document.querySelector('#cards-wrapper-question-mark');
+//md02 info pop up
+let md02_info_pop_up = document.querySelector('.md02-info-pop-up');
+let md02_infoPopup_close_btn = document.querySelector('#md02-info-popup-close-btn');
 
 let md02_selected_cards = 0;
+let md02_stack_loc;
 
 //KarteiKarten Object
 let Karteikarten = {
@@ -761,6 +770,14 @@ function Darkmode(from) {
 let DropDownIsOpen = false;
 
 // A few button events
+cards_wrapper_question_mark.addEventListener('click' , () => {
+    md02_info_pop_up.style.display = 'block';
+});
+
+md02_infoPopup_close_btn.addEventListener('click' , () => {
+    md02_info_pop_up.style.display = 'none';
+});
+
 md02_selectOppo_cards_btn.addEventListener('click' , () => {
     md02_select_oppo_cards();
 });
@@ -947,12 +964,29 @@ sn_saveStack_butt.addEventListener('click' , () => {
     CloseHeaderDropDown();
 
     md02_selected_cards = 0;
+    md02_stack_loc = stackLocation;
 
     if(TableCells[0] != null) {
         CreateMiniCardListLoop_3();
         GetStacks();
 
         md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+        md02_selectedStacks_shower.textContent = stackLocation + " | ";
+        file_namefield.value = stackLocation;
+
+        //Changes stackLocation from preload.js so both is the same
+        window.App.ChangeThisStackLoc(stackLocation);
+        //Calls Function from preload.js
+        //Checks if File with Stacklocation name is already saved
+        window.App.CheckFileExists();
+
+        //Checks if localStorage property exists and displays the property
+        if(localStorage.getItem(`${stackLocation}_lastSave`)) {
+            file_lastSave_field.value = localStorage.getItem(`${stackLocation}_lastSave`);
+
+        } else {
+            file_lastSave_field.value = '-';
+        };
 
     } else {
         SetInitialText_DownloadCardsWindow();
@@ -1030,7 +1064,8 @@ spu_YesButton.addEventListener('click' , () => {
         pressed_ResetApp_butt == false && 
         pressed_SendMail_butt == false &&
         pressed_transferCards_butt == false &&
-        pressed_copyCards_butt == false) {
+        pressed_copyCards_butt == false &&
+        pressed_savedFile_butt == false) {
 
         darkContainer.style.display = 'none';
 
@@ -1075,6 +1110,9 @@ spu_YesButton.addEventListener('click' , () => {
         pressed_copyCards_butt = false;
 
         CopyCards();
+
+    } else if(pressed_savedFile_butt == true) {
+        pressed_savedFile_butt = false;
     };
 })
 
@@ -1089,7 +1127,8 @@ spu_NoButton.addEventListener('click' , () => {
         pressed_ResetApp_butt == false && 
         pressed_SendMail_butt == false &&
         pressed_transferCards_butt == false &&
-        pressed_copyCards_butt == false) {
+        pressed_copyCards_butt == false &&
+        pressed_savedFile_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -1136,6 +1175,11 @@ spu_NoButton.addEventListener('click' , () => {
 
         SmallPopUp.style.display = 'none';
         pressed_copyCards_butt = false;
+
+    }  else if(pressed_savedFile_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_savedFile_butt = false;
     };
 })
 
@@ -2854,6 +2898,9 @@ function GetStacks() {
         li.appendChild(StackName);
         md02_headerbarlist.appendChild(li);  
     };
+
+    //Bug fix or something
+    Stackdata = {};
 };
 
 //Is MiniCardListLoop_3 but called out from a different location
@@ -2864,6 +2911,8 @@ function CreateCardsForHeaderBar(Stack) {
         md02_content_cardsList.textContent = null;
 
         md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[Stack].vs.length}`;
+
+        Stackdata = {};
     
         let numb = 0;
         for (i of Karteikarten[`${Stack}`].vs) {
@@ -2872,15 +2921,35 @@ function CreateCardsForHeaderBar(Stack) {
         
             numb++;
         };
+
+        md02_stack_loc = Stack;
     
     } else {
             SetInitialText_DownloadCardsWindow();
+            md02_selectedCards_counter.textContent = `selected cards: 0`;
     };
-}
+
+    //Changes stackLocation from preload.js so both is the same
+    window.App.ChangeThisStackLoc(Stack);
+    //Calls Function from preload.js
+    //Checks if File with Stacklocation name is already saved
+    window.App.CheckFileExists();
+
+    file_namefield.value = Stack;
+    md02_selectedStacks_shower.textContent = Stack + " | ";
+
+    //Checks if localStorage property exists and displays the property
+    if(localStorage.getItem(`${Stack}_lastSave`)) {
+        file_lastSave_field.value = localStorage.getItem(`${Stack}_lastSave`);
+
+    } else {
+        file_lastSave_field.value = '-';
+    };
+};
 
 //Sets Replacement Text for md02 pop up 
 function SetInitialText_DownloadCardsWindow() {
-    md02_content_cardsList.textContent = null;
+    md02_content_cardsList.textContent = "No cards to save";
 };
 
 function md02_SelectCard() {
@@ -2898,7 +2967,7 @@ function md02_SelectCard() {
             li.style.backgroundColor = "rgba(0,0,0,0.8)";
 
             //Modifys Data that can be saved as a file later
-            modifyStackData(stackLocation , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , true);
+            modifyStackData(md02_stack_loc , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , true);
 
     } else if(this.getAttribute('md02-isselected') === 'true') {
 
@@ -2911,10 +2980,12 @@ function md02_SelectCard() {
             li.style.backgroundColor = "";
 
             //Modifys Data that can be saved as a file later
-            modifyStackData(stackLocation , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , false);
+            modifyStackData(md02_stack_loc , li.childNodes[0].childNodes[0].textContent , li.childNodes[0].childNodes[1].textContent , false);
     };
 
-    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[md02_stack_loc].vs.length}`;
+    md02_selectedStacks_shower.textContent = md02_stack_loc + " | ";
+    file_namefield.value = md02_stack_loc;
 };
 
 //Deselects all Cards in md02 window 
@@ -2932,13 +3003,17 @@ function md02_deselect_all_cards() {
                 e.setAttribute('md02-isselected' , 'false');
                 e.className = "fa-solid fa-check fa-1x";
                 e.parentElement.parentElement.style.backgroundColor = "";
+
+                modifyStackData(md02_stack_loc , e.parentElement.childNodes[0].textContent , e.parentElement.childNodes[1].textContent , false)
             };
         };
     };
 
     //Update html
     md02_selected_cards = 0;
-    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[md02_stack_loc].vs.length}`;
+    md02_selectedStacks_shower.textContent = md02_stack_loc + " | ";
+    file_namefield.value = md02_stack_loc;
 };
 
 //Selects all opposits cards of md02 window. true -> false ; false -> true
@@ -2959,6 +3034,8 @@ function md02_select_oppo_cards() {
 
                 md02_selected_cards++;
 
+                modifyStackData(md02_stack_loc , e.parentElement.childNodes[0].textContent , e.parentElement.childNodes[1].textContent , true)
+
             } else if(e.getAttribute('md02-isselected') === 'true') {
                 //Sets back to defaut 
                 e.setAttribute('md02-isselected' , 'false');
@@ -2966,12 +3043,16 @@ function md02_select_oppo_cards() {
                 e.parentElement.parentElement.style.backgroundColor = "";
 
                 if(md02_selected_cards > 0) md02_selected_cards--;
+
+                modifyStackData(md02_stack_loc , e.parentElement.childNodes[0].textContent , e.parentElement.childNodes[1].textContent , false)
             };
         };
     };
 
     //Update html
-    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
+    md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[md02_stack_loc].vs.length}`;
+    md02_selectedStacks_shower.textContent = md02_stack_loc + " | ";
+    file_namefield.value = md02_stack_loc;
 };
 
 //All about file system and saving,creating,read,write files
@@ -2979,7 +3060,8 @@ function md02_select_oppo_cards() {
 //On button klick the selected data will be saved
 document.querySelector('#save-button').addEventListener('click', SaveStackInSystem);
 
-// Save stack with cards
+// Save stack with cards (Always replaces old data with new data)
+//Die Datei die später gespeichert wird , wird immer mit den neu ausgewählten Carden ersetzt 
 function modifyStackData(stack , data_VS , data_RS , addProp) {
     switch (addProp) {
         //If the user wants to add a card
@@ -2987,31 +3069,62 @@ function modifyStackData(stack , data_VS , data_RS , addProp) {
 
             //Proof if a Card is already saved 
             if(Stackdata[stack] != undefined && Stackdata[stack] != undefined) {
-                //Adds card
-                Stackdata[stack].vs.push(data_VS);
-                Stackdata[stack].rs.push(data_RS);
+
+                
+                if(!Stackdata[stack].vs[data_VS] && !Stackdata[stack].vs[data_RS]) {
+                    //Adds card
+                    Stackdata[stack].vs.push(data_VS);
+                    Stackdata[stack].rs.push(data_RS);
+                };
 
             } else {
                 //Builds arrays and adds card
                 Stackdata[stack] = {'vs' : [data_VS]  , 'rs' : [data_RS]};
             };
+
             break;
     
         //If the user wants to deselect a card
         case false:
-            //Proofs if Element that the user wants to delete exists and deletes it
-            let VS_index = Stackdata[stack]['vs'].indexOf(data_VS);
-            let RS_index = Stackdata[stack]['rs'].indexOf(data_RS);
+            if (Stackdata != {}) {
+                //Proofs if Element that the user wants to delete exists and deletes it
+                let VS_index = Stackdata[stack]['vs'].indexOf(data_VS);
+                let RS_index = Stackdata[stack]['rs'].indexOf(data_RS);
 
-            if(VS_index !== -1 && RS_index !== -1) {
-                //delete
-                Stackdata[stack].vs.splice(VS_index , 1);
-                Stackdata[stack].rs.splice(RS_index , 1);
+                if(VS_index !== -1 && RS_index !== -1) {
+                    //delete
+                    Stackdata[stack].vs.splice(VS_index , 1);
+                    Stackdata[stack].rs.splice(RS_index , 1);
+                };
             };
+
             break;
     };
+    md02_stack_loc = stack;
 };
 
-function SaveStackInSystem() {   
-    window.App.CreateFile(Stackdata);
+function SaveStackInSystem() {  
+    let PropAmount = Object.keys(Stackdata).length;
+
+    if (PropAmount == 0) {
+        pressed_savedFile_butt = true;
+        SetUpSmallPopUp('ok' , 'ah' , 'block' , 'block' , 'You first need to select cards you wanna save');
+
+    } else if(PropAmount > 0) {
+        //Saves date when data was saved
+        localStorage.setItem(`${md02_stack_loc}_lastSave` , todayDate);
+        //Updates html with it
+        file_lastSave_field.value = localStorage.getItem(`${md02_stack_loc}_lastSave`);
+
+        window.App.ChangeThisStackLoc(md02_stack_loc);
+        window.App.CreateFile(Stackdata);
+
+        //Deselects all selected cards from md02-pop-up
+        md02_deselect_all_cards();
+
+        pressed_savedFile_butt = true;
+        SetUpSmallPopUp('ok' , 'cool' , 'block' , 'block' , 'The selected Cards are save now! Go to the "files" tab to monitor your saved file.');
+
+        Stackdata = {};
+    };
 };

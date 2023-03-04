@@ -191,16 +191,16 @@
 
         <div id="md-PopUp-Content02">
             <div id="md02-header-bar">
+                <div id="side-nav-toggle-btn-wrapper">
+                    <i id="side-nav-toggle-btn" class="fa-solid fa-bars fa-2x"></i>
+                </div>
+
                 <div id="stack-wrapper">
                     <div>
                         <i id="scrollToLeft-btn" class="fas fa-arrow-left"></i>
                     </div>
                     <nav>
                         <ul id="header-bar-list">
-                            <!-- Example -->
-                            <!-- <li class="header-bar-list-item">
-                                Englisch
-                            </li> -->
                         </ul>
                     </nav>
                     <div>
@@ -214,6 +214,7 @@
 
                     <div id="md02-currStackInfo-div">
                         <div id="md02-infoDiv-innerWrapper">
+                            <h4 id="md02-selectedStack-shower">CurrStack | </h4>
                             <h4 id="md02-selectedCards-counter">selected cards: 0/0</h4>
                             <nav>
                                 <ul id="md02-info-div-header-list">
@@ -231,35 +232,61 @@
                         </div>
                     </div>
 
-                    <div id="cards-wrapper">
-                        <nav>
-                            <ul id="md02-content-cards-list">
+                    <div id="cards-main-wrapper">
+                        <div id="cards-wrapper">
+                            <nav>
+                                <ul id="md02-content-cards-list">
 
-                            </ul>
-                        </nav>
+                                </ul>
+                            </nav>
+                        </div>
+                        <i id="cards-wrapper-question-mark" class="fa-solid fa-question"></i>
                     </div>
                 </div>
                 <div id="info-and-confi-area">
                     <div id="user-setting">
-                        <form>
-                            <div>
-                                <label for="filename-input">Dateiname:</label>
-                                <input type="text" id="filename-input" name="filename">
+                        <!-- If File doesn't exists -->
+                        <div id="file-exist-warning-wrapper">
+                            <div id="fe-warning">
+                                <i id="fe-excalamation-mark" class="fa-solid fa-exclamation"></i>
+                                <p>Your cards are not saved as a file. Select the cards you want to select and click "save file" to save them.</p>
+                            </div>
+                        </div>
+                        <!-- If File exists -->
+                        <div id="file-exist-green-warning-wrapper">
+                            <div id="fe-green-warning">
+                                <i id="fe-green-check-mark" class="fa-solid fa-check"></i>
+                                <p id="green-warning-text">You saved a few cards as a file. Click "saved files" in the side navigation to review the saved file.</p>
+                            </div>
+                        </div>
+                        <!-- form -->
+                        <form id="file-form">
+                            <div id="fileProper-wrapper">
+                                <label for="file-namefield">name of file</label>
+                                <input type="text" id="file-namefield" name="name" value="" disabled>
+                                <label id="lastSave-label" for="file-lastSave-field">last save</label>
+                                <input type="text" id="file-lastSave-field" name="name" value="" disabled>
                             </div>
                             <div>
-                                <label for="filetype-input">Dateityp:</label>
-                                <select id="filetype-input" name="filetype">
-                                <option value="txt">TXT</option>
-                                <option value="json">JSON</option>
-                            </select>
-                            </div>
-                            <div>
-                                <button type="button" id="save-button">Datei speichern</button>
+                                <button type="button" id="save-button">save file</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="md02-info-pop-up">
+        <div id="md02-infoPop-up-head">
+            <h2>Info</h2>
+            <i id="md02-info-popup-close-btn" class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div id="md02-infoPop-up-main">
+            <ul>
+                <li>- fsdfsdfdsfsdfdffs</li>
+            </ul>
         </div>
     </div>
 
@@ -574,7 +601,7 @@
 
                 <div id="fift-content">
                     <div class="form">
-                        <form method="post">
+                        <form method="post" id="e-mail-form">
                             <input id="name" name="name" type="text" class="feedback-input" placeholder="What's your name?" autocomplete="off" />
                             <input style="display:none;" id="email" name="email" type="email" class="feedback-input" placeholder="YOUR Email" autocomplete="off" />
                             <input style="display:none;" id="subject" name="subject" type="text" class="feedback-input" placeholder="Subject" autocomplete="off" />

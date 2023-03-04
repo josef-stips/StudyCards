@@ -607,8 +607,8 @@ header a {
     margin-left: auto;
     margin-right: auto;
     position: absolute;
-    width: 60%;
-    height: 75vh;
+    width: 80%;
+    height: 85vh;
     background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
     box-shadow: 1px 1px 7px var(--border-color);
 }
@@ -656,7 +656,7 @@ header a {
 }
 
 .md-PopUp-Header {
-    height: 3em;
+    height: 4vh;
 }
 
 #md-PopUp-TransferCards {
@@ -895,7 +895,7 @@ header a {
 
 #md02-header-bar {
     width: 100%;
-    height: 10%;
+    height: 4.6em;
     background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
     border-bottom: solid 1px var(--front-color);
     display: flex;
@@ -903,7 +903,29 @@ header a {
     align-items: center;
 }
 
+#side-nav-toggle-btn {
+    transition: color 0.25s ease-out;
+    font-size: 27px;
+}
+
+#side-nav-toggle-btn:hover {
+    transition: color 0.25s ease-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#side-nav-toggle-btn-wrapper {
+    width: 5%;
+    height: 3.5em;
+    color: var(--front-color);
+    border-right: solid 1px var(--front-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #stack-wrapper {
+    width: 95%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -921,13 +943,13 @@ header a {
     /*giga main div */
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: 64vh;
 }
 
 #cards-area {
     /*main div*/
     width: 50%;
-    height: 100%;
+    height: 71.7vh;
     border-right: 1px solid var(--front-color);
 }
 
@@ -938,29 +960,209 @@ header a {
 }
 
 #user-setting {
-    margin: 0.5em 0 0 0.5em;
+    margin: 1em 0 0 0.6em;
+}
+
+#file-form {
+    margin: 0.65em 0 0 0;
+}
+
+#fileProper-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 0 1em 0;
+}
+
+#file-namefield {
+    background-color: var(--color-invisible);
+    color: rgb(197, 197, 197);
+    border: none;
+    border-bottom: solid 1px var(--basic-bg-color);
+    padding: 0.7em 0 0.1em 0;
+    font-size: 15px;
+}
+
+#lastSave-label {
+    margin: 0.5em 0 0 0;
+}
+
+#file-lastSave-field {
+    background-color: var(--color-invisible);
+    color: rgb(197, 197, 197);
+    border: none;
+    border-bottom: solid 1px var(--basic-bg-color);
+    padding: 0.7em 0 0.1em 0;
+    font-size: 15px;
+}
+
+#cards-main-wrapper {
+    display: flex;
+    flex-direction: row;
 }
 
 #cards-wrapper {
     color: var(--front-color);
-    height: 100%;
+    height: 65.5vh;
     width: 100%;
     overflow: scroll;
     margin: 1em 0 0 0;
 }
 
+#cards-wrapper-question-mark {
+    color: var(--front-color);
+    font-size: 17px;
+    margin: 0.6em;
+    transition: color 0.1s ease-out;
+    width: min-content;
+    height: min-content;
+}
+
+#cards-wrapper-question-mark:hover {
+    color: var(--button-hover-color);
+    transition: color 0.1s ease-out;
+    cursor: pointer;
+}
+
+#file-exist-warning-wrapper {
+    width: 95%;
+    display: none;
+}
+
+#fe-excalamation-mark {
+    margin: 0 0.6em 0 0;
+}
+
+#fe-warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: var(--front-color);
+    border: solid 1px rgb(193, 0, 0);
+    font-size: 15px;
+    background-color: rgba(127, 0, 0, 0.285);
+    border-radius: 10px;
+}
+
+#file-exist-green-warning-wrapper {
+    width: 95%;
+    display: none;
+}
+
+#fe-green-check-mark {
+    margin: 0 0.6em 0 0;
+}
+
+#fe-green-warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: var(--front-color);
+    border: solid 1px rgb(0, 193, 0);
+    font-size: 15px;
+    background-color: rgba(0, 127, 44, 0.285);
+    border-radius: 10px;
+}
+
+
+/* md02 Info pop-up */
+
+.md02-info-pop-up {
+    display: none;
+    position: absolute;
+    margin: auto auto auto auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    height: 55vh;
+    background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
+    z-index: 21201;
+    box-shadow: 2px 2px 8px var(--border-color);
+    color: var(--front-color);
+}
+
+.md02-info-pop-up h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.md02-info-pop-up ul {
+    margin: 0 0 0 0.3em;
+    padding: 0;
+    font-size: 17px;
+}
+
+#md02-infoPop-up-head {
+    width: 100%;
+    height: 3em;
+    margin: 0.2em 0.2em 0 0.4em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#md02-info-popup-close-btn {
+    font-size: 22px;
+    margin-right: 0.6em;
+    transition: color 0.1s ease-in;
+}
+
+#md02-info-popup-close-btn:hover {
+    cursor: pointer;
+    transition: color 0.1s ease-in;
+    color: var(--button-hover-color);
+}
+
+
+/* save button style */
+
+#save-button {
+    padding: 6px;
+    border: solid 2px var(--button-hover-color);
+    background-color: var(--color-invisible);
+    color: var(--front-color);
+    font-size: 17px;
+    border-radius: 7px;
+    user-select: none;
+    transition: all 0.1s ease-out;
+}
+
+#save-button:disabled {
+    opacity: .5;
+}
+
+#save-button:focus {
+    outline: 0;
+    cursor: pointer;
+}
+
+#save-button:hover {
+    background-color: var(--button-hover-color);
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+
+
+/* other */
+
 #header-bar-list {
-    margin: 1em 0 0 4.5em;
+    margin: 1em 0 0 3.7em;
     padding: 0;
     display: flex;
     flex-direction: row;
-    width: 59em;
-    overflow: scroll;
+    height: 4em;
+    width: 82em;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 .header-bar-list-item {
     color: var(--front-color);
-    font-size: 17px;
+    font-size: 14px;
     margin: 0 0 0 1em;
     background-color: var(--mini-button-bg-color);
     padding: 0.4em;
@@ -1025,6 +1227,10 @@ header a {
     cursor: pointer;
 }
 
+#md02-selectedStack-shower {
+    white-space: pre;
+}
+
 
 /* cards-wrapper nav ul */
 
@@ -1041,7 +1247,7 @@ header a {
     color: var(--front-color);
     position: absolute;
     right: 2.5%;
-    top: 10%;
+    top: 9.4%;
     font-size: 18px;
     transition: 0.1s all ease-in-out;
 }
@@ -1055,8 +1261,8 @@ header a {
 #scrollToLeft-btn {
     color: var(--front-color);
     position: absolute;
-    left: 2.5%;
-    top: 10%;
+    left: 7%;
+    top: 9.4%;
     font-size: 18px;
     transition: 0.1s all ease-in-out;
 }
@@ -1561,7 +1767,7 @@ header a {
 /***********************CONTACT-FORM***********************/
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-form {
+#e-mail-form {
     max-width: 50em;
     margin: 50px auto;
 }

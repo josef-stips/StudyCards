@@ -83,9 +83,56 @@ if (isDev) {
     console.log('Running in production');
 };
 
+//Create Folder
+const folderPath = `${app.getPath('appData')}/studycards/App Files`;
+
+//If folder is not already existing => create folder
+if (!fs.existsSync(folderPath)) {
+    // create folder
+    fs.mkdirSync(folderPath);
+    console.log('Ordner wurde erstellt!');
+
+} else {
+    console.log('Ordner existiert bereits!');
+};
+
 //About file and file system
 
+//standard path I use
+const userPath = `${app.getPath('appData')}/studycards/App Files`;
+
+
+//Check if a certain file is existing
+ipcMain.on('checkfile_exists', (event, data) => {
+    console.log(data)
+
+    let FileData = data.FileProper;
+
+    //File Data
+    const filename = FileData.name;
+    const filetype = FileData.type;
+    const filePath = `${filename}.${filetype}`;
+
+    const filepath = path.join(userPath, filePath);
+
+    if (fs.existsSync(filepath)) {
+        fs.readFile(filepath, 'utf8', (err, data) => {
+            if (err) throw err;
+
+            const file_data = JSON.parse(data);
+
+            console.log(file_data);
+
+            event.sender.send('FileExists', file_data);
+        });
+
+    } else {
+        event.sender.send("FileDoesnt'tExists", 'false');
+    };
+});
+
 //Save file with data in Roaming Folder
+//This code block OVERWRITES the data of the expected file
 ipcMain.on('gotData', (event, data) => {
     //Handle Data from preload.js
     let FileData = data.FileProper;
@@ -97,7 +144,7 @@ ipcMain.on('gotData', (event, data) => {
     const filePath = `${filename}.${filetype}`;
 
     //File Path
-    const userPath = app.getPath('userData');
+    const userPath = `${app.getPath('appData')}/studycards/App Files`;
     let FilePath = path.join(userPath, filePath);
 
     // save file
