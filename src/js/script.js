@@ -959,7 +959,7 @@ sn_transferCards_butt.addEventListener('click' , () => {
 });
 
 sn_saveStack_butt.addEventListener('click' , () => {
-    md_PopUp_DownloadCards.style.display = 'block';
+    md_PopUp_DownloadCards.style.display = 'flex';
     darkContainer.style.display = 'block';
 
     //closes the header drop down menu when it's open
