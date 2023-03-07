@@ -179,6 +179,8 @@ let pressed_SendMail_butt = false;
 let pressed_transferCards_butt = false;
 let pressed_copyCards_butt = false;
 let pressed_savedFile_butt = false;
+//For all buttons which open a new small window in a window and nothing special should happen 
+let pressed_small_pop_up = false;
 
 //Create todays date
 const today = new Date();
@@ -1065,7 +1067,8 @@ spu_YesButton.addEventListener('click' , () => {
         pressed_SendMail_butt == false &&
         pressed_transferCards_butt == false &&
         pressed_copyCards_butt == false &&
-        pressed_savedFile_butt == false) {
+        pressed_savedFile_butt == false &&
+        pressed_small_pop_up == false) {
 
         darkContainer.style.display = 'none';
 
@@ -1113,6 +1116,9 @@ spu_YesButton.addEventListener('click' , () => {
 
     } else if(pressed_savedFile_butt == true) {
         pressed_savedFile_butt = false;
+
+    }  else if(pressed_small_pop_up == true) {
+        pressed_small_pop_up = false;
     };
 })
 
@@ -1128,7 +1134,8 @@ spu_NoButton.addEventListener('click' , () => {
         pressed_SendMail_butt == false &&
         pressed_transferCards_butt == false &&
         pressed_copyCards_butt == false &&
-        pressed_savedFile_butt == false) {
+        pressed_savedFile_butt == false &&
+        pressed_small_pop_up == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -1180,6 +1187,11 @@ spu_NoButton.addEventListener('click' , () => {
 
         SmallPopUp.style.display = 'none';
         pressed_savedFile_butt = false;
+
+    }  else if(pressed_small_pop_up == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_small_pop_up = false;
     };
 })
 
@@ -1583,7 +1595,15 @@ function AbortUserStackName() {
 };
 
 function AcceptUserStackName() {
-    if (CTE_ContenteditableField.textContent != '') {
+    let result = CheckIfNameAlreadyExists(CTE_ContenteditableField.textContent);
+    //If result == true a stack with this name already exists
+
+    if(result && CTE_ContenteditableField.textContent != '') {
+        pressed_small_pop_up = true;
+        SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A stack with this name already exists');
+    };
+
+    if (CTE_ContenteditableField.textContent != '' && result == false) {
         let Content = CTE_ContenteditableField.textContent
     
         CreateTableElement(Content);
@@ -1597,6 +1617,25 @@ function AcceptUserStackName() {
         GetTimeData();
         GetRepsData();
     };
+};
+
+function CheckIfNameAlreadyExists(NewName) {
+    //Get all Stack names
+    let names = []// example: names[0].textContent; Output: "first stack name"
+    GetUpdatedStackTable(names);
+
+    for (const i of names) {
+        let e = i.textContent
+        console.log(e)  
+        console.log(NewName)
+
+        if (NewName === e) {
+            return true;
+        };
+    };
+
+    //If no same name exists the function returns false
+    return false;
 };
 
 //That functons are called while the game
