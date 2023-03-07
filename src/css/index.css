@@ -425,10 +425,11 @@ header a {
 }
 
 #sdm-table tr td {
-    text-align: center;
+    text-align: start;
     transition: all 0.2s ease-in;
-    font-size: 17px;
+    font-size: 15px;
     padding-top: 10px;
+    margin-left: 1em;
 }
 
 #sdm-table tr td:hover {

@@ -1384,7 +1384,7 @@ SideMenuAddButton.addEventListener('click', () => {
 })
 
 SideMenuOpenButton.addEventListener('click', () => {
-    SideMenu.style.width = '35vh';
+    SideMenu.style.width = '44vh';
 
     CloseHeaderDropDown();
 });
