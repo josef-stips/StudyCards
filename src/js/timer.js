@@ -88,7 +88,10 @@ function update_Timer() {
 function stop_Timer() {
     if (timerIsOn) {
         clearInterval(timer);
-        save_UserTime(playTimer.textContent);
+
+        if (Runde == Karteikarten[`${stackLocation}`].vs.length - 1) {
+            save_UserTime(playTimer.textContent);
+        };
 
         timerIsOn = false;
     };
@@ -113,7 +116,7 @@ function save_UserTime(time) {
 
             times[stackLocation].user_timesNew.push(timeInSec);
 
-            console.log(timeInSec)
+            console.log(timeInSec, time)
 
         } else {
             times[stackLocation].user_timesNew.push(time);
@@ -132,7 +135,7 @@ function save_UserTime(time) {
 
             times[stackLocation].user_timesNew.push(timeInSec);
 
-            console.log(timeInSec)
+            console.log(timeInSec, time)
 
         } else {
             times[stackLocation].user_timesNew.push(time);
@@ -155,6 +158,8 @@ function save_UserReps(reps) {
 
         ToRepeat[stackLocation].user_repsNew.push(reps);
 
+        console.log(reps)
+
     } else {
 
         if (ToRepeat[stackLocation] == null) {
@@ -162,6 +167,8 @@ function save_UserReps(reps) {
         };
 
         ToRepeat[stackLocation].user_repsNew.push(reps);
+
+        console.log(reps)
 
         currentLocation02 = stackLocation;
     };
@@ -180,6 +187,8 @@ function save_UserDate() {
 
         FromUserDate[stackLocation].user_dateNew.push(todayDate);
 
+        console.log(todayDate)
+
     } else {
 
         if (FromUserDate[stackLocation] == null) {
@@ -187,6 +196,8 @@ function save_UserDate() {
         };
 
         FromUserDate[stackLocation].user_dateNew.push(todayDate);
+
+        console.log(todayDate)
 
         currentLocation03 = stackLocation;
     };
