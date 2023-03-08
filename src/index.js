@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
-
+const stringSimilarity = require('string-similarity');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -76,6 +76,7 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 const isDev = require('electron-is-dev');
+const { serialize } = require('v8');
 
 if (isDev) {
     console.log('Running in development');
@@ -156,3 +157,27 @@ ipcMain.on('gotData', (event, data) => {
         };
     });
 });
+
+
+//String similarity
+ipcMain.on('proveStringSimilarity', (event, data) => {
+    let string1 = data.string1;
+    let string2 = data.string2;
+
+    let similarity = StringSimilarity(string1, string2);
+
+    if (similarity) {
+
+    } else {
+
+    };
+});
+
+function StringSimilarity(String1, String2) {
+    let result = stringSimilarity.compareTwoStrings(String1, String2);
+
+    if (result >= 0.8) {
+        return true
+    };
+    return false;
+};

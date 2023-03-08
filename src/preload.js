@@ -60,9 +60,12 @@ ipcRenderer.on("FileExists", (event, args) => {
 
     Current_File_DExists.style.display = 'none';
     Current_File_Exists.style.display = 'block';
-
-    console.log(args)
 });
+
+//string similarity 
+function SendStringToMain(string1, string2) {
+    ipcRenderer.send('proveStringSimilarity', { string1, string2 });
+};
 
 //Communicate with renderer
 contextBridge.exposeInMainWorld('App', {
@@ -70,4 +73,6 @@ contextBridge.exposeInMainWorld('App', {
     CreateFile: CreateFile,
     ChangeThisStackLoc: ChangeThisStackLoc,
     CheckFileExists: CheckFileExists,
+    SendStringToMain,
+    SendStringToMain,
 });
