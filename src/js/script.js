@@ -64,6 +64,23 @@ let pgNavClickEl_1 = document.getElementById('pg-navClickEl-1');
 let pgNavClickEl_2 = document.getElementById('pg-navClickEl-2');
 let pgNavClickEl_3 = document.getElementById('pg-navClickEl-3');
 
+//pg INI elements 
+let pg_INI_close_btn = document.querySelector('#pg-INI-close-btn');
+let pg_ModeOverview = document.querySelector('.pg-ModeOverview');
+
+let pg_classicMode_btn = document.querySelector('#pg-classicMode-btn');
+let pg_writeMode_btn = document.querySelector('#pg-writeMode-btn');
+let pg_choiceMode_btn = document.querySelector('#pg-multipleChoiceMode-btn');
+let pg_connectMode_btn = document.querySelector('#pg-connectMode-btn');
+
+let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
+let pg_Start_btn = document.querySelector('#pg-Start-btn');
+let pg_MainContent = document.querySelector('.pg-MainContent');
+let pg_header_ini_Wrapper = document.querySelector('#pg-header-ini-Wrapper');
+let pg_navHeader = document.querySelector('#pg-nav-header');
+let pg_countdown = document.querySelector('#pg-countdown');
+let pg_countdown_wrapper = document.querySelector('#pg-countdown-wrapper');
+
 let pgObenSichtbarDiv = document.getElementsByClassName('pg-oben-SichtbarDiv')[0];
 let pgUntenSichtbarDiv = document.getElementsByClassName('pg-unten-SichtbarDiv')[0];
 
@@ -240,6 +257,29 @@ let Karteikarten = {
     //     'vs': []
 
     // },
+};
+
+//PlayGround Mode 
+let UserPlayModes = {
+    'Classic Mode': true,
+    'Write Mode': false,
+    'Multiple Choice Mode': false,
+    'Connect Mode': false,
+};
+
+let CurrMode; //String, one of the "UserPlayModes" Object
+
+//Selected Mode is true and all other modes are false
+const ChangePlayMode = (Selected_Mode) => {
+    CurrMode = Selected_Mode;
+
+    for (const k in UserPlayModes) {
+        UserPlayModes[k] = false;
+    };
+
+    UserPlayModes[Selected_Mode] = true;
+
+    pg_ShowMode_title.textContent = `Selected mode: ${Selected_Mode}`;
 };
 
 //Contenteditable field from 'CreateTableElWindow'
@@ -686,8 +726,9 @@ function ToggleDarkMode() {
 };
 
 function LightMode() {
-    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
-    EmailUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))"
+    ColorChangeUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))";
+    EmailUI_Area.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))";
+    pg_ModeOverview.style.backgroundImage = "linear-gradient(to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02))";
 
     document.body.classList.remove('dark-mode');
 
@@ -711,6 +752,7 @@ function LightMode() {
 function Darkmode(from) {
     ColorChangeUI_Area.style.backgroundImage = "none";
     EmailUI_Area.style.backgroundImage = "none";
+    pg_ModeOverview.style.backgroundImage = "none";
 
     let firstBasicBG = rs.getPropertyValue(`--bg-gardiant-01`);
     let secondBasicBG = rs.getPropertyValue(`--bg-gardiant-02`);
@@ -768,6 +810,20 @@ function reloadGame() {
     GameEnd = false;
 
     pgKarteikarte.style.cursor = 'pointer';
+
+    pgObenSichtbarDiv.style.display = 'block';
+    pgUntenSichtbarDiv.style.display = 'block';
+
+    pg_ModeOverview.style.display = 'flex';
+    pg_MainContent.style.display = 'none';
+    pg_header_ini_Wrapper.style.display = 'flex';
+    pg_navHeader.style.display = 'none';
+
+    GameEnd = false;
+    PlayMode = false;
+
+    clearInterval(count_timer);
+    StartGameCountDown();
 };
 
 //User can edit the card after it was edit to the stack
@@ -853,35 +909,80 @@ function ToggleContentEditableOfElements(boolean) {
     };
 }
 
+var count_timer;
+
 function ClosePlayGround() {
     PlayModeIsNotActive();
     ExitGame();
     pgKarteikarte.style.cursor = 'pointer';
+
+    clearInterval(count_timer);
 };
 
 function OpenPlayGround() {
     if(TableCells.length >= 1) {
         if (Karteikarten[`${stackLocation}`].vs.length != 0) {
-            //Defines value for two arrays with copied values from the users first stack as default
-            DefineValueForStackArray();
 
             PlayGround.style.display = 'flex';
-            darkContainer.style.display = 'block';  
-
-            pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[0];
-            pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[0];
-
-            CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
-
-            //If User clicked "view below" button or "view_above" button.
-            CardView();
-
-            PlayMode = true;
+            darkContainer.style.display = 'block';
+            pg_countdown_wrapper.style.display = 'none'; 
 
         } else {
             SetUpSmallPopUp('Okay' , 'No' , 'block' , 'block' , `Add an index card first ${String.fromCodePoint(0x1F496)}`);
-        }
+        };
     };
+};
+
+function StartGameCountDown() {
+    pg_countdown.textContent = 'The Game begins in..';
+
+    pg_countdown_wrapper.style.display = 'flex';
+    pg_ModeOverview.style.display = 'none';
+
+    var counter = 3;
+
+    count_timer = setInterval(() => {
+        if (counter > 0) {
+            pg_countdown.textContent = counter;
+
+            counter--;
+        } else {
+            clearInterval(count_timer);
+            OpenGame();
+        };
+    }, 1000);
+};
+
+function OpenGame() {
+    pg_countdown_wrapper.style.display = 'none';
+    pg_MainContent.style.display = 'block';
+    pg_header_ini_Wrapper.style.display = 'none';
+    pg_navHeader.style.display = 'block';
+
+    pgUntenSichtbarDiv.style.display = 'none';
+    pgObenSichtbarDiv.style.display = 'none';
+    pgKannIchButton.style.display = 'none';
+    pgWiederhohlenButton.style.display = 'none';
+    pg_countdown_wrapper.style.display = 'none';
+
+    PlayModeIsActive();
+    start_Timer(); //Timer function of 'timer.js' file
+
+    //Defines value for two arrays with copied values from the users first stack as default
+    DefineValueForStackArray();
+
+    pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[0];
+    pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[0];
+
+    CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
+
+    pgKannIchButton.style.display = 'none';
+    pgWiederhohlenButton.style.display = 'none';
+
+    //If User clicked "view below" button or "view_above" button.
+    CardView();
+
+    PlayMode = true;
 };
 
 function CardView() {
@@ -954,13 +1055,12 @@ function PlayModeIsActive() {
     pgKarteiKarteRS.style.color = 'var(--front-color)';
     pgKarteiKarteVS.style.color = 'var(--front-color)';
     pgShowCardsButton.style.display = 'none';
-    pgSubDoubleButton.style.marginTop = '4.4%'
-
-    pgUntenSichtbarDiv.style.display = 'none';
-    pgObenSichtbarDiv.style.display = 'none';
 
     pgKannIchButton.style.display = 'block';
     pgWiederhohlenButton.style.display = 'block';
+
+    pgObenSichtbarDiv.style.display = 'none';
+    pgUntenSichtbarDiv.style.display = 'none';
 };
 
 //Wird aufgerufen wenn User das Spiel durch das klicken von einem "Exit-Button" verlässt.
@@ -985,10 +1085,6 @@ function PlayModeIsNotActive() {
     CardView();
 
     pgShowCardsButton.style.display = 'flex';
-    pgSubDoubleButton.style.marginTop = '1.5%'
-
-    pgUntenSichtbarDiv.style.display = 'block';
-    pgObenSichtbarDiv.style.display = 'block';
 
     pgKannIchButton.style.display = 'none';
     pgWiederhohlenButton.style.display = 'none';
@@ -1007,6 +1103,11 @@ function ExitGame() {
     
         PlayGround.style.display = 'none';
         darkContainer.style.display = 'none';
+
+        pg_ModeOverview.style.display = 'flex';
+        pg_MainContent.style.display = 'none';
+        pg_header_ini_Wrapper.style.display = 'flex';
+        pg_navHeader.style.display = 'none';
 
         GameEnd = false;
         PlayMode = false;
@@ -1052,6 +1153,9 @@ function ShowNextCard() {
 
         //HTML Counter shows the reps 
         CardsOfMaxCardstext.textContent = `${Runde}/${Karteikarten[`${stackLocation}`].vs.length}`;
+
+        pgObenSichtbarDiv.style.display = 'none';
+        pgUntenSichtbarDiv.style.display = 'none';
     };
 };
 

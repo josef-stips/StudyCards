@@ -647,9 +647,13 @@
     </div>
 
     <div id="play-ground">
-        <!--First Main Container-->
+        <!--First Mode Container-->
         <div id="pg-NavHeader">
-            <nav>
+            <div id="pg-header-ini-Wrapper">
+                <h2 id="pg-header-iniText">Playground</h2>
+                <li class="fa-solid fa-x fa-2x" id="pg-INI-close-btn"> </li>
+            </div>
+            <nav id="pg-nav-header">
                 <ul id="pg-NavItems">
                     <li class="fa-solid fa-x fa-2x" id="pg-navClickEl-1"> </li>
                     <li id="pg-navClickEl-3" class="fa-solid fa-rotate-right fa-2x"></li>
@@ -661,48 +665,70 @@
             </nav>
             <hr id="pg-vl" class="vertical-line">
         </div>
-        <!--Second Main Container-->
-        <div id="pg-karteikarten-div">
-            <div class="pg-Karteikarte">
-                <div id="pg-sv">
-                    <h3 class="UserShortInput">front</h3>
-                </div>
-                <div id="pg-sr">
-                    <h3 class="UserShortInput">back</h3>
-                </div>
-            </div>
-            <hr id="pg-vl2" class="vertical-line">
+
+        <!-- Mode overview -->
+        <div class="pg-ModeOverview">
+            <h2>Select Mode</h2>
+            <ul>
+                <li id="pg-classicMode-btn">- Classic Mode - Nothing to write just think and see if it's correct</li>
+                <li id="pg-writeMode-btn">- Write Mode - Type your Answer in a Text field</li>
+                <li id="pg-multipleChoiceMode-btn">- Multiple Choice - Select the right answer</li>
+                <li id="pg-connectMode-btn">- Connect Mode - Connect the cards that belong together (Works only with a max. of 30 cards)</li>
+            </ul>
+
+            <h3 id="pg-ShowMode-title">Selected mode: Classic Mode (default)</h3>
+
+            <button id="pg-Start-btn" style="--clr:#FF44CC"><span>Start <i class="fas fa-arrow-right"></i></span><i></i></button>
         </div>
-        <!--Third Main Container-->
-        <div id="pg-Subheader">
-            <div class="pg-sub-firsDiv">
-                <button id="ShowAllCards-Button" class="bn30">Show all cards</button>
-            </div>
-            <div class="pg-sub-secondDiv">
-                <!--Vor dem Spiel-->
-                <div class="pg-oben-SichtbarDiv">
-                    <p style="margin-top:1.4% ;">view above</p>
-                </div>
-                <div class="pg-unten-SichtbarDiv">
-                    <p style="margin-top:1.4% ;">view below</p>
-                </div>
 
-                <!--whärend dem Spiel-->
-                <div class="pg-wiederhohlen-div">
-                    <p style="margin-top:1.4% ;">repeat</p>
+        <div class="pg-MainContent">
+            <!--Second Main Container-->
+            <div id="pg-karteikarten-div">
+                <div class="pg-Karteikarte">
+                    <div id="pg-sv">
+                        <h3 class="UserShortInput">front</h3>
+                    </div>
+                    <div id="pg-sr">
+                        <h3 class="UserShortInput">back</h3>
+                    </div>
                 </div>
-                <div class="pg-kannIch-div">
-                    <p style="margin-top:1.4% ;">easy</p>
+                <hr id="pg-vl2" class="vertical-line">
+            </div>
+            <!--Third Main Container-->
+            <div id="pg-Subheader">
+                <div class="pg-sub-firsDiv">
+                    <button id="ShowAllCards-Button" class="bn30">Show all cards</button>
                 </div>
+                <div class="pg-sub-secondDiv">
+                    <!--Vor dem Spiel-->
+                    <div class="pg-oben-SichtbarDiv">
+                        <p style="margin-top:1.4% ;">view above</p>
+                    </div>
+                    <div class="pg-unten-SichtbarDiv">
+                        <p style="margin-top:1.4% ;">view below</p>
+                    </div>
 
-                <!--Nach dem Spiel-->
-                <div class="pg-nochmal-div">
-                    <p style="margin-top:1.4% ;">repeat</p>
-                </div>
-                <div class="pg-spaeter-div">
-                    <p style="margin-top:1.4% ;">later</p>
+                    <!--whärend dem Spiel-->
+                    <div class="pg-wiederhohlen-div">
+                        <p style="margin-top:1.4% ;">repeat</p>
+                    </div>
+                    <div class="pg-kannIch-div">
+                        <p style="margin-top:1.4% ;">easy</p>
+                    </div>
+
+                    <!--Nach dem Spiel-->
+                    <div class="pg-nochmal-div">
+                        <p style="margin-top:1.4% ;">repeat</p>
+                    </div>
+                    <div class="pg-spaeter-div">
+                        <p style="margin-top:1.4% ;">later</p>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div id="pg-countdown-wrapper">
+            <h1 id="pg-countdown">The Game begins in..</h1>
         </div>
     </div>
 

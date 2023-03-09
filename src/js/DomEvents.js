@@ -537,9 +537,7 @@ pgKannIchButton.addEventListener('click', () => {
 pgKarteikarte.addEventListener('click', () => {
     if (GameEnd == false) {
         PlayModeIsActive();
-
-        start_Timer(); //Timer function of 'timer.js' file
-    }
+    };
 })
 
 stappel.addEventListener('click', () => {
@@ -682,4 +680,29 @@ stappel_RueckSeite.addEventListener('keyup', (el) => {
     if (el.which === 38) {
         NeuerStapel_VS.focus();
     }
+});
+
+pg_INI_close_btn.addEventListener('click', () => {
+    ClosePlayGround();
+});
+
+//Playground mode overview
+pg_classicMode_btn.addEventListener('click', () => {
+    ChangePlayMode(Object.keys(UserPlayModes)[0]); //Classic Mode
+});
+
+pg_writeMode_btn.addEventListener('click', () => {
+    ChangePlayMode(Object.keys(UserPlayModes)[1]); //Write Mode
+});
+
+pg_choiceMode_btn.addEventListener('click', () => {
+    ChangePlayMode(Object.keys(UserPlayModes)[2]); //Multiple Choice Mode
+});
+
+pg_connectMode_btn.addEventListener('click', () => {
+    ChangePlayMode(Object.keys(UserPlayModes)[3]); //Connect Mode
+});
+
+pg_Start_btn.addEventListener('click', () => {
+    StartGameCountDown();
 });
