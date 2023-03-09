@@ -337,7 +337,7 @@ header a {
 }
 
 #header-dropdown-con {
-    display: block;
+    display: none;
     position: absolute;
     background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
     box-shadow: 1px 1px 7px var(--border-color);
@@ -345,6 +345,9 @@ header a {
     z-index: 8000;
     top: 2em;
     margin-left: 35em;
+    height: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #header-dropdown-con a {
@@ -1043,6 +1046,7 @@ header a {
 }
 
 #file-exist-green-warning-wrapper {
+    margin-left: 0.3em;
     width: 95%;
     display: none;
 }
