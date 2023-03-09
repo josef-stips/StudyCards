@@ -617,7 +617,7 @@ header a {
 .md-PopUp-Header {
     height: 5%;
     border-bottom: 1px solid var(--front-color);
-    padding: 0.65% 0.75% 0 0.75%;
+    padding: 0.45% 0.55% 0 0.55%;
 }
 
 
@@ -667,7 +667,7 @@ header a {
     flex-direction: row;
     justify-content: space-between;
     padding: 0;
-    margin: 0.6em 0.6em 0 0.6em;
+    margin: 0 0.1em 0 0.1em;
 }
 
 #first-md-PopUp-Header-title {
@@ -700,10 +700,13 @@ header a {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin: -0.4em 0.03em 0 0.03em;
+    padding-bottom: 0.8em;
+    border-bottom: solid 1px var(--front-color);
 }
 
 #md-PopUp-Content01 {
-    height: 6.5%;
+    height: calc(93.7% - 2px);
     width: 100%;
     margin: 0.85em 0 0 0;
 }
@@ -732,6 +735,7 @@ header a {
 /* Parent div of the two divs below */
 
 #main-content01 {
+    height: inherit;
     display: flex;
     flex-direction: row;
 }
@@ -740,10 +744,8 @@ header a {
 /* Current Stack DIV */
 
 #currentStack-window {
-    height: 60vh;
     width: 100%;
-    max-width: 570px;
-    margin: 0 0 0 10px;
+    height: calc(100% + 1px);
     border-right: 1px solid white;
 }
 
@@ -752,8 +754,9 @@ header a {
 }
 
 #currStackInfo-div {
-    width: 90%;
-    height: 5%;
+    width: 100%;
+    height: 4%;
+    margin-top: 1.2%;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -762,7 +765,7 @@ header a {
 }
 
 #currStackInfo-div h4 {
-    margin: 0;
+    margin: 0 0 0 1em;
 }
 
 #info-div-header-list {
@@ -784,8 +787,8 @@ header a {
 }
 
 #currCards-nav-wrapper {
-    margin: 1.65% 0 0 0;
-    height: 90%;
+    margin: 1.65% 0 0 1em;
+    height: 93%;
     width: 100%;
     overflow: scroll;
 }
@@ -794,14 +797,9 @@ header a {
 /* All Stacks DIV */
 
 #allStacks-windows {
-    height: 60vh;
     width: 100%;
-    max-width: 570px;
+    height: calc(100% + 1px);
     border-left: 1px solid var(--front-color);
-}
-
-#allStacks-win-inner-wrapper {
-    margin: 0 0 0 10px;
 }
 
 #allStacks-winTitle {
@@ -811,11 +809,13 @@ header a {
 #allStacks-win-inner-wrapper {
     height: 100%;
     width: 100%;
+    margin: 0 0 0 0;
 }
 
 #AllStacksInfo-div {
-    width: 90%;
-    height: 5%;
+    width: 100%;
+    height: 4%;
+    margin-top: 1.2%;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -824,12 +824,12 @@ header a {
 }
 
 #AllStacksInfo-div h4 {
-    margin: 0;
+    margin: 0 0 0 0.6em;
 }
 
 #allStacks-table-wrapper {
-    margin: 1.95% 0 0 0;
-    height: 85%;
+    margin: 1.95% 0 0 0.7em;
+    height: 90.5%;
     width: 90%;
     overflow-y: auto;
 }
@@ -1295,7 +1295,7 @@ header a {
     flex-direction: row;
     justify-content: space-between;
     padding: 0;
-    margin: 0.6em;
+    margin: -0.09em 0.03em 0 0.03em;
 }
 
 #first-TimesProgress-Header-item {
@@ -1322,7 +1322,7 @@ header a {
 }
 
 #md03-content-header {
-    width: 90%;
+    width: 100%;
     height: 3.15em;
     display: flex;
     border-bottom: solid 1px var(--front-color);
@@ -1530,15 +1530,15 @@ header a {
 /* first Chart */
 
 #Chart-wrapper {
-    width: 100vh;
-    height: 45vh;
+    width: 140vh;
+    height: 57vh;
     margin-left: 2em;
 }
 
 #md03-first-chart-content {
     /* display: none; */
     width: 70%;
-    margin: 1em 0 0 0;
+    margin: 0 0 0 0;
 }
 
 #first-chart-header {
@@ -1552,15 +1552,15 @@ header a {
 /* Second Chart */
 
 #Chart-wrapper2 {
-    width: 100vh;
-    height: 45vh;
+    width: 140vh;
+    height: 57vh;
     margin-left: 2em;
 }
 
 #md03-second-chart-content {
     display: none;
     width: 70%;
-    margin: 1em 0 0 0;
+    margin: 0 0 0 0;
 }
 
 #second-chart-header {

@@ -72,6 +72,9 @@ let pg_classicMode_btn = document.querySelector('#pg-classicMode-btn');
 let pg_writeMode_btn = document.querySelector('#pg-writeMode-btn');
 let pg_choiceMode_btn = document.querySelector('#pg-multipleChoiceMode-btn');
 let pg_connectMode_btn = document.querySelector('#pg-connectMode-btn');
+let pg_showCardAbove_btn = document.querySelector('.pg-showCardAbove-btn');
+let pg_showCardBelow_btn = document.querySelector('.pg-showCardBelow-btn');
+let pg_ShowCardView_title = document.querySelector('#pg-ShowCardView-title');
 
 let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
 let pg_Start_btn = document.querySelector('#pg-Start-btn');
@@ -848,15 +851,12 @@ function SaveEditChanges() {
     };
 
     // every_nth(AllCardsName,2);
-
     Karteikarten[`${stackLocation}`].vr = every_nth(AllCardsName,2);
     Karteikarten[`${stackLocation}`].vs = getEveryNth(AllCardsName,2);
 
     localStorage.setItem(`${stackLocation}_stapel_RS` ,JSON.stringify(Karteikarten[`${stackLocation}`].vr));
     localStorage.setItem(`${stackLocation}_stapel_VS` ,JSON.stringify(Karteikarten[`${stackLocation}`].vs));
-
 };
-
 
 function EditCardName() {
     ShowCards_SideContent.innerHTML = `<h2 id="SideCont_Text" >Now you can change the name of your cards! <br> <br> Press <li class="fa-solid fa-check fa-2"></li> in the navigation bar above this text when you're done editing.</h2>`;
@@ -894,7 +894,6 @@ function EndEditMode() {
         r.style.setProperty('--button-hover-color-special' , 'rgba(0,0,0,0.6)');
 
     };
-    
     Check_ForEdit_Button.style.cursor = 'default';
 };
 

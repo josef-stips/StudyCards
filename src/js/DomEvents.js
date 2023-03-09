@@ -706,3 +706,13 @@ pg_connectMode_btn.addEventListener('click', () => {
 pg_Start_btn.addEventListener('click', () => {
     StartGameCountDown();
 });
+
+pg_showCardAbove_btn.addEventListener('click', () => {
+    pg_ShowCardView_title.textContent = 'Selected view: Above';
+    UntenSichtbar_Boolean = false;
+});
+
+pg_showCardBelow_btn.addEventListener('click', () => {
+    pg_ShowCardView_title.textContent = 'Selected view: Below';
+    UntenSichtbar_Boolean = true;
+});
