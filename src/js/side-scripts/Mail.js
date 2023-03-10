@@ -23,3 +23,9 @@ function SendMail() {
         SetUpSmallPopUp('okay', 'oh!', 'block', 'block', 'Fill out the text fields!');
     };
 };
+
+//clears the formular after the email was sended 
+function clearFormular() {
+    mail_name_field.value = "";
+    mail_message_field.value = "";
+};
