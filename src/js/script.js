@@ -1110,8 +1110,8 @@ function ShowEndText() {
     p.style.marginTop = '0';
     p.style.fontWeight = '600';
 
-    let AfterGameText = document.createTextNode(`Super das du dich weiterbildest!    -    Du hast ${ZuWiederhohlen} Vokabeln zu wiederhohlen!`);
-    let underText = document.createTextNode(`Deine Zeit ${playTimer.textContent}`);
+    let AfterGameText = document.createTextNode(`Great that you are continuing your education!    -    You have to repeat ${ZuWiederhohlen} cards!`);
+    let underText = document.createTextNode(`Your Time ${playTimer.textContent}`);
 
     h3.appendChild(AfterGameText);
     p.appendChild(underText);

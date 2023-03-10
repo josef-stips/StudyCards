@@ -1514,11 +1514,14 @@ header a {
 }
 
 #dropdown-con {
-    display: block;
+    display: none;
     position: absolute;
     background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
     box-shadow: 1px 1px 7px var(--border-color);
     min-width: 160px;
+    height: 60%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     z-index: 1;
     top: 6em;
 }
