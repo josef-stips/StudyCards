@@ -716,3 +716,18 @@ pg_showCardBelow_btn.addEventListener('click', () => {
     pg_ShowCardView_title.textContent = 'Selected view: Below';
     UntenSichtbar_Boolean = true;
 });
+
+pg_ShowAllCards_btn.addEventListener('click', () => {
+    ShowAllcardsWind.style.display = 'flex';
+    CreateMiniCardListLoop();
+});
+
+side_nav_toggle_btn.addEventListener('click', () => {
+    md02_sidebar.style.display = 'block';
+    md02_sidebar.style.width = '35vh';
+});
+
+md02_sidebar_close_btn.addEventListener('click', () => {
+    md02_sidebar.style.width = '0';
+    md02_sidebar.style.display = 'none';
+});

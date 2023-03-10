@@ -189,7 +189,37 @@
         </div>
 
         <div id="md02-sidebar">
+            <div id="md02-sidebar-header">
+                <h2>About Files</h2>
+                <i id="md02-sidebar-close-btn" class="fa-solid fa-x"></i>
+            </div>
+            <hr>
             <table>
+                <tr>
+                    <td>
+                        stack overview
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        file overview
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        saved files
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        saved files
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        saved files
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         saved files
@@ -664,27 +694,33 @@
             <hr id="pg-vl" class="vertical-line">
         </div>
 
-        <!-- Mode overview -->
-        <div class="pg-ModeOverview">
-            <h2>Select Mode</h2>
-            <ul>
-                <li id="pg-classicMode-btn">- Classic Mode - Nothing to write just think and see if it's correct</li>
-                <li id="pg-writeMode-btn">- Write Mode - Type your Answer in a Text field</li>
-                <li id="pg-multipleChoiceMode-btn">- Multiple Choice - Select the right answer</li>
-                <li id="pg-connectMode-btn">- Connect Mode - Connect the cards that belong together (Works only with a max. of 30 cards)</li>
-            </ul>
 
-            <h3 id="pg-ShowMode-title">Selected mode: Classic Mode (default)</h3>
+        <div class="pg-Overview-wrapper">
+            <!-- Mode overview -->
+            <div class="pg-ModeOverview">
+                <h2>Select Mode</h2>
+                <ul>
+                    <li id="pg-classicMode-btn">- Classic Mode - Nothing to write just think and see if it's correct</li>
+                    <li id="pg-writeMode-btn">- Write Mode - Type your Answer in a Text field</li>
+                    <li id="pg-multipleChoiceMode-btn">- Multiple Choice - Select the right answer</li>
+                    <li id="pg-connectMode-btn">- Connect Mode - Connect the cards that belong together (Works only with a max. of 30 cards)</li>
+                </ul>
 
-            <h2>Select Card View</h2>
-            <ul>
-                <li class="pg-showCardAbove-btn"> - Show card above</li>
-                <li class="pg-showCardBelow-btn"> - Show card below</li>
-            </ul>
+                <h3 id="pg-ShowMode-title">Selected mode: Classic Mode (default)</h3>
 
-            <h3 id="pg-ShowCardView-title">Selected view: Above (recommended)</h3>
+                <h2>Select Card View</h2>
+                <ul>
+                    <li class="pg-showCardAbove-btn"> - Show card above</li>
+                    <li class="pg-showCardBelow-btn"> - Show card below</li>
+                </ul>
 
-            <button id="pg-Start-btn" style="--clr:#FF44CC"><span>Start <i class="fas fa-arrow-right"></i></span><i></i></button>
+                <h3 id="pg-ShowCardView-title">Selected view: Above (recommended)</h3>
+
+            </div>
+            <div class="pg-Overview-under-div">
+                <button id="pg-Start-btn" style="--clr:#FF44CC"><span>Start <i class="fas fa-arrow-right"></i></span><i></i></button>
+                <button id="pg-ShowAllCards-btn" style="--clr:#FF44CC"><span>Cards</span><i></i></button>
+            </div>
         </div>
 
         <div class="pg-MainContent">

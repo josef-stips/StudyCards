@@ -792,7 +792,6 @@ header a {
 #currCards-nav-wrapper {
     margin: 1.65% 0 0 1em;
     height: 93%;
-    width: 100%;
     overflow: scroll;
 }
 
@@ -847,13 +846,20 @@ header a {
     text-align: start;
     transition: all 0.2s ease-in;
     font-size: 17px;
-    padding-top: 7px;
 }
 
 #allStacks-table tr td:hover {
     transition: all 0.2s ease-in;
     cursor: pointer;
+    font-weight: 600;
     color: var(--table-cell-hover);
+}
+
+#allStacks-table tbody tr {
+    background-color: rgba(96, 96, 96, 0.285);
+    display: block;
+    padding: 1em;
+    margin-top: 1em;
 }
 
 
@@ -1248,7 +1254,7 @@ header a {
     color: var(--front-color);
     position: absolute;
     right: 2.5%;
-    top: 9.4%;
+    top: 8.4%;
     font-size: 18px;
     transition: 0.1s all ease-in-out;
 }
@@ -1263,7 +1269,7 @@ header a {
     color: var(--front-color);
     position: absolute;
     left: 7%;
-    top: 9.4%;
+    top: 8.4%;
     font-size: 18px;
     transition: 0.1s all ease-in-out;
 }
@@ -1278,13 +1284,63 @@ header a {
 /* md02 side bar */
 
 #md02-sidebar {
+    transition: all 0.5s ease-out;
+    display: none;
     position: absolute;
     color: var(--front-color);
     height: 100%;
-    width: 35vh;
+    width: 0;
     background-image: linear-gradient(to bottom right, var(--bg-table-gardiant-01), var(--bg-table-gardiant-02));
     z-index: 20000;
-    display: none;
+}
+
+#md02-sidebar h2 {
+    margin: 0.1em 0 0 0.3em;
+}
+
+#md02-sidebar table {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#md02-sidebar table tr {
+    padding: 0.5em;
+    /* margin-top: 0.5em; */
+    background-color: rgba(96, 96, 96, 0.184);
+    display: block;
+}
+
+#md02-sidebar tr td {
+    text-align: start;
+    transition: all 0.1s ease-in;
+    font-size: 17px;
+}
+
+#md02-sidebar tr td:hover {
+    transition: all 0.1s ease-in;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--table-cell-hover);
+}
+
+#md02-sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#md02-sidebar-close-btn {
+    font-size: 19px;
+    margin: 0.5em 0.5em 0 0;
+    transition: all 0.1s ease-in;
+}
+
+#md02-sidebar-close-btn:hover {
+    transition: all 0.1s ease-in;
+    cursor: pointer;
+    color: var(--table-cell-hover);
 }
 
 
@@ -2068,10 +2124,39 @@ textarea {
     font-size: 22px;
 }
 
+.pg-Overview-wrapper {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
 
 /* Button design */
 
 #pg-Start-btn {
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid var(--front-color);
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    margin: 2.5em 0.4em 0 0;
+    outline: none;
+    color: var(--front-color);
+}
+
+#pg-Start-btn:hover {
+    box-shadow: 5px 5px 15px var(--border-color);
+    border: 2px solid var(--button-hover-color);
+    color: var(--button-hover-color);
+}
+
+#pg-ShowAllCards-btn {
     width: 130px;
     height: 40px;
     padding: 10px 25px;
@@ -2088,10 +2173,16 @@ textarea {
     color: var(--front-color);
 }
 
-#pg-Start-btn:hover {
-    box-shadow: 5px 5px 15px var(--border-color);
+#pg-ShowAllCards-btn:hover {
     border: 2px solid var(--button-hover-color);
     color: var(--button-hover-color);
+}
+
+.pg-Overview-under-div {
+    position: absolute;
+    top: 89.3%;
+    left: 0;
+    margin: 0 0 0 0.9em;
 }
 
 

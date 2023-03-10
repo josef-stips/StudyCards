@@ -66,7 +66,7 @@ let pgNavClickEl_3 = document.getElementById('pg-navClickEl-3');
 
 //pg INI elements 
 let pg_INI_close_btn = document.querySelector('#pg-INI-close-btn');
-let pg_ModeOverview = document.querySelector('.pg-ModeOverview');
+let pg_ModeOverview = document.querySelector('.pg-Overview-wrapper');
 
 let pg_classicMode_btn = document.querySelector('#pg-classicMode-btn');
 let pg_writeMode_btn = document.querySelector('#pg-writeMode-btn');
@@ -75,6 +75,10 @@ let pg_connectMode_btn = document.querySelector('#pg-connectMode-btn');
 let pg_showCardAbove_btn = document.querySelector('.pg-showCardAbove-btn');
 let pg_showCardBelow_btn = document.querySelector('.pg-showCardBelow-btn');
 let pg_ShowCardView_title = document.querySelector('#pg-ShowCardView-title');
+let pg_ShowAllCards_btn = document.querySelector('#pg-ShowAllCards-btn');
+let side_nav_toggle_btn = document.querySelector('#side-nav-toggle-btn');
+let md02_sidebar = document.querySelector('#md02-sidebar');
+let md02_sidebar_close_btn = document.querySelector('#md02-sidebar-close-btn');
 
 let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
 let pg_Start_btn = document.querySelector('#pg-Start-btn');
@@ -705,6 +709,21 @@ document.onkeydown = (e) => {
         }  else if(e.shiftKey && e.which == 71) {
     
             ClosePlayGround();
+        } else if(e.which == 13 && PlayMode == true) {
+            if (GameEnd == false) {
+                PlayModeIsActive();
+            };
+
+        } else if(e.which == 39 && PlayMode == true) {
+            if (GameEnd == false) {
+                ShowNextCard();
+            };
+
+        } else if(e.which == 37 && PlayMode == true) {
+            if (GameEnd == false) {
+                ZuWiederhohlen++;
+                ShowNextCard();
+            };
         }
     };
 };
