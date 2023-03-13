@@ -525,14 +525,12 @@ pgSpaeterButton.addEventListener('click', () => {
 });
 
 pgWiederhohlenButton.addEventListener('click', () => {
-    ZuWiederhohlen++;
-
-    ShowNextCard();
-})
+    SeeCard(true);
+});
 
 pgKannIchButton.addEventListener('click', () => {
-    ShowNextCard();
-})
+    SeeCard(false);
+});
 
 pgKarteikarte.addEventListener('click', () => {
     if (GameEnd == false) {
@@ -730,4 +728,8 @@ side_nav_toggle_btn.addEventListener('click', () => {
 md02_sidebar_close_btn.addEventListener('click', () => {
     md02_sidebar.style.width = '0';
     md02_sidebar.style.display = 'none';
+});
+
+extra_retry_btn.addEventListener('click', () => {
+    StartRedoGame();
 });

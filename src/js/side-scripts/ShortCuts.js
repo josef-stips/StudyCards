@@ -67,13 +67,12 @@ document.onkeydown = (e) => {
 
         } else if (e.which == 39 && PlayMode == true) {
             if (GameEnd == false) {
-                ShowNextCard();
+                SeeCard(false);
             };
 
         } else if (e.which == 37 && PlayMode == true) {
             if (GameEnd == false) {
-                ZuWiederhohlen++;
-                ShowNextCard();
+                SeeCard(true);
             };
         }
     };

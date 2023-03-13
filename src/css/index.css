@@ -2373,6 +2373,35 @@ textarea {
     transition: color 0.15s ease-out;
 }
 
+.extra-retry-btn {
+    position: absolute;
+    left: 0.6%;
+    top: 19.8%;
+    display: none;
+}
+
+#pg-RetryMistakes-btn {
+    width: 140px;
+    height: 50px;
+    padding: 10px 25px;
+    border: 2px solid var(--front-color);
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    margin: 2.5em 0.4em 0 0;
+    outline: none;
+    color: var(--front-color);
+}
+
+#pg-RetryMistakes-btn:hover {
+    border: 2px solid var(--button-hover-color);
+    color: var(--button-hover-color);
+}
+
 
 /*********************PLAY-GROUND-BUTTON*********************/
 

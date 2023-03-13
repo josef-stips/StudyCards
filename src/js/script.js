@@ -79,6 +79,7 @@ let pg_ShowAllCards_btn = document.querySelector('#pg-ShowAllCards-btn');
 let side_nav_toggle_btn = document.querySelector('#side-nav-toggle-btn');
 let md02_sidebar = document.querySelector('#md02-sidebar');
 let md02_sidebar_close_btn = document.querySelector('#md02-sidebar-close-btn');
+let extra_retry_btn = document.querySelector('.extra-retry-btn');
 
 let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
 let pg_Start_btn = document.querySelector('#pg-Start-btn');
@@ -175,14 +176,6 @@ let rs = getComputedStyle(r);
 //Variables for ShowAllCards Window
 
 let CheckButton_Blur = true;
-
-//While Playing
-let PlayMode = false; //Prüft sich der Spieler gerade ab?
-let Runde = 0; //Bei Welcher Karte befindet sich der Spieler gerade?
-let UntenSichtbar_Boolean = false; //Wird die Vorderseite oder die Rückseite zum Abfragen benutzt?
-let ZuWiederhohlen = 0; //Wie viele Karten muss der Spieler am Ende des Spiels wiederhohlen?
-let EndScreen_Boolean = false; //Wurde schon das Ende des Spiels also der End-Screen erreicht?
-let GameEnd = false; //Is nur true wenn man sich im EndScreen des Spiels befindet
 
 //Other importaant stuff
 let stackLocation = "";
@@ -727,9 +720,6 @@ function Darkmode(from) {
     };
 };
 
-//real stuff
-
-//Code Schnipsel 
 //Select every nth item of an array[2,4,6]
 const every_nth = (arr, nth) => arr.filter((e, i) => i % nth === nth - 1);
 //Selects every nth item of array[1,3,5]
@@ -742,6 +732,39 @@ function getEveryNth(arr, nth) {
   
     return result;
 };
+
+//Function which shuffles two arrays
+function shuffle(obj1, obj2) {
+    var index = obj1.length;
+    var rnd, tmp1, tmp2;
+  
+    while (index) {
+      rnd = Math.floor(Math.random() * index);
+      index -= 1;
+      tmp1 = obj1[index];
+      tmp2 = obj2[index];
+      obj1[index] = obj1[rnd];
+      obj2[index] = obj2[rnd];
+      obj1[rnd] = tmp1;
+      obj2[rnd] = tmp2;
+    };
+};
+
+//Defines Value for Array and calls shuffle function to shuffle array
+function DefineValueForStackArray() {
+    PlayGround_Cards_VS = [];
+    PlayGround_Cards_RS = [];
+
+    for (i of Karteikarten[`${stackLocation}`].vs) {
+        PlayGround_Cards_VS.push(i);
+    };
+    for (i of Karteikarten[`${stackLocation}`].vr) {
+        PlayGround_Cards_RS.push(i);
+    };
+
+    shuffle(PlayGround_Cards_VS, PlayGround_Cards_RS);
+};
+
 
 //User can edit the card after it was edit to the stack
 function MakeCardEditPossible() {

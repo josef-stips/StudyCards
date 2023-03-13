@@ -1,7 +1,22 @@
+//While Playing
+let PlayMode = false; //Prüft sich der Spieler gerade ab?
+let Runde = 0; //Bei Welcher Karte befindet sich der Spieler gerade?
+let UntenSichtbar_Boolean = false; //Wird die Vorderseite oder die Rückseite zum Abfragen benutzt?
+let ZuWiederhohlen = 0; //Wie viele Karten muss der Spieler am Ende des Spiels wiederhohlen?
+let EndScreen_Boolean = false; //Wurde schon das Ende des Spiels also der End-Screen erreicht?
+let GameEnd = false; //Is nur true wenn man sich im EndScreen des Spiels befindet
+let redo_game = false; //Is the player in the redo game to retry his mistakes?
+
 //That functions are called while the game
 var count_timer;
 
+let redo_game_counter = 0;
+let RedoGame_CardsToRepeat = {};
+
 function ClosePlayGround() {
+    redo_game_counter = 0;
+    RedoGame_CardsToRepeat = {};
+
     PlayModeIsNotActive();
     ExitGame();
     pgKarteikarte.style.cursor = 'pointer';
@@ -44,16 +59,22 @@ function StartGameCountDown() {
 };
 
 function OpenGame() {
+    redo_game_counter++;
+
+    RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`] = { 'vs': [], 'rs': [] };
+
     pg_countdown_wrapper.style.display = 'none';
     pg_MainContent.style.display = 'block';
     pg_header_ini_Wrapper.style.display = 'none';
     pg_navHeader.style.display = 'block';
+    playTimer.style.color = 'white';
 
     pgUntenSichtbarDiv.style.display = 'none';
     pgObenSichtbarDiv.style.display = 'none';
     pgKannIchButton.style.display = 'none';
     pgWiederhohlenButton.style.display = 'none';
     pg_countdown_wrapper.style.display = 'none';
+    extra_retry_btn.style.display = 'none';
 
     PlayModeIsActive();
     start_Timer(); //Timer function of 'timer.js' file
@@ -64,7 +85,7 @@ function OpenGame() {
     pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[0];
     pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[0];
 
-    CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
+    CardsOfMaxCardstext.textContent = `${Runde + 1}/${Karteikarten[`${stackLocation}`].vs.length}`;
 
     pgKannIchButton.style.display = 'none';
     pgWiederhohlenButton.style.display = 'none';
@@ -77,6 +98,9 @@ function OpenGame() {
 
 //reloads the Game
 function reloadGame() {
+    redo_game_counter = 0;
+    RedoGame_CardsToRepeat = {};
+
     DefineValueForStackArray();
     PlayModeIsNotActive();
     GameEnd = false;
@@ -90,6 +114,7 @@ function reloadGame() {
     pg_MainContent.style.display = 'none';
     pg_header_ini_Wrapper.style.display = 'flex';
     pg_navHeader.style.display = 'none';
+    extra_retry_btn.style.display = 'none';
 
     GameEnd = false;
     PlayMode = false;
@@ -135,6 +160,7 @@ function PlayModeIsNotActive() {
 
     ZuWiederhohlen = 0;
     EndScreen_Boolean = false;
+    redo_game = false;
     Runde = 0;
 
     pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
@@ -170,8 +196,11 @@ function ExitGame() {
         pg_header_ini_Wrapper.style.display = 'flex';
         pg_navHeader.style.display = 'none';
 
+        extra_retry_btn.style.display = 'none';
+
         GameEnd = false;
         PlayMode = false;
+        redo_game = false;
 
         pgKarteikarte.style.cursor = 'pointer';
 
@@ -180,14 +209,68 @@ function ExitGame() {
     }; 
 }
 
+//Start redo game with cards to redo 
+function StartRedoGame() {
+    redo_game_counter++;
+
+    RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`] = {'vs': [] , 'rs': [] };
+
+    PlayModeIsNotActive();
+
+    pgKarteikarte.style.cursor = 'pointer';
+
+    pg_countdown_wrapper.style.display = 'none';
+    pg_MainContent.style.display = 'block';
+    pg_header_ini_Wrapper.style.display = 'none';
+    pg_navHeader.style.display = 'block';
+
+    pgUntenSichtbarDiv.style.display = 'block';
+    pgObenSichtbarDiv.style.display = 'block';
+    pgKannIchButton.style.display = 'none';
+    pgWiederhohlenButton.style.display = 'none';
+    pg_countdown_wrapper.style.display = 'none';
+    extra_retry_btn.style.display = 'none'; 
+
+    GameEnd = false;
+    PlayMode = false;
+    redo_game = true;
+
+    pgKarteiKarteVS.querySelector('h3').textContent = RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs[0];
+    pgKarteiKarteRS.querySelector('h3').textContent = RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[0];
+
+    CardsOfMaxCardstext.textContent = `${Runde + 1}/${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}`;
+
+    console.log('Gibt es')
+
+    CardView();
+
+    playTimer.style.color = 'rgba(0,0,0,0)';
+
+    console.log(redo_game_counter)
+};
+
 //When user presses the button "Kann Ich" wird die nächste Karte vom Stapel angezeigt
 function ShowNextCard() {
-    if(Runde == Karteikarten[`${stackLocation}`].vs.length - 1) {//Checks if this is the last card of array
+    //This current Value of this variable is just a placeholder here it gets overwritten when the user wants to repeat his missed cards
+    let MistakeLength = RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length;
+
+    if(redo_game) {
+        MistakeLength = RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length;
+    };
+
+    console.log(RedoGame_CardsToRepeat);
+
+    if(Runde == Karteikarten[`${stackLocation}`].vs.length - 1 && redo_game == false ||
+        Runde == MistakeLength - 1 && redo_game == true) {//Checks if this is the last card of array
 
         EndScreen_Boolean = true;
 
         //HTML Counter shows the reps 
-        CardsOfMaxCardstext.textContent = `${Karteikarten[`${stackLocation}`].vs.length}/${Karteikarten[`${stackLocation}`].vs.length}`;
+        if(!redo_game) {
+            CardsOfMaxCardstext.textContent = `${Karteikarten[`${stackLocation}`].vs.length}/${Karteikarten[`${stackLocation}`].vs.length}`;
+        } else {
+            CardsOfMaxCardstext.textContent =`${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}/${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}`;
+        };
 
         ShowEndText();
         ShowOptionsAfterGame();
@@ -196,10 +279,8 @@ function ShowNextCard() {
         save_UserReps(ZuWiederhohlen)//save data for analysis function of 'timer.js' file
 
     }  else {
+        
         Runde++;
-
-        pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[Runde];
-        pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[Runde];
     
         pgKannIchButton.style.display = 'none';
         pgWiederhohlenButton.style.display = 'none';
@@ -212,8 +293,21 @@ function ShowNextCard() {
             pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)';
         };
 
-        //HTML Counter shows the reps 
-        CardsOfMaxCardstext.textContent = `${Runde}/${Karteikarten[`${stackLocation}`].vs.length}`;
+        if (redo_game == false) {
+            //HTML Counter shows the reps 
+            CardsOfMaxCardstext.textContent = `${Runde + 1}/${Karteikarten[`${stackLocation}`].vs.length}`;
+
+            pgKarteiKarteVS.querySelector('h3').textContent = PlayGround_Cards_VS[Runde];
+            pgKarteiKarteRS.querySelector('h3').textContent = PlayGround_Cards_RS[Runde];
+
+        } else {
+            console.log(redo_game_counter)
+
+            CardsOfMaxCardstext.textContent = `${Runde + 1}/${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}`;
+
+            pgKarteiKarteVS.querySelector('h3').textContent = RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs[Runde];
+            pgKarteiKarteRS.querySelector('h3').textContent = RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[Runde];
+        };
 
         pgObenSichtbarDiv.style.display = 'none';
         pgUntenSichtbarDiv.style.display = 'none';
@@ -225,6 +319,13 @@ function ShowEndText() {
 
     pgKarteiKarteVS.style.display = 'none';
     pgKarteiKarteRS.style.display = 'none';
+
+    console.table(RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`])
+
+    if(RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length != 0) {
+        
+        extra_retry_btn.style.display = 'block';
+    } else extra_retry_btn.style.display = 'none';
     
     let h3 = document.createElement('h3');
     let p = document.createElement('p');
@@ -233,8 +334,25 @@ function ShowEndText() {
     p.style.marginTop = '0';
     p.style.fontWeight = '600';
 
-    let AfterGameText = document.createTextNode(`Great that you are continuing your education!    -    You have to repeat ${ZuWiederhohlen} cards!`);
-    let underText = document.createTextNode(`Your Time ${playTimer.textContent}`);
+    if(!redo_game && RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length > 0) {
+        var AfterGameText = document.createTextNode(`Great that you are continuing your education! - You have to repeat ${ZuWiederhohlen} cards!`);
+        var underText = document.createTextNode(`Your Time ${playTimer.textContent}`);
+
+    } else if(redo_game == true && RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length > 0) {
+
+        var AfterGameText = document.createTextNode(`Great that you are continuing your education! - 
+        You still have to repeat ${RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length} cards!`);
+
+        var underText = document.createTextNode(`Keep going!`);
+    };
+
+    if(redo_game == true && RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length <= 0 || 
+        !redo_game && RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.length <= 0) {
+
+        var AfterGameText = document.createTextNode(`Congrats you learned all cards!`);
+
+        var underText = document.createTextNode(``);
+    };
 
     h3.appendChild(AfterGameText);
     p.appendChild(underText);
@@ -263,34 +381,37 @@ function ShowOptionsAfterGame() {
 
 };
 
-//Defines Value for Array and calls shuffle function to shuffle array
-function DefineValueForStackArray() {
-    PlayGround_Cards_VS = [];
-    PlayGround_Cards_RS = [];
+//User clicks whether he needs to repeat or not
+//Event on 'DomEvents.js' l.527-535 and 'ShortCuts.js' l.63
+function SeeCard(clicked_repeat) {
+    if(redo_game == false) {
+        switch (clicked_repeat) {
+            case true:
+                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.push(PlayGround_Cards_VS[Runde]);
+                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].rs.push(PlayGround_Cards_RS[Runde]);
+    
+                ZuWiederhohlen++;
+                ShowNextCard();
+                break;
+        
+            case false:
+                ShowNextCard();
+                break;
+        };
+    } else {
+        switch (clicked_repeat) {
+            case true:
 
-    for (i of Karteikarten[`${stackLocation}`].vs) {
-        PlayGround_Cards_VS.push(i);
-    };
-    for (i of Karteikarten[`${stackLocation}`].vr) {
-        PlayGround_Cards_RS.push(i);
-    };
+                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.push(RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[Runde]);
+                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].rs.push(RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[Runde]);
 
-    shuffle(PlayGround_Cards_VS, PlayGround_Cards_RS);
-};
-
-//Function which shuffles two arrays
-function shuffle(obj1, obj2) {
-    var index = obj1.length;
-    var rnd, tmp1, tmp2;
-  
-    while (index) {
-      rnd = Math.floor(Math.random() * index);
-      index -= 1;
-      tmp1 = obj1[index];
-      tmp2 = obj2[index];
-      obj1[index] = obj1[rnd];
-      obj2[index] = obj2[rnd];
-      obj1[rnd] = tmp1;
-      obj2[rnd] = tmp2;
+                ShowNextCard();
+                break;
+        
+            case false:
+                ShowNextCard();
+                break;
+        };
     };
+    console.table(RedoGame_CardsToRepeat)
 };
