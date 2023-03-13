@@ -402,7 +402,7 @@ function SeeCard(clicked_repeat) {
         switch (clicked_repeat) {
             case true:
 
-                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.push(RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[Runde]);
+                RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].vs.push(RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs[Runde]);
                 RedoGame_CardsToRepeat[`Game_0${redo_game_counter}`].rs.push(RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].rs[Runde]);
 
                 ShowNextCard();
