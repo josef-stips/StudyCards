@@ -268,6 +268,10 @@ function ShowNextCard() {
         //HTML Counter shows the reps 
         if(!redo_game) {
             CardsOfMaxCardstext.textContent = `${Karteikarten[`${stackLocation}`].vs.length}/${Karteikarten[`${stackLocation}`].vs.length}`;
+
+            stop_Timer();//Timer function of 'timer.js' file
+            save_UserReps(ZuWiederhohlen)//save data for analysis function of 'timer.js' file
+            
         } else {
             CardsOfMaxCardstext.textContent =`${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}/${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}`;
         };
@@ -275,23 +279,13 @@ function ShowNextCard() {
         ShowEndText();
         ShowOptionsAfterGame();
 
-        stop_Timer();//Timer function of 'timer.js' file
-        save_UserReps(ZuWiederhohlen)//save data for analysis function of 'timer.js' file
-
     }  else {
-        
         Runde++;
     
         pgKannIchButton.style.display = 'none';
         pgWiederhohlenButton.style.display = 'none';
     
-        if (!UntenSichtbar_Boolean) {
-            pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)';
-            pgKarteiKarteVS.style.color = 'var(--front-color)';
-        } else {
-            pgKarteiKarteRS.style.color = 'var(--front-color)';
-            pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)';
-        };
+        CardView();
 
         if (redo_game == false) {
             //HTML Counter shows the reps 
@@ -364,7 +358,7 @@ function ShowEndText() {
         pgKarteikarte.style.cursor = 'default';
     };
 
-    stop_Timer();//Timer function of 'timer.js' file
+    if(!redo_game) stop_Timer();//Timer function of 'timer.js' file
 };
 
 function ShowOptionsAfterGame() {
