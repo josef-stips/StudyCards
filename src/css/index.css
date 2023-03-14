@@ -1958,6 +1958,24 @@ textarea {
     margin: 0.25em 0 0 27.5em;
 }
 
+.WriteMode-Modify {
+    width: 40em;
+    height: 4em;
+    background-color: var(--user-input-02);
+    border-radius: 0.3em;
+    margin-top: -0.9em;
+    display: none;
+}
+
+#input3 {
+    height: inherit;
+    width: inherit;
+    margin: 0;
+    padding: 0.6em 0 0 0.1em;
+    text-align: center;
+    border-radius: 0.3em;
+}
+
 
 /*********************PLAY-GROUND*********************/
 
@@ -2108,7 +2126,6 @@ textarea {
 .pg-ModeOverview ul li {
     font-weight: 500;
     font-size: 17px;
-    margin: 0.425em 0 0 0;
     transition: all 0.25s ease-in-out;
 }
 
@@ -2116,6 +2133,18 @@ textarea {
     color: var(--button-hover-color);
     cursor: pointer;
     transition: all 0.25s ease-in-out;
+}
+
+#pg-classicMode-btn {
+    margin: 0.7em 0 0 0;
+}
+
+.pg-ModeList li {
+    margin: 2.1em 0 0 0;
+}
+
+.pg-ViewList li {
+    margin: 0.425em 0 0 0;
 }
 
 #pg-countdown-wrapper {
@@ -2371,6 +2400,12 @@ textarea {
     cursor: pointer;
     color: var(--button-hover-color);
     transition: color 0.15s ease-out;
+}
+
+.Mode-btn {
+    background-color: var(--mini-button-bg-color);
+    padding: 12px;
+    margin: 0.3em;
 }
 
 .extra-retry-btn {

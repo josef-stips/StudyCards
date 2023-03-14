@@ -60,20 +60,20 @@ document.onkeydown = (e) => {
         } else if (e.shiftKey && e.which == 71) {
 
             ClosePlayGround();
-        } else if (e.which == 13 && PlayMode == true) {
+        } else if (e.which == 13 && PlayMode == true && CurrMode == Object.keys(UserPlayModes)[0]) {
             if (GameEnd == false) {
                 PlayModeIsActive();
             };
-
-        } else if (e.which == 39 && PlayMode == true) {
-            if (GameEnd == false) {
-                SeeCard(false);
-            };
-
-        } else if (e.which == 37 && PlayMode == true) {
-            if (GameEnd == false) {
-                SeeCard(true);
-            };
         }
+        // } else if (e.which == 39 && PlayMode == true) {
+        //     if (GameEnd == false) {
+        //         SeeCard(false);
+        //     };
+
+        // } else if (e.which == 37 && PlayMode == true) {
+        //     if (GameEnd == false) {
+        //         SeeCard(true);
+        //     };
+        // }
     };
 };

@@ -54,6 +54,7 @@ function StartGameCountDown() {
         } else {
             clearInterval(count_timer);
             OpenGame();
+            SwitchToMode();
         };
     }, 1000);
 };
@@ -271,7 +272,7 @@ function ShowNextCard() {
 
             stop_Timer();//Timer function of 'timer.js' file
             save_UserReps(ZuWiederhohlen)//save data for analysis function of 'timer.js' file
-            
+
         } else {
             CardsOfMaxCardstext.textContent =`${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}/${RedoGame_CardsToRepeat[`Game_0${redo_game_counter - 1}`].vs.length}`;
         };
@@ -373,6 +374,7 @@ function ShowOptionsAfterGame() {
 
     pgShowCardsButton.style.display = 'flex';
 
+    pg_writeField.parentElement.style.display = 'none';
 };
 
 //User clicks whether he needs to repeat or not
@@ -386,10 +388,14 @@ function SeeCard(clicked_repeat) {
     
                 ZuWiederhohlen++;
                 ShowNextCard();
+
+                console.log('user answer is false')
                 break;
         
             case false:
                 ShowNextCard();
+
+                console.log("user answer was true")
                 break;
         };
     } else {
@@ -408,4 +414,28 @@ function SeeCard(clicked_repeat) {
         };
     };
     console.table(RedoGame_CardsToRepeat)
+};
+
+function SwitchToMode() {
+    switch (CurrMode) {
+        case Object.keys(UserPlayModes)[0]: //Classic Mode
+
+        pg_writeField.parentElement.style.display = 'none';
+        break;
+
+        case Object.keys(UserPlayModes)[1]: //Write Mode
+
+        pg_writeField.parentElement.style.display = 'block';
+        break;
+
+        case Object.keys(UserPlayModes)[2]: //Multiple Choice Mode
+
+        pg_writeField.parentElement.style.display = 'none';
+        break;
+
+        case Object.keys(UserPlayModes)[3]: //Connect Mode
+
+        pg_writeField.parentElement.style.display = 'none';
+        break;
+    };
 };

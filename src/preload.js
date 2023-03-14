@@ -64,7 +64,40 @@ ipcRenderer.on("FileExists", (event, args) => {
 
 //string similarity 
 function SendStringToMain(string1, string2) {
+    let s1 = string1.toLowerCase();
+    let s2 = string2.toLowerCase();
+
     ipcRenderer.send('proveStringSimilarity', { string1, string2 });
+};
+
+//Main process checked if the solution and the user answer in the playground write-mode is similar
+//Now the rendererProcess handles the answer from the main process
+var clicked_repeat_mainProc;
+
+ipcRenderer.on('StringIsSimilar', (event, arg) => {
+    ChangeRepeatState(false)
+
+    console.log("String is similar")
+});
+
+ipcRenderer.on('StringIsNotSimilar', (event, arg) => {
+    ChangeRepeatState(true)
+
+    console.log('String is not similar')
+});
+
+function ChangeRepeatState(state) {
+    clicked_repeat_mainProc = state;
+
+    console.log(clicked_repeat_mainProc)
+};
+
+function updateRepeatState(FrontEndResult) {
+    let FER = FrontEndResult;
+    FER = clicked_repeat_mainProc;
+
+    console.log(clicked_repeat_mainProc)
+    return FER;
 };
 
 //Communicate with renderer
@@ -73,6 +106,6 @@ contextBridge.exposeInMainWorld('App', {
     CreateFile: CreateFile,
     ChangeThisStackLoc: ChangeThisStackLoc,
     CheckFileExists: CheckFileExists,
-    SendStringToMain,
-    SendStringToMain,
+    SendStringToMain: SendStringToMain,
+    updateRepeatState: updateRepeatState,
 });

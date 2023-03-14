@@ -106,6 +106,8 @@ let pgKannIchButton = document.getElementsByClassName('pg-kannIch-div')[0];
 let pgNochmalButton = document.getElementsByClassName('pg-nochmal-div')[0];
 let pgSpaeterButton = document.getElementsByClassName('pg-spaeter-div')[0];
 
+//Playground Mode elements 
+let pg_writeField = document.getElementsByClassName('UserShortInput2')[1];
 
 let ShowAllCardsWind_ClsButton = document.getElementById('showCards-WindButt');
 let ShowAllcardsWind = document.getElementById('allCardsWindow');
@@ -267,7 +269,8 @@ let UserPlayModes = {
     'Connect Mode': false,
 };
 
-let CurrMode; //String, one of the "UserPlayModes" Object
+//Classic Mode is default
+let CurrMode = 'Classic Mode'; //String, one of the "UserPlayModes" Object
 
 //Selected Mode is true and all other modes are false
 const ChangePlayMode = (Selected_Mode) => {

@@ -533,7 +533,7 @@ pgKannIchButton.addEventListener('click', () => {
 });
 
 pgKarteikarte.addEventListener('click', () => {
-    if (GameEnd == false) {
+    if (GameEnd == false && CurrMode == Object.keys(UserPlayModes)[0]) {
         PlayModeIsActive();
     };
 })

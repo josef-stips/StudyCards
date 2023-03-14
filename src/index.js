@@ -166,10 +166,11 @@ ipcMain.on('proveStringSimilarity', (event, data) => {
 
     let similarity = StringSimilarity(string1, string2);
 
+    console.log(similarity)
     if (similarity) {
-
+        event.sender.send('StringIsSimilar', 'true')
     } else {
-
+        event.sender.send('StringIsNotSimilar', 'false')
     };
 });
 
