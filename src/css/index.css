@@ -601,6 +601,18 @@ header a {
     background-color: var(--mini-button-hover);
 }
 
+#stappel-info-wrapper {
+    color: var(--front-color);
+    display: flex;
+    flex-direction: row;
+}
+
+#stappel-info-wrapper p {
+    margin: 0.2em 0 0 0;
+    padding: 0;
+    font-weight: 500
+}
+
 
 /*********************Middle Big PopUp*********************/
 
