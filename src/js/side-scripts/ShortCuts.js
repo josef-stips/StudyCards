@@ -4,6 +4,26 @@ const MAX_TEXT_LENGTH = settings.maxCardLen;
 
 //Fügt eine Karte einem Stapel hinzu
 stappel_RueckSeite.addEventListener('keydown', (e) => {
+    TryToAddCard(e);
+
+    if (e.which != 13) {
+        //On the html page there is a counter which counts how many letters the user can still type in his card (front and back)
+        //Here is the logic
+        let text = stappel_RueckSeite.innerText;
+        let textWithoutNewLines = text.replace(/(\r\n|\n|\r)/gm, "");
+        let remainingChars = MAX_TEXT_LENGTH - textWithoutNewLines.length;
+
+        if (remainingChars >= 0) {
+            back_stack_words_left.textContent = `/ ${remainingChars}`;
+        } else {
+            back_stack_words_left.textContent = `/ 0`;
+            stappel_RueckSeite.innerText = text.slice(0, MAX_TEXT_LENGTH);
+        };
+    };
+});
+
+//Trys to add a card to the stack if it is not possible try something different
+function TryToAddCard(e) {
     //Text von der karteikarte
     var StInner = stappel_RueckSeite.children[0].textContent;
     var StInner_vs = stappel_VorderSeite.children[0].textContent;
@@ -29,22 +49,7 @@ stappel_RueckSeite.addEventListener('keydown', (e) => {
 
         NeuerStapel_VS.focus();
     };
-
-    if (e.which != 13) {
-        //On the html page there is a counter which counts how many letters the user can still type in his card (front and back)
-        //Here is the logic
-        let text = stappel_RueckSeite.innerText;
-        let textWithoutNewLines = text.replace(/(\r\n|\n|\r)/gm, "");
-        let remainingChars = MAX_TEXT_LENGTH - textWithoutNewLines.length;
-
-        if (remainingChars >= 0) {
-            back_stack_words_left.textContent = `/ ${remainingChars}`;
-        } else {
-            back_stack_words_left.textContent = `/ 0`;
-            stappel_RueckSeite.innerText = text.slice(0, MAX_TEXT_LENGTH);
-        };
-    };
-});
+};
 
 stappel_VorderSeite.addEventListener('keydown', (e) => {
     if (e.which != 13) {
@@ -70,7 +75,8 @@ document.onkeydown = (e) => {
         document.activeElement !== CTE_ContenteditableField &&
         document.activeElement !== mail_name_field &&
         document.activeElement !== mail_message_field &&
-        document.activeElement !== search_bar
+        document.activeElement !== search_bar &&
+        document.activeElement !== WriteMode_AcceptUserAnswer_btn
     ) {
         if (e.ctrlKey && e.which == 77) {
 

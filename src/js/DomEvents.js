@@ -502,7 +502,26 @@ stsTable_Item5.addEventListener('click', () => {
 
 //Other
 NavPen.addEventListener('click', () => {
-    NeuerStapel_VS.focus();
+    //Text von der karteikarte
+    var StInner = stappel_RueckSeite.children[0].textContent;
+    var StInner_vs = stappel_VorderSeite.children[0].textContent;
+
+    if (StInner != "" && StInner_vs != "") {
+
+        AddCardToStack();
+
+        ResetPlaceHolderToDefault();
+
+        back_stack_words_left.textContent = `/ 37`;
+        front_stack_words_left.textContent = `Letters left: 37`;
+    };
+
+    if (StInner_vs == "" || StInner == "" ||
+        StInner != "" && StInner_vs == "" ||
+        StInner != "" && StInner_vs == "front") {
+
+        NeuerStapel_VS.focus();
+    };
 
     CloseHeaderDropDown();
 });
@@ -746,4 +765,14 @@ extra_retry_btn.addEventListener('click', () => {
 //Playground -> All Cards Overview Window Search Button
 search_bar.addEventListener('keyup', () => {
     searchCard(search_bar.value);
+});
+
+logIn_btn.addEventListener('click', () => {
+    SetUpSmallPopUp('ok', 'aj', 'block', 'block', 'This feature is availible soon');
+});
+
+info_pp_close_btn.addEventListener('click', () => {
+    info_pop_up.style.display = 'none';
+    darkContainer.style.display = 'none';
+    localStorage.setItem(`sawUpdate_${window.App.version}`, true);
 });

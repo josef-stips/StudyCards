@@ -2,6 +2,7 @@ let stappel = document.getElementById('stappel');
 let stappelHeader = document.getElementById('stappel-header');
 let stappelUnderHead = document.getElementById('stappel-underhead');
 let header_StackDropDownMenu_btn = document.getElementById('header_StackDropDownMenu-btn');
+let logIn_btn = document.querySelector('#logIn-btn');
 
 let stappel_RueckSeite = document.getElementById('sr');
 let stappel_VorderSeite = document.getElementById('sv');
@@ -19,7 +20,7 @@ let darkContainer = document.getElementById('dark-webapp-con'); // Makes the com
 let SettingsWindow = document.getElementById('sts-popup');
 
 let SettingsWindowOpenButton = document.getElementById('OpenSettWindow');
-let NavPen = document.getElementById('Nav_createCard-Pen');
+let NavPen = document.getElementById('createCard-Pen');
 
 let MainContent = document.getElementById('main-content');
 let MainCon_InitialText = document.getElementById('initial-text');
@@ -243,6 +244,8 @@ let md02_selectOppo_cards_btn = document.querySelector('#md02-selectOppo-cards-b
 let file_namefield = document.querySelector('#file-namefield');
 let file_lastSave_field = document.querySelector('#file-lastSave-field');
 let cards_wrapper_question_mark = document.querySelector('#cards-wrapper-question-mark');
+let info_pp_close_btn = document.querySelector('#info-pp-close-btn');
+let info_pop_up = document.querySelector('.info-pop-up');
 //md02 info pop up
 let md02_info_pop_up = document.querySelector('.md02-info-pop-up');
 let md02_infoPopup_close_btn = document.querySelector('#md02-info-popup-close-btn');
@@ -333,7 +336,6 @@ for (i = 0; i < TableCells.length; i++) {
     };
 };
 
-
 //Default Settings
 if (TableCells.length >= 1) {
 
@@ -369,6 +371,18 @@ if (TableCells.length >= 1) {
     MainContent.style.display = 'none';
     SideMenuTable.style.display = 'none';
 
+};
+
+//check if user already saw update info pop up and clicked the close button 
+function UserSawInfoPopUp() {
+    //Check if user already was in the app since the latest update to see the "new update features" pop up
+    if(localStorage.getItem(`sawUpdate_${window.App.version}`)) {
+        info_pop_up.style.display = 'none';
+
+    } else {
+        info_pop_up.style.display = 'flex';
+        darkContainer.style.display = 'block';
+    };
 };
 
 //Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt

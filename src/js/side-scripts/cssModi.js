@@ -12,11 +12,13 @@ separator.addEventListener('animationend', () => {
 });
 
 title.addEventListener('animationend', () => {
-    setTimeout(() => {
+    let waitAni = setTimeout(() => {
         startscreen.classList.add('hide');
 
         setTimeout(() => {
             startscreen.style.display = 'none';
+
+            UserSawInfoPopUp();
         }, 700);
 
     }, 300);
