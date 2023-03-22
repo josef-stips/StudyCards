@@ -284,12 +284,7 @@ sdm_TrashIcon.addEventListener('click', () => {
 spu_YesButton.addEventListener('click', () => {
     SmallPopUp.style.display = 'none';
 
-    if (PlayMode == true) {
-        deleteAllCards();
-
-        PlayMode = false;
-
-    } else if (PlayMode == false &&
+    if (PlayMode == false &&
         pressed_DeleteAllStacks_butt == false &&
         pressed_DeleteCurrStack_butt == false &&
         pressed_ResetColors_butt == false &&
@@ -298,7 +293,8 @@ spu_YesButton.addEventListener('click', () => {
         pressed_transferCards_butt == false &&
         pressed_copyCards_butt == false &&
         pressed_savedFile_butt == false &&
-        pressed_small_pop_up == false) {
+        pressed_small_pop_up == false &&
+        pressed_deleteAllCards_butt == false) {
 
         darkContainer.style.display = 'none';
 
@@ -349,14 +345,16 @@ spu_YesButton.addEventListener('click', () => {
 
     } else if (pressed_small_pop_up == true) {
         pressed_small_pop_up = false;
+
+    } else if (pressed_deleteAllCards_butt == true) {
+
+        pressed_deleteAllCards_butt = false;
+        deleteAllCards();
     };
 })
 
 spu_NoButton.addEventListener('click', () => {
-    if (PlayMode == true) {
-        SmallPopUp.style.display = 'none';
-
-    } else if (PlayMode == false &&
+    if (PlayMode == false &&
         pressed_DeleteAllStacks_butt == false &&
         pressed_DeleteCurrStack_butt == false &&
         pressed_ResetColors_butt == false &&
@@ -365,7 +363,8 @@ spu_NoButton.addEventListener('click', () => {
         pressed_transferCards_butt == false &&
         pressed_copyCards_butt == false &&
         pressed_savedFile_butt == false &&
-        pressed_small_pop_up == false) {
+        pressed_small_pop_up == false &&
+        pressed_deleteAllCards_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -422,10 +421,16 @@ spu_NoButton.addEventListener('click', () => {
 
         SmallPopUp.style.display = 'none';
         pressed_small_pop_up = false;
+
+    } else if (pressed_deleteAllCards_butt == true) {
+
+        SmallPopUp.style.display = 'none';
+        pressed_deleteAllCards_butt = false;
     };
 })
 
 deleteAllCards_Button.addEventListener('click', () => {
+    pressed_deleteAllCards_butt = true;
     SetUpSmallPopUp('Yes', 'No', 'block', 'block', 'Do you really want to irrevocably delete all cards?');
 });
 
@@ -718,6 +723,10 @@ pg_showCardBelow_btn.addEventListener('click', () => {
 pg_ShowAllCards_btn.addEventListener('click', () => {
     ShowAllcardsWind.style.display = 'flex';
     CreateMiniCardListLoop();
+
+    setInterval(() => {
+        pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
+    }, 10);
 });
 
 side_nav_toggle_btn.addEventListener('click', () => {
@@ -732,4 +741,9 @@ md02_sidebar_close_btn.addEventListener('click', () => {
 
 extra_retry_btn.addEventListener('click', () => {
     StartRedoGame();
+});
+
+//Playground -> All Cards Overview Window Search Button
+search_bar.addEventListener('keyup', () => {
+    searchCard(search_bar.value);
 });

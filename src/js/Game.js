@@ -1,3 +1,5 @@
+let WriteMode_AcceptUserAnswer_btn = document.getElementById('input3');
+
 //While Playing
 let PlayMode = false; //Prüft sich der Spieler gerade ab?
 let Runde = 0; //Bei Welcher Karte befindet sich der Spieler gerade?
@@ -125,14 +127,15 @@ function reloadGame() {
 };
 
 function CardView() {
+    pgKarteiKarteRS.style.transition = 'none';
     if (UntenSichtbar_Boolean) {
                 
-        pgKarteiKarteRS.style.color = 'var(--front-color)'
-        pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)'
+        pgKarteiKarteRS.style.color = 'var(--front-color)';
+        pgKarteiKarteVS.style.color = 'rgba(255,255,255,0)';
 
     } else {
-        pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)'
-        pgKarteiKarteVS.style.color = 'var(--front-color)'
+        pgKarteiKarteRS.style.color = 'rgba(255,255,255,0)';
+        pgKarteiKarteVS.style.color = 'var(--front-color)';
     };
 };
 
@@ -143,8 +146,11 @@ function PlayModeIsActive() {
     pgKarteiKarteVS.style.color = 'var(--front-color)';
     pgShowCardsButton.style.display = 'none';
 
-    pgKannIchButton.style.display = 'block';
-    pgWiederhohlenButton.style.display = 'block';
+    //If current mode isn't write mode
+    if(CurrMode != Object.keys(UserPlayModes)[1]) {
+        pgKannIchButton.style.display = 'block';
+        pgWiederhohlenButton.style.display = 'block';
+    };
 
     pgObenSichtbarDiv.style.display = 'none';
     pgUntenSichtbarDiv.style.display = 'none';
@@ -224,13 +230,19 @@ function StartRedoGame() {
     pg_MainContent.style.display = 'block';
     pg_header_ini_Wrapper.style.display = 'none';
     pg_navHeader.style.display = 'block';
-
-    pgUntenSichtbarDiv.style.display = 'block';
-    pgObenSichtbarDiv.style.display = 'block';
     pgKannIchButton.style.display = 'none';
     pgWiederhohlenButton.style.display = 'none';
     pg_countdown_wrapper.style.display = 'none';
     extra_retry_btn.style.display = 'none'; 
+
+    if(CurrMode == Object.keys(UserPlayModes)[0]) { // Classic Mode
+        pgUntenSichtbarDiv.style.display = 'block';
+        pgObenSichtbarDiv.style.display = 'block';
+
+    } else if(CurrMode == Object.keys(UserPlayModes)[1]) { // Write Mode
+        pg_writeField.parentElement.style.display = "block";
+        WriteMode_AcceptUserAnswer_btn.focus();
+    };
 
     GameEnd = false;
     PlayMode = false;
@@ -426,6 +438,7 @@ function SwitchToMode() {
         case Object.keys(UserPlayModes)[1]: //Write Mode
 
         pg_writeField.parentElement.style.display = 'block';
+        WriteMode_AcceptUserAnswer_btn.focus();
         break;
 
         case Object.keys(UserPlayModes)[2]: //Multiple Choice Mode
@@ -439,3 +452,51 @@ function SwitchToMode() {
         break;
     };
 };
+
+let lastExecutionTime = 0;
+//This happens when user is in write mode and he enters his ansewer
+WriteMode_AcceptUserAnswer_btn.addEventListener('keyup' , (event) => {
+  //Sends user text 
+  //playground write mode
+    if (event.which == 13) {
+    // Überprüfen Sie, ob genügend Zeit vergangen ist, seit der Code zuletzt ausgeführt wurde
+    const now = Date.now();
+    if (now - lastExecutionTime > 1300) {
+    // Aktualisieren Sie die letzte Ausführungszeit auf die aktuelle Zeit
+    lastExecutionTime = now;
+
+    event.preventDefault();
+
+    window.App.SendStringToMain(pgKarteiKarteRS.querySelector('h3').textContent, input3.textContent)
+
+    input3.textContent = null;
+
+    //Waits till all things in back-end are done
+    let WaitToFinish = setInterval(() => {
+
+        //This function from "preload.js" returns an array with the the case if the users answer is correct and a color
+        //if result[0] = false it means that the users answer is correct and if it's true it's uncorrect
+        let result = window.App.updateRepeatState();
+
+        if (GameEnd == false) {
+            PlayModeIsActive();
+        };
+
+        //Animation
+        //result[1] is the color that gets returned in the function that is saved as the variable "result"
+        gsap.to(pgKarteiKarteRS, {duration: 0.10, color: result[1], onComplete: () => {
+
+            let WaitForAnimationAndContinue = setInterval(() => {
+                CardView();
+                SeeCard(result[0]);
+
+                clearInterval(WaitForAnimationAndContinue);
+            }, 1300)
+        }});
+
+        clearInterval(WaitToFinish);
+        
+            }, 100);
+        };
+    };
+});

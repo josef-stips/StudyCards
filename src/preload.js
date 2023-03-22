@@ -92,12 +92,13 @@ function ChangeRepeatState(state) {
     console.log(clicked_repeat_mainProc)
 };
 
-function updateRepeatState(FrontEndResult) {
-    let FER = FrontEndResult;
-    FER = clicked_repeat_mainProc;
+function updateRepeatState() {
+    if (clicked_repeat_mainProc) {
+        return [clicked_repeat_mainProc, 'red'];
 
-    console.log(clicked_repeat_mainProc)
-    return FER;
+    } else {
+        return [clicked_repeat_mainProc, 'green'];
+    };
 };
 
 //Communicate with renderer

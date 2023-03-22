@@ -2,9 +2,6 @@ import { settings } from "../side-scripts/MaxTextLength.js";
 
 const MAX_TEXT_LENGTH = settings.maxCardLen;
 
-// let front_remaining = settings.maxCardLen;
-// let back_remaining = settings.maxCardLen;
-
 //Fügt eine Karte einem Stapel hinzu
 stappel_RueckSeite.addEventListener('keydown', (e) => {
     //Text von der karteikarte
@@ -19,6 +16,8 @@ stappel_RueckSeite.addEventListener('keydown', (e) => {
 
         ResetPlaceHolderToDefault();
 
+        back_stack_words_left.textContent = `/ 37`;
+        front_stack_words_left.textContent = `Letters left: 37`;
     };
 
     if (e.key === 'Enter' && StInner_vs == "" ||
@@ -70,7 +69,8 @@ document.onkeydown = (e) => {
         document.activeElement !== NeuerStapel_VS &&
         document.activeElement !== CTE_ContenteditableField &&
         document.activeElement !== mail_name_field &&
-        document.activeElement !== mail_message_field
+        document.activeElement !== mail_message_field &&
+        document.activeElement !== search_bar
     ) {
         if (e.ctrlKey && e.which == 77) {
 

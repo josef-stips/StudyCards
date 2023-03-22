@@ -5,6 +5,8 @@ let header_StackDropDownMenu_btn = document.getElementById('header_StackDropDown
 
 let stappel_RueckSeite = document.getElementById('sr');
 let stappel_VorderSeite = document.getElementById('sv');
+let front_stack_words_left = document.querySelector('#front-stack-words-left');
+let back_stack_words_left = document.querySelector('#back-stack-words-left');
 
 let clsCloseButton = document.getElementById('cls-menu-button');
 
@@ -113,6 +115,8 @@ let ShowAllCardsWind_ClsButton = document.getElementById('showCards-WindButt');
 let ShowAllcardsWind = document.getElementById('allCardsWindow');
 let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[0];
 let AllCardsListWrapper_PopUp_Wind = document.getElementsByClassName('AllCardsList_popUp-window')[0];
+let search_bar = document.querySelector('.search-bar');
+let pgOverview_CardAmount = document.querySelector('#pgOverview-CardAmount');
 
 let deleteAllCards_Button = document.getElementById('deleteAllCards_Button');
 let EditCard_Button = document.getElementById('EditCard_Button');
@@ -198,6 +202,7 @@ let pressed_SendMail_butt = false;
 let pressed_transferCards_butt = false;
 let pressed_copyCards_butt = false;
 let pressed_savedFile_butt = false;
+let pressed_deleteAllCards_butt = false;
 //For all buttons which open a new small window in a window and nothing special should happen 
 let pressed_small_pop_up = false;
 
@@ -348,7 +353,7 @@ if (TableCells.length >= 1) {
 
     PlayGroundHeader.textContent = stackLocation;
     stappelHeader.textContent = `your ${stackLocation} stack`;
-    stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
     CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
 
     MainCon_InitialText.style.display = 'none';
@@ -368,6 +373,10 @@ if (TableCells.length >= 1) {
 
 //Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
 function AddCardToStack() {
+    //Text von der karteikarte
+    var StInner = stappel_RueckSeite.children[0].textContent;
+    var StInner_vs = stappel_VorderSeite.children[0].textContent;
+
     if (StInner != 'back' && StInner_vs != 'front' && StInner != '' && StInner_vs != '') {
 
         Karteikarten[`${stackLocation}`].vr.push(StInner);
@@ -377,7 +386,7 @@ function AddCardToStack() {
         pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
         pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
     
-        stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+        stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
 
         //Sets focus to the first field (Vorderseite)
         NeuerStapel_VS.focus();
@@ -883,6 +892,45 @@ function AcceptUserStackName() {
     };
 };
 
+//Playground -> All Cards Overview Window Search Bar Search function
+function searchCard(value) {
+    let FrontCards = Karteikarten[`${stackLocation}`].vs;
+    let BackCards = Karteikarten[`${stackLocation}`].vr;
+
+    //List with all cards
+    AllCardsListWrapper.textContent = null;
+
+    for (let i = 0; i < FrontCards.length; i++) {
+        let val = value.toLowerCase();
+        let card_f = FrontCards[i].toLowerCase();
+        let card_b = BackCards[i].toLowerCase();
+
+        if(card_f.includes(val)) {
+            //creates card
+            CreateListMiniCard(i);
+
+        } else if(card_b.includes(val)) {
+            //creates card
+            CreateListMiniCard(i);
+        
+        } else if(val == "") {
+            CreateListMiniCard(i);
+        };
+    };
+};
+
+//Combines all cards (front and back of the card)
+function combineAllCards(frontCards , backCards) {
+    let AllCards = [];
+
+    for (let i = 0; i < frontCards.length; i++) {
+        AllCards.push(frontCards[i]);
+        AllCards.push(backCards[i]);
+    };
+
+    return AllCards
+};
+
 function CheckIfNameAlreadyExists(NewName) {
     //Get all Stack names
     let names = []// example: names[0].textContent; Output: "first stack name"
@@ -991,7 +1039,7 @@ function TableCellEvent() {
         
             PlayGroundHeader.textContent = stackLocation;
             stappelHeader.textContent = `your ${stackLocation} stack`;
-            stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+            stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
         
             pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
             pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
@@ -1030,7 +1078,7 @@ function SetFocusToTable(TableCellInner , CardAmount) {
 
     PlayGroundHeader.textContent = stackLocation;
     stappelHeader.textContent = `your ${stackLocation} stack`;
-    stappelUnderHead.textContent = `Amount of the index cards: (${CardAmount})`;
+    stappelUnderHead.textContent = `Amount of the index cards: ${CardAmount}`;
     StackNameTitle.textContent = stackLocation;
 
     setTimeout(() => {
@@ -1062,7 +1110,7 @@ function deleteSingleIndexCard() {
         darkContainer.style.display = 'none';
     }
 
-    stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
 };
 
 //Removes all user selected cards from current stack
@@ -1089,7 +1137,7 @@ function SaveAndUpdate() {
     localStorage.setItem(`${stackLocation}_stapel_RS` , JSON.stringify(Karteikarten[`${stackLocation}`].vr));
         
     //When the user transfers cards to the current stack he is in , the html needs to update to show the new amount of cards
-    stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
     selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
 
 };
@@ -1108,7 +1156,7 @@ function deleteAllCards() {
     ShowAllcardsWind.style.display = 'none';
     darkContainer.style.display = 'none';
 
-    stappelUnderHead.textContent = `Amount of the index cards: (${Karteikarten[`${stackLocation}`].vs.length})`;
+    stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
 };
 
 //Deletes all cards
