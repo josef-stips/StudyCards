@@ -502,21 +502,6 @@ function SwitchToSelectedStack(aEl) {
     CloseHeaderDropDown();
 };
 
-//Gets the updated version of tableCells that only existed in localstorage
-function GetUpdatedStackTable(UpdatedChilds) {
-    let TableHTML = localStorage.getItem('UserTable');
-    let HTMLreceiver = document.createElement('table');
-    HTMLreceiver.innerHTML = TableHTML;
-
-    if (HTMLreceiver.querySelector('tbody') !== null) {
-        let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
-
-        for (const k of UpdatedTableList) {
-            UpdatedChilds.push(k.children[0])
-        };
-    };
-};
-
 //Deletes Chart Data from curr Stack
 function DeleteChartData() {
     //Curr Stack

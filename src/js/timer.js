@@ -85,11 +85,15 @@ function update_Timer() {
     }
 };
 
-function stop_Timer() {
+function stop_Timer(ConnectMode) { // Connect Mode : boolean
     if (timerIsOn) {
         clearInterval(timer);
 
-        if (Runde == Karteikarten[`${stackLocation}`].vs.length - 1) {
+        if (Runde == Karteikarten[`${stackLocation}`].vs.length - 1 && ConnectMode == undefined) {
+            save_UserTime(playTimer.textContent);
+        };
+
+        if (ConnectMode == true) {
             save_UserTime(playTimer.textContent);
         };
 

@@ -71,16 +71,22 @@
             <h2>Stack collection</h2>
 
             <div id="sdm-icons">
+                <i title="add a new topic" id="sdm-plus-topic-item" class="fa-solid fa-pen-to-square"></i>
                 <i title="add a new stack" id="sdm-plus-item" class="fa-solid fa-plus"></i>
                 <i title="delete current stack" id="sdm-x-item" class="fa-solid fa-x "></i>
                 <i title="delete all stacks" id="sdm-trash-item" class="fa-solid fa-trash-can"></i>
             </div>
 
-            <hr class="vertical-line">
         </div>
         <div class="table-wrapper">
             <table id="sdm-table">
             </table>
+
+            <div class="table-sub-topic">
+                <i class="fa-solid fa-caret-right"></i>
+                <p class="sub-topic-text">Französisch</p>
+            </div>
+
         </div>
 
         <!-- <tr>
@@ -91,6 +97,9 @@
         </tr> -->
         <a title="close" href="#" id="cls-menu-button" class="fa-solid fa-x " accesskey="k"></a>
     </div>
+
+    <!-- Pop up to create sub topic -->
+
 
     <!-- Pop Ups -->
 
@@ -463,6 +472,9 @@
 
         <div id="main-content">
             <div id="neuer-stappel">
+                <div id="stappel-head">
+                    <a title="create a new index card" href="#" class="fa-solid fa-pen fa-2x" id="createCard-Pen"></a>
+                </div>
                 <div id="sv">
                     <h3 class="NeuerStapel_UserShortInput" contenteditable data-placeholder="front" id="NeuerStapel_vs"></h3>
                 </div>
@@ -492,8 +504,7 @@
         </div>
 
         <!-- Just for flex box -->
-        <div class="stappel-right-div">
-            <a title="create a new index card" href="#" class="fa-solid fa-pen fa-2x" id="createCard-Pen"></a>
+        <div>
         </div>
     </div>
 
@@ -686,7 +697,7 @@
                     <li id="pg-classicMode-btn">- <i class="Mode-btn">Classic Mode</i> - Nothing to write just think and see if it's correct</li>
                     <li id="pg-writeMode-btn">- <i class="Mode-btn">Write Mode</i> - Type your Answer in a Text field</li>
                     <li id="pg-multipleChoiceMode-btn">- <i class="Mode-btn">Multiple Choice</i> - Select the right answer</li>
-                    <li id="pg-connectMode-btn">- <i class="Mode-btn">Connect Mode</i> - Connect the cards that belong together (Works only with a max. of 30 cards)</li>
+                    <li id="pg-connectMode-btn">- <i class="Mode-btn">Connect Mode</i> - Connect the cards that belong together by clicking them (Works only with a max. of 30 cards)</li>
                 </ul>
 
                 <h3 id="pg-ShowMode-title">Selected mode: Classic Mode (default)</h3>
@@ -710,12 +721,33 @@
             <!--Second Main Container-->
             <div id="pg-karteikarten-div">
                 <div class="pg-Karteikarte">
+                    <!-- If classic mode is on -->
+
                     <div id="pg-sv">
                         <h3 class="UserShortInput">front</h3>
                     </div>
                     <div id="pg-sr">
                         <h3 id="pg-back-card" class="UserShortInput">back</h3>
                     </div>
+
+                    <!-- If connect mode is on -->
+
+                    <div id="connect-cards-area">
+                        <div class="connect-cards-header-area">
+                            <p>Connect two cards each</p>
+                        </div>
+                        <div id="connect-FrontCards">
+                            <ul id="FrontCards-ul" class="ConnectMode-CardList">
+
+                            </ul>
+                        </div>
+                        <div id="connect-BackCards">
+                            <ul id="BackCards-ul" class="ConnectMode-CardList">
+
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
                 <hr id="pg-vl2" class="vertical-line">
             </div>
@@ -725,6 +757,7 @@
                     <button id="ShowAllCards-Button" class="bn30">Show all cards</button>
                 </div>
                 <div class="pg-sub-secondDiv">
+
                     <div class="ModeModify">
                         <div class="WriteMode-Modify">
                             <p contenteditable class="UserShortInput2" id="input3"></p>

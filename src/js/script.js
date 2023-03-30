@@ -45,6 +45,7 @@ let sdm_Icons = document.getElementById('sdm-icons');
 let sdm_TrashIcon = document.getElementById('sdm-trash-item');
 let sdm_XIcon = document.getElementById('sdm-x-item');
 let SideMenuAddButton = document.getElementById('sdm-plus-item');
+let sdm_plusTopic_item = document.querySelector('#sdm-plus-topic-item');
 
 let CreateTableElWindow = document.getElementById('CreateTableElWindow');
 
@@ -91,6 +92,9 @@ let pg_header_ini_Wrapper = document.querySelector('#pg-header-ini-Wrapper');
 let pg_navHeader = document.querySelector('#pg-nav-header');
 let pg_countdown = document.querySelector('#pg-countdown');
 let pg_countdown_wrapper = document.querySelector('#pg-countdown-wrapper');
+let connect_cards_area = document.querySelector('#connect-cards-area');
+let ConnectMode_FrontCards = document.querySelector('#FrontCards-ul');
+let ConnectMode_BackCards = document.querySelector('#BackCards-ul');
 
 let pgObenSichtbarDiv = document.getElementsByClassName('pg-oben-SichtbarDiv')[0];
 let pgUntenSichtbarDiv = document.getElementsByClassName('pg-unten-SichtbarDiv')[0];
@@ -754,7 +758,7 @@ function getEveryNth(arr, nth) {
   
     for (let i = 0; i < arr.length; i += nth) {
       result.push(arr[i]);
-    }
+    };
   
     return result;
 };
@@ -773,6 +777,20 @@ function shuffle(obj1, obj2) {
       obj2[index] = obj2[rnd];
       obj1[rnd] = tmp1;
       obj2[rnd] = tmp2;
+    };
+};
+
+// shuffles one array
+function shuffleSingle(obj1) {
+    var index = obj1.length;
+    var rnd, tmp1;
+  
+    while (index) {
+      rnd = Math.floor(Math.random() * index);
+      index -= 1;
+      tmp1 = obj1[index];
+      obj1[index] = obj1[rnd];
+      obj1[rnd] = tmp1;
     };
 };
 
@@ -881,17 +899,35 @@ function AbortUserStackName() {
     CTE_ContenteditableField.textContent = null;
 };
 
-function AcceptUserStackName() {
-    let result = CheckIfNameAlreadyExists(CTE_ContenteditableField.textContent);
-    //If result == true a stack with this name already exists
+let CreateSubTopic = false;
 
-    if(result && CTE_ContenteditableField.textContent != '') {
-        pressed_small_pop_up = true;
-        SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A stack with this name already exists');
+//When the user wants to create a new stack or sub topic for stacks and wants to confirm the name of it , this function gets called
+//It checks if the user wants to create a stack or a sub topic for stacks
+//It also checks if a stack/sub topic with this name is already existing
+function AcceptUserStackName() { 
+    // CreateSubTopic: Boolean; if false it creates a stack; if true it creates a sub topic for stacks
+
+    //If the user wants to create a stack
+    if(!CreateSubTopic) {
+        var result = CheckIfNameAlreadyExists(CTE_ContenteditableField.tetContent);
+        //If result == true a stack with this name already exists
+
+        if(result && CTE_ContenteditableField.textContent != '') {
+            pressed_small_pop_up = true;
+            SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A stack with this name already exists');
+        };
+
+    } else { // If the user wants to create a sub topic for stacks
+        var result_02 = CheckIfNameAlreadyExists_SubTopic(CTE_ContenteditableField.tetContent);
+
+        if(result_02 && CTE_ContenteditableField.textContent != '') {
+            pressed_small_pop_up = true;
+            SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A sub topic with this name already exists');
+        };
     };
 
-    if (CTE_ContenteditableField.textContent != '' && result == false) {
-        let Content = CTE_ContenteditableField.textContent
+    if (CTE_ContenteditableField.textContent != '' /*&& !result && !CreateSubTopic*/) {
+        let Content = CTE_ContenteditableField.textContent;
     
         CreateTableElement(Content);
     
@@ -1425,4 +1461,31 @@ FetchPreload();
 function CloseHeaderDropDown() {
     header_btn_clicked = true;
     toggleHeaderDropDownMenu();
+};
+
+//Gets the updated version of tableCells that only existed in localstorage
+function GetUpdatedStackTable(UpdatedChilds) {
+    let TableHTML = localStorage.getItem('UserTable');
+    let HTMLreceiver = document.createElement('table');
+    HTMLreceiver.innerHTML = TableHTML;
+
+    if (HTMLreceiver.querySelector('tbody') !== null) {
+        let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
+
+        for (const k of UpdatedTableList) {
+            UpdatedChilds.push(k.children[0])
+        };
+    };
+};
+
+//About side menu "sub topic" button 
+
+//Creates a sub topic with the name the user choosed
+function sdm_create_subTopic(name) {
+
+};
+
+//Checks if a sub topic with this name already exists
+function CheckIfNameAlreadyExists_SubTopic(text) {
+    
 };

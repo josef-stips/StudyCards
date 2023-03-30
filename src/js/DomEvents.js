@@ -531,6 +531,10 @@ ShowAllCardsWind_OpenButton.addEventListener('click', () => {
     darkContainer.style.display = 'block';
 
     CreateMiniCardListLoop();
+
+    setInterval(() => {
+        pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
+    }, 10);
 });
 
 ShowAllCardsWind_ClsButton.addEventListener('click', () => {
@@ -775,4 +779,15 @@ info_pp_close_btn.addEventListener('click', () => {
     info_pop_up.style.display = 'none';
     darkContainer.style.display = 'none';
     localStorage.setItem(`sawUpdate_${window.App.version}`, true);
+});
+
+sdm_plusTopic_item.addEventListener('click', () => {
+    CreateSubTopic = true;
+    darkContainer.style.display = 'block';
+    CreateTableElWindow.style.display = 'block';
+    CTE_ContenteditableField.focus();
+});
+
+connect_cards_area.addEventListener('click', () => {
+    CM_deselect_Card();
 });
