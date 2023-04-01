@@ -537,11 +537,13 @@ function DeleteChartData() {
     currentLocation02 = "";
     currentLocation03 = "";
     currentLocation04 = "";
+    currentLocation05 = "";
 
     delete times[CurrStack];
     delete ToRepeat[CurrStack] ;
     delete FromUserDate[CurrStack];
     delete CardsAmount[CurrStack];
+    delete UsedModes[CurrStack];
 
     //Sets Replacement Text
     GetTimeData();
