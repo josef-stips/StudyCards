@@ -227,17 +227,31 @@ const scales02 = {
     },
 };
 
+let isIn2ndChart = false;
 const plugin01 = {
     tooltip: {
         callbacks: {
             label: ((tooltipItem) => {
                 if (tooltipItem.dataset.label == `How often you clicked "repeat"`) {
+                    isIn2ndChart = true;
+
                     return `${tooltipItem.dataset.label} : ${tooltipItem.formattedValue}/${CardsAmount[CurrChartStack]['user_cardAmountNew'][tooltipItem.dataIndex]} Cards`;
                 } else {
+                    isIn2ndChart = false;
+
                     return `${tooltipItem.dataset.label}:${tooltipItem.formattedValue}`;
                 };
-            })
-        }
+            }),
+            afterBody: ((tooltipItem) => {
+                if (isIn2ndChart) {
+                    if (localStorage.getItem('UsedMode')) {
+                        let modes = JSON.parse(localStorage.getItem('UsedMode'));
+
+                        return `Used Mode - ${modes[CurrChartStack].user_usedMode[tooltipItem[0].dataIndex]}`;
+                    };
+                };
+            }),
+        },
     }
 }
 

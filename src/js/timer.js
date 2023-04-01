@@ -17,6 +17,8 @@ let ToRepeat = {};
 let FromUserDate = {};
 //How many Cards were existing on this date/point of time
 let CardsAmount = {};
+//What mode the user used at this round
+let UsedModes = {};
 
 //Deletes old localstorageItem
 if (localStorage.getItem('timesArray')) {
@@ -45,6 +47,12 @@ if (localStorage.getItem('AmountOfCards')) {
     let CardAm = JSON.parse(localStorage.getItem('AmountOfCards'));
 
     CardsAmount = CardAm;
+};
+
+if (localStorage.getItem('UsedMode')) {
+    let usedmode = JSON.parse(localStorage.getItem('UsedMode'));
+
+    UsedModes = usedmode;
 };
 
 //Real Stuff
@@ -214,7 +222,7 @@ function save_UserDate() {
 
 let currentLocation04;
 
-//Svaes the user card amount on a certain point of time
+//Saves the user card amount on a certain point of time
 function save_UserCardAmount() {
     if (stackLocation == currentLocation04) {
 
@@ -233,4 +241,29 @@ function save_UserCardAmount() {
 
     localStorage.setItem('AmountOfCards', JSON.stringify(CardsAmount));
     localStorage.setItem(`${stackLocation}_UserCardAmountNew`, JSON.stringify(CardsAmount[stackLocation]));
+
+    save_UserUsedMode();
+};
+
+let currentLocation05;
+
+//Saves the mode the user was in
+function save_UserUsedMode() {
+    if (stackLocation == currentLocation05) {
+
+        UsedModes[stackLocation].user_usedMode.push(CurrMode);
+
+    } else {
+
+        if (UsedModes[stackLocation] == null) {
+            UsedModes[stackLocation] = { 'user_usedMode': [] };
+        };
+
+        UsedModes[stackLocation].user_usedMode.push(CurrMode);
+
+        currentLocation05 = stackLocation;
+    };
+
+    localStorage.setItem('UsedMode', JSON.stringify(UsedModes));
+    localStorage.setItem(`${stackLocation}_user_usedMode`, JSON.stringify(UsedModes[stackLocation]));
 };

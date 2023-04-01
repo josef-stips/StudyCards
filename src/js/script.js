@@ -95,6 +95,9 @@ let pg_countdown_wrapper = document.querySelector('#pg-countdown-wrapper');
 let connect_cards_area = document.querySelector('#connect-cards-area');
 let ConnectMode_FrontCards = document.querySelector('#FrontCards-ul');
 let ConnectMode_BackCards = document.querySelector('#BackCards-ul');
+let multipleChoice_area = document.querySelector('#multiple-choice-area');
+let multipleChoice_back = document.querySelector('#multipleCards-back-ul');
+let multipleChoice_front = document.querySelector('#singleCard-front-ul');
 
 let pgObenSichtbarDiv = document.getElementsByClassName('pg-oben-SichtbarDiv')[0];
 let pgUntenSichtbarDiv = document.getElementsByClassName('pg-unten-SichtbarDiv')[0];
@@ -122,6 +125,8 @@ let AllCardsListWrapper = document.getElementsByClassName('AllCardsList')[0];
 let AllCardsListWrapper_PopUp_Wind = document.getElementsByClassName('AllCardsList_popUp-window')[0];
 let search_bar = document.querySelector('.search-bar');
 let pgOverview_CardAmount = document.querySelector('#pgOverview-CardAmount');
+let pg_ViewList = document.querySelector('.pg-ViewList');
+let selectCardViewTitle = document.querySelector('#selectCardView-title');
 
 let deleteAllCards_Button = document.getElementById('deleteAllCards_Button');
 let EditCard_Button = document.getElementById('EditCard_Button');
@@ -294,7 +299,7 @@ const ChangePlayMode = (Selected_Mode) => {
 
     UserPlayModes[Selected_Mode] = true;
 
-    pg_ShowMode_title.textContent = `Selected mode: ${Selected_Mode}`;
+    pg_ShowMode_title.textContent = `Selected mode - ${Selected_Mode}`;
 };
 
 //Contenteditable field from 'CreateTableElWindow'
@@ -1333,11 +1338,13 @@ function AllStacksDeleted() {
     currentLocation02 = "";
     currentLocation03 = "";
     currentLocation04 = "";
+    currentLocation05 = "";
     
     times = {};
     ToRepeat = {};
     FromUserDate = {};
     CardsAmount = {};
+    UsedModes = {};
 };
 
 //Sets up the Contet for the Small Alert PopUp
@@ -1374,11 +1381,13 @@ function ClearStorage() {
     currentLocation02 = "";
     currentLocation03 = "";
     currentLocation04 = "";
+    currentLocation05 = "";
     
     times = {};
     ToRepeat = {};
     FromUserDate = {};
     CardsAmount = {};
+    UsedModes = {};
 };
 
 function SetAppColorsToDefault() {
@@ -1413,11 +1422,13 @@ function ResetApp() {
     currentLocation02 = "";
     currentLocation03 = "";
     currentLocation04 = "";
+    currentLocation05 = "";
 
     times = {};
     ToRepeat = {};
     FromUserDate = {};
     CardsAmount = {};
+    UsedModes = {};
 
     stackLocation = "";
     CurrChartStack = "";
@@ -1488,4 +1499,9 @@ function sdm_create_subTopic(name) {
 //Checks if a sub topic with this name already exists
 function CheckIfNameAlreadyExists_SubTopic(text) {
     
+};
+
+// return random intenger
+function randomInt(from , to) {
+    return Math.floor(Math.random() * to) + from;
 };

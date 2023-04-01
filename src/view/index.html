@@ -25,6 +25,9 @@
 <script type="module" defer src="../js/side-scripts/ShortCuts.js"></script>
 <script defer src="../js/Chart.js"></script>
 <script defer src="../js/side-scripts/cssModi.js"></script>
+<script defer src="../js/playground_modes/ConnectMode.js"></script>
+<script defer src="../js/playground_modes/MultipleChoiceMode.js"></script>
+<script defer src="../js/playground_modes/WriteMode.js"></script>
 
 <script src="../libraries/smtp.js"></script>
 
@@ -694,21 +697,29 @@
             <div class="pg-ModeOverview">
                 <h2>Select Mode</h2>
                 <ul class="pg-ModeList">
-                    <li id="pg-classicMode-btn">- <i class="Mode-btn">Classic Mode</i> - Nothing to write just think and see if it's correct</li>
-                    <li id="pg-writeMode-btn">- <i class="Mode-btn">Write Mode</i> - Type your Answer in a Text field</li>
-                    <li id="pg-multipleChoiceMode-btn">- <i class="Mode-btn">Multiple Choice</i> - Select the right answer</li>
-                    <li id="pg-connectMode-btn">- <i class="Mode-btn">Connect Mode</i> - Connect the cards that belong together by clicking them (Works only with a max. of 30 cards)</li>
+                    <li id="pg-classicMode-btn"> <i class="Mode-btn">Classic Mode</i>
+                        <!-- - Nothing to write just think and see if it's correct-->
+                    </li>
+                    <li id="pg-writeMode-btn"> <i class="Mode-btn">Write Mode</i>
+                        <!-- - Type your Answer in a Text field-->
+                    </li>
+                    <li id="pg-multipleChoiceMode-btn"> <i class="Mode-btn">Multiple Choice</i>
+                        <!--- Select the right answer-->
+                    </li>
+                    <li id="pg-connectMode-btn"> <i class="Mode-btn">Connect Mode</i>
+                        <!--- Connect the cards that belong together by clicking them (Works only with a max. of 30 cards)-->
+                    </li>
                 </ul>
 
-                <h3 id="pg-ShowMode-title">Selected mode: Classic Mode (default)</h3>
+                <h3 id="pg-ShowMode-title">Selected mode - Classic Mode (default)</h3>
 
-                <h2>Select Card View</h2>
+                <h2 id="selectCardView-title">Select Card View</h2>
                 <ul class="pg-ViewList">
-                    <li class="pg-showCardAbove-btn"> - Show card above</li>
-                    <li class="pg-showCardBelow-btn"> - Show card below</li>
+                    <li class="pg-showCardAbove-btn"> Show card above</li>
+                    <li class="pg-showCardBelow-btn"> Show card below</li>
                 </ul>
 
-                <h3 id="pg-ShowCardView-title">Selected view: Above (recommended)</h3>
+                <h3 id="pg-ShowCardView-title">Selected view - Above (recommended)</h3>
 
             </div>
             <div class="pg-Overview-under-div">
@@ -743,6 +754,27 @@
                         </div>
                         <div id="connect-BackCards">
                             <ul id="BackCards-ul" class="ConnectMode-CardList">
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="multiple-choice-area">
+                        <div id="multiple-choice-header">
+                            Multiple Choice
+                        </div>
+                        <div class="multiple-cards-area">
+                            <ul id="multipleCards-back-ul" class="ConnectMode-CardList MultipleChoice-CardList">
+
+                            </ul>
+                        </div>
+                        <div class="MultipleChoice-middleDiv">
+                            <hr class="text-style-hr01">
+                            <p class="text-style-p">Choose the right card</p>
+                            <hr class="text-style-hr02">
+                        </div>
+                        <div class="single-card-area">
+                            <ul id="singleCard-front-ul" class="MultipleChoice-CardList">
 
                             </ul>
                         </div>

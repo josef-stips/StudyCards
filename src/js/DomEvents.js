@@ -730,18 +730,36 @@ pg_connectMode_btn.addEventListener('click', () => {
 });
 
 pg_Start_btn.addEventListener('click', () => {
-    StartGameCountDown();
+    if (CurrMode == 'Connect Mode' && Karteikarten[stackLocation].vs.length > 20) {
+        SetUpSmallPopUp('aj', 'ok', 'block', 'block', 'You can use the connect mode only with up to 20 Cards');
+        pressed_small_pop_up = true;
+    };
+
+    if (CurrMode == 'Multiple Choice Mode' && Karteikarten[stackLocation].vs.length < 10) {
+        SetUpSmallPopUp('aj', 'ok', 'block', 'block', 'You need minimum 10 Cards to play the Multiple Choice Mode');
+        pressed_small_pop_up = true;
+    };
+
+    if (CurrMode == 'Write Mode' ||
+        CurrMode == 'Classic Mode' ||
+        CurrMode == 'Multiple Choice Mode' && Karteikarten[stackLocation].vs.length >= 10 ||
+        CurrMode == 'Connect Mode' && Karteikarten[stackLocation].vs.length <= 20) {
+        StartGameCountDown();
+    };
 });
 
-pg_showCardAbove_btn.addEventListener('click', () => {
-    pg_ShowCardView_title.textContent = 'Selected view: Above';
-    UntenSichtbar_Boolean = false;
-});
-
-pg_showCardBelow_btn.addEventListener('click', () => {
-    pg_ShowCardView_title.textContent = 'Selected view: Below';
+function ShowViewBelowInPG() {
+    pg_ShowCardView_title.textContent = 'Selected view - Below';
     UntenSichtbar_Boolean = true;
-});
+};
+
+function ShowViewAboveInPG() {
+    pg_ShowCardView_title.textContent = 'Selected view - Above (recommended)';
+    UntenSichtbar_Boolean = false;
+};
+
+pg_showCardAbove_btn.addEventListener('click', ShowViewAboveInPG);
+pg_showCardBelow_btn.addEventListener('click', ShowViewBelowInPG);
 
 pg_ShowAllCards_btn.addEventListener('click', () => {
     ShowAllcardsWind.style.display = 'flex';

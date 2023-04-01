@@ -2175,20 +2175,36 @@ textarea {
 }
 
 .pg-ModeOverview {
+    margin: 3em 0 0 0;
     padding: 0.4em 0 0.9em 0.7em;
     display: flex;
     justify-content: start;
+    align-items: center;
     flex-direction: column;
     background-image: linear-gradient (to bottom right, var(--standard-dark-color-01), var(--standard-dark-color-02));
+    border-bottom: 1px solid var(--front-color);
+    border-top: 1px solid var(--front-color);
 }
 
 .pg-ModeOverview h2 {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .pg-ModeOverview ul {
-    margin: 0.35em 0 0 0.35em;
+    margin: 1.25em 0 0 0.35em;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#pg-ShowMode-title {
+    margin-top: 2em;
+}
+
+#selectCardView-title {
+    font-size: 30;
 }
 
 .pg-ModeOverview ul li {
@@ -2211,8 +2227,24 @@ textarea {
     margin: 2.1em 0 0 0;
 }
 
+.pg-ViewList {
+    margin-top: 0.75em;
+}
+
 .pg-ViewList li {
     margin: 0.425em 0 0 0;
+}
+
+.pg-ViewList li:first-child {
+    margin: 0 0 0 0;
+}
+
+#selectCardView-title {
+    transition: all 0.25s ease-in-out;
+}
+
+#pg-ShowCardView-title {
+    transition: all 0.25s ease-in-out;
 }
 
 #pg-countdown-wrapper {
@@ -2274,10 +2306,85 @@ textarea {
     justify-content: center;
 }
 
+#multiple-choice-area {
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom right, var(--bg-pop-up-gardiant-01), var(--bg-pop-up-gardiant-02));
+}
 
-/* #FrontCards-ul {}
+.multiple-cards-area {
+    height: 50%;
+    display: flex;
+    align-items: flex-start;
+    margin: 2em 0 0 0;
+    /* border-bottom: 1px solid var(--front-color); */
+}
 
-#BackCards-ul {} */
+.single-card-area {
+    height: 60%;
+    display: flex;
+    align-items: center;
+}
+
+#multiple-choice-header {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0.5em 0 0 0.5em;
+}
+
+.MultipleChoice-middleDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.text-style-hr01 {
+    width: 10%;
+    height: 0.1px;
+}
+
+.text-style-hr02 {
+    width: 70%;
+    height: 0.1px;
+}
+
+.text-style-p {
+    margin: -0.4em 0.7em 0 0.7em;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.MultipleChoice-CardList {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.MultipleChoice_frontCard {
+    width: max-content;
+    font-size: 30px;
+    border: 2px solid rgb(65, 105, 187);
+    border-style: solid;
+    text-align: center;
+    background-color: var(--mini-button-bg-color);
+    padding: 15.5px;
+    border-radius: 10px;
+    margin: 0.5em;
+    height: max-content;
+}
+
+.MultipleChoice_frontCard li {
+    background-color: var(--mini-button-bg-color);
+    padding: 15.5px;
+    border-radius: 10px;
+    border: 2px solid rgb(128, 128, 128);
+    /* grün : rgb(52, 143, 52) , grau : rgb(128 , 128 , 128) , blau : rgb(65, 105, 187)*/
+    border-style: dashed;
+    margin: 0.5em;
+    height: max-content;
+}
 
 
 /* Button design */
