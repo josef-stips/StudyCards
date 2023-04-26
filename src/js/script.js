@@ -3,6 +3,9 @@ let stappelHeader = document.getElementById('stappel-header');
 let stappelUnderHead = document.getElementById('stappel-underhead');
 let header_StackDropDownMenu_btn = document.getElementById('header_StackDropDownMenu-btn');
 let logIn_btn = document.querySelector('#logIn-btn');
+let adjustableHeader_btn = document.querySelector('#adjustable-header-btn');
+let appHeader = document.querySelector('.app-header');
+let mainSideNavigation = document.querySelector('#side-navigation');
 
 let stappel_RueckSeite = document.getElementById('sr');
 let stappel_VorderSeite = document.getElementById('sv');
@@ -262,6 +265,7 @@ let file_lastSave_field = document.querySelector('#file-lastSave-field');
 let cards_wrapper_question_mark = document.querySelector('#cards-wrapper-question-mark');
 let info_pp_close_btn = document.querySelector('#info-pp-close-btn');
 let info_pop_up = document.querySelector('.info-pop-up');
+let middleBigPopUpClass = document.querySelectorAll('.middleBig-popUp');
 //md02 info pop up
 let md02_info_pop_up = document.querySelector('.md02-info-pop-up');
 let md02_infoPopup_close_btn = document.querySelector('#md02-info-popup-close-btn');
@@ -1884,4 +1888,31 @@ function CheckIfCardExists(vs_card , rs_card) { // vs_card = front_card; rs_card
 // return random intenger
 function randomInt(from , to) {
     return Math.floor(Math.random() * to) + from;
+};
+
+// toggle main-app header visibility
+let HeaderDisplay = true;
+function toggleAppHeader() {
+    if (HeaderDisplay) {
+        HeaderDisplay = false
+        appHeader.style.display = 'none';
+        // design optimizing
+        adjustableHeader_btn.style.top = '0.7%';
+        MainContent.style.marginTop = '4em';
+        mainSideNavigation.style.marginTop = '1%';
+        middleBigPopUpClass[0].style.marginTop = '4em';
+        middleBigPopUpClass[1].style.marginTop = '4em';
+        middleBigPopUpClass[2].style.marginTop = '4em';
+
+    } else {
+        HeaderDisplay = true;
+        appHeader.style.display = 'flex';
+        // design optimizing
+        adjustableHeader_btn.style.top = '7%';
+        MainContent.style.marginTop = '2.3em';
+        mainSideNavigation.style.marginTop = '1.5%';
+        middleBigPopUpClass[0].style.marginTop = '0';
+        middleBigPopUpClass[1].style.marginTop = '0';
+        middleBigPopUpClass[2].style.marginTop = '0';
+    };
 };

@@ -850,3 +850,7 @@ theme_4.addEventListener('click', () => {
 cst_acceptName.addEventListener('click', () => {
     CST_AcceptSubTopicName();
 });
+
+adjustableHeader_btn.addEventListener('click', () => {
+    toggleAppHeader();
+});
