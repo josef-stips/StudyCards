@@ -29,15 +29,18 @@ function TryToAddCard(e) {
     var StInner_vs = stappel_VorderSeite.children[0].textContent;
 
     if (e.key === 'Enter' && StInner != "" && StInner_vs != "") {
-
         e.preventDefault();
 
-        AddCardToStack();
+        //Check if front/back card already exists
+        let CardAlreadyExists = CheckIfCardExists(StInner_vs, StInner);
 
-        ResetPlaceHolderToDefault();
+        if (!CardAlreadyExists) {
+            AddCardToStack();
+            ResetPlaceHolderToDefault();
 
-        back_stack_words_left.textContent = `/ 37`;
-        front_stack_words_left.textContent = `Letters left: 37`;
+            back_stack_words_left.textContent = `/ 37`;
+            front_stack_words_left.textContent = `Letters left: 37`;
+        };
     };
 
     if (e.key === 'Enter' && StInner_vs == "" ||

@@ -1854,6 +1854,33 @@ function deleteSubTopic(subtopic_el) {
     };
 };
 
+// When the user wants to add a card , 
+// this function checks if the front/back card the user wants to add already exists
+// to prevent bugs
+function CheckIfCardExists(vs_card , rs_card) { // vs_card = front_card; rs_card = back_card
+    let frontCards = Karteikarten[stackLocation].vs;
+    let backCards = Karteikarten[stackLocation].vr;
+
+    // Check if a similar front card already exists
+    for (const v of frontCards) {
+        if (v == vs_card) {
+            SetUpSmallPopUp('aj', 'ok', 'block', 'block', 'A card with this text already exists');
+            return true;// A card already exists so the user can't add anything
+        };  
+    };
+
+    // Check if a similar back card already exists
+    for (const b of backCards) {
+        if (b == rs_card) {
+            SetUpSmallPopUp('aj', 'ok', 'block', 'block', 'A card with this text already exists');
+            return true;// A card already exists so the user can't add anything
+        };  
+    };
+
+    //If none of these cases are true , it returns false by default
+    return false;
+};
+
 // return random intenger
 function randomInt(from , to) {
     return Math.floor(Math.random() * to) + from;
