@@ -535,9 +535,7 @@ ShowAllCardsWind_OpenButton.addEventListener('click', () => {
 
     CreateMiniCardListLoop();
 
-    setInterval(() => {
-        pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
-    }, 10);
+    pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
 });
 
 ShowAllCardsWind_ClsButton.addEventListener('click', () => {
@@ -767,9 +765,7 @@ pg_ShowAllCards_btn.addEventListener('click', () => {
     ShowAllcardsWind.style.display = 'flex';
     CreateMiniCardListLoop();
 
-    setInterval(() => {
-        pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
-    }, 10);
+    pgOverview_CardAmount.textContent = `${Karteikarten[stackLocation].vs.length} Cards`;
 });
 
 side_nav_toggle_btn.addEventListener('click', () => {
