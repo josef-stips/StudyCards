@@ -15,11 +15,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 <script defer src="../libraries/chart.umd.js"></script>
 
+<script defer src="../js/side-scripts/AppColor.js"></script>
 <script defer src="../js/script.js"></script>
 <script defer src="../js/Game.js"></script>
 <script defer src="../js/side-scripts/mds.js"></script>
 <script defer src="../js/DomEvents.js"></script>
-<script defer src="../js/side-scripts/AppColor.js"></script>
 <script defer src="../js/timer.js"></script>
 <script type="module" defer src="../js/side-scripts/MaxTextLength.js"></script>
 <script type="module" defer src="../js/side-scripts/ShortCuts.js"></script>
@@ -76,19 +76,40 @@
             <div id="sdm-icons">
                 <i title="add a new topic" id="sdm-plus-topic-item" class="fa-solid fa-pen-to-square"></i>
                 <i title="add a new stack" id="sdm-plus-item" class="fa-solid fa-plus"></i>
-                <i title="delete current stack" id="sdm-x-item" class="fa-solid fa-x "></i>
                 <i title="delete all stacks" id="sdm-trash-item" class="fa-solid fa-trash-can"></i>
             </div>
 
         </div>
         <div class="table-wrapper">
-            <table id="sdm-table">
+            <!-- <div table-sub-topic-index="1" class="table-sub-topic">
+                <i tablesubtopic-caret-btn-is-clicked="false" class="fa-solid fa-caret-right"></i>
+                <p class="sub-topic-text">Französisch</p>
+            </div> -->
+
+            <table class="sdm-table-layout" id="sdm-table">
             </table>
 
-            <div class="table-sub-topic">
-                <i class="fa-solid fa-caret-right"></i>
+            <!-- <div table-sub-topic-index="1" class="table-sub-topic">
+                <i tablesubtopic-caret-btn-is-clicked="false" class="fa-solid fa-caret-right tableSubTopic-caret-btn"></i>
                 <p class="sub-topic-text">Französisch</p>
-            </div>
+            </div> -->
+
+            <!-- <table class="sdm-table-layout" table-sb-index="1">
+                <tbody>
+                    <tr>
+                        <td>hello0</td>
+                    </tr>
+                    <tr>
+                        <td>hello1</td>
+                    </tr>
+                    <tr>
+                        <td>hello2</td>
+                    </tr>
+                    <tr>
+                        <td>hello3</td>
+                    </tr>
+                </tbody>
+            </table> -->
 
         </div>
 
@@ -455,6 +476,13 @@
     <!-- main content -->
     <div id="wrapper">
 
+        <!-- position:fixed -->
+        <div class="fixed-footer">
+            <p class="stack-info"><i title="delete this stack" id="sdm-x-item" class="fa-solid fa-trash-can"></i></p>
+            <span>|</span>
+            <p class="display-stack-theme"></p>
+        </div>
+
         <div id="side-navigation">
             <button class="mini-button" id="sn-transferCards-butt" title="copy and paste cards">
 
@@ -620,7 +648,7 @@
                     <h2 class="tab-subtitle"><i id="AppColorSettings-dropdown-btn" class="fa-solid fa-caret-right"></i> App Colors</h2>
 
                     <div class="child-Content">
-                        <button id="SetColorToDefault-Butt" class="classicbutton">Set Colors to default</button>
+                        <button id="SetColorToDefault-Butt" class="classicbutton">Reset default colors</button>
                     </div>
 
                     <h2 class="tab-subtitle"><i id="OtherSettings-dropdown-btn" class="fa-solid fa-caret-right"></i> Other</h2>
@@ -653,22 +681,67 @@
     </div>
 
     <div id="CreateTableElWindow">
-        <h2>Type in a name</h2>
-        <p contenteditable class="UserShortInput2" id="input2"></p>
+        <div class="CTE-header">
+            <h2>Create new stack</h2>
+            <i title="abort" id="cteAbortButton" class="fa-solid fa-x fa-x"></i>
+        </div>
+        <hr>
 
-        <nav>
-            <ul id="cteNav-links">
-                <li>
-                    <i title="confirm" id="cteAcceptName" class="fa-solid fa-check fa-2x"></i>
-                </li>
-                <li>
-                    <i title="abort" id="cteAbortButton" class="fa-solid fa-x fa-2x"></i>
-                </li>
-                <li>
-                    <i title="delete name" id="cteDeleteName" class="fa-solid fa-trash-can fa-2x"></i>
-                </li>
-            </ul>
-        </nav>
+        <div class="CTE_content-form">
+
+            <div class="CTE_Namefield">
+                <label for="input2">name of stack</label>
+                <div class="CTE_InputNamefield">
+                    <input type="text" id="input2" name="name" value="">
+                    <i title="delete name" id="cteDeleteName" class="fa-solid fa-trash-can"></i>
+                </div>
+            </div>
+
+            <div class="CTE_SubTopicfield">
+                <div class="CTE_SubTopic-header">
+                    <label>choose a sub topic</label>
+                    <i cte_subtopic-btn-isclicked="false" id="CTE_SubTopic-btn" class="fa-solid fa-caret-right"></i>
+                    <i id="displayed-subtopic"></i>
+                </div>
+
+                <div id="CTE-subtopic-dropdown">
+
+                </div>
+            </div>
+
+            <div class="CTE_Colorfield">
+                <label id="CTE_colorTheme-title" for="colorTheme-field">choose color theme</label>
+
+                <div class="CTE_colorTHEME-btn-wrapper">
+                    <div class="CTE-colortheme-btn" id="theme-1"></div>
+                    <div class="CTE-colortheme-btn" id="theme-2"></div>
+                    <div class="CTE-colortheme-btn" id="theme-3"></div>
+                    <div class="CTE-colortheme-btn" id="theme-4"></div>
+
+                </div>
+
+                <p id="CTE_colorTheme-untitle">choosed theme - No theme</p>
+            </div>
+        </div>
+
+        <div class="CTE_footer">
+            <button title="confirm" id="cteAcceptName" style="--clr:#FF44CC"><span>Create Stack <i class="fas fa-arrow-right"></i></span><i></i></button>
+        </div>
+    </div>
+
+    <div class="createSubTopic-popUp">
+        <div class="CST-header">
+            <h3>Create a sub topic</h3>
+            <i title="abort" id="cst-AbortButton" class="fa-solid fa-x fa-x"></i>
+        </div>
+        <label for="input4">name of the sub topic</label>
+        <div class="CST-content">
+            <input type="text" id="input4" name="name" value="">
+            <i title="delete name" id="cst-DeleteName" class="fa-solid fa-trash-can"></i>
+        </div>
+        <div class="CST-footer">
+            <button title="confirm" id="cst-acceptName" style="--clr:#FF44CC"><span>Create Sub Topic <i class="fas fa-arrow-right"></i></span><i></i></button>
+        </div>
     </div>
 
     <div id="play-ground">

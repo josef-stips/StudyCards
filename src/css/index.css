@@ -431,25 +431,30 @@ header a {
     color: var(--button-hover-color);
 }
 
-#sdm-table {
-    background-image: linear-gradient(to bottom right, var(--bg-table-gardiant-01), var(--bg-table-gardiant-02));
+.sdm-table-layout {
     width: 100%;
-    color: var(--front-color);
-    border-top: 1px solid var(--front-color);
-    border-bottom: 1px solid var(--front-color);
-    padding-top: 2.5px;
-    padding-bottom: 15px;
+    border-top: 2px solid grey;
 }
 
-#sdm-table tr td {
+.sdm-table-layout tbody {
+    display: block;
+    background-image: linear-gradient(to bottom right, var(--bg-table-gardiant-01), var(--bg-table-gardiant-02));
+    color: var(--front-color);
+    padding-top: 2.5px;
+    padding-bottom: 15px;
+    margin: 1em 0 0 2em;
+    width: 100%;
+    border-top: 3px dashed grey;
+}
+
+.sdm-table-layout tr td {
     text-align: start;
     transition: all 0.2s ease-in;
     font-size: 15px;
     padding-top: 10px;
-    margin-left: 1em;
 }
 
-#sdm-table tr td:hover {
+.sdm-table-layout tr td:hover {
     transition: all 0.2s ease-in;
     cursor: pointer;
     color: var(--table-cell-hover);
@@ -476,7 +481,6 @@ header a {
 #sdm-x-item:hover {
     cursor: pointer;
     transition: all 0.5 ease-in;
-    color: var(--button-hover-color);
 }
 
 .table-sub-topic {
@@ -607,7 +611,7 @@ header a {
 
 #initial-text {
     text-align: center;
-    margin: -27em 0 0 0;
+    margin: 15em 0 0 0;
     display: none;
 }
 
@@ -666,6 +670,39 @@ header a {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.display-stack-theme {
+    font-size: 22px;
+    color: var(--front-color);
+    font-weight: 500;
+    margin: 0;
+}
+
+.fixed-footer {
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    color: var(--front-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    min-width: 300px;
+    min-height: 27.5px;
+    margin: 0 0 0.5em 0.5em;
+    justify-content: start;
+    align-items: center;
+}
+
+.fixed-footer span {
+    margin: 0 0.7em 0 0.7em;
+}
+
+.stack-info {
+    font-size: 18.5px;
+    margin: 0 0 0 0;
+    padding: 0;
 }
 
 
@@ -1721,7 +1758,7 @@ header a {
 #sts-popup {
     width: 85%;
     height: 85vh;
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+    background-image: linear-gradient(to bottom right, rgb(26, 33, 36), rgb(45, 51, 57));
     z-index: 21200;
     left: 0;
     right: 0;
@@ -1744,7 +1781,7 @@ header a {
 #sts-main-content {
     width: 72.5%;
     height: 100%;
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+    background-image: linear-gradient(to bottom right, rgb(26, 33, 36), rgb(45, 51, 57));
 }
 
 #cls-sts-button {
@@ -1967,9 +2004,9 @@ textarea {
 /*********************USER-CREATE-NEW-TABLE-ELEMENT-POP-UP*********************/
 
 #CreateTableElWindow {
-    width: 30%;
-    height: 170px;
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+    width: 60%;
+    height: 50%;
+    background-image: linear-gradient(to bottom right, rgb(26, 33, 36), rgb(45, 51, 57));
     left: 0;
     right: 0;
     margin-left: auto;
@@ -1977,7 +2014,7 @@ textarea {
     bottom: 0;
     top: 0;
     margin-bottom: auto;
-    margin-top: 25em;
+    margin-top: 13em;
     position: absolute;
     box-shadow: 5px 5px 15px var(--border-color);
     z-index: 21200;
@@ -2042,6 +2079,323 @@ textarea {
     padding: 0.6em 0 0 0.1em;
     text-align: center;
     border-radius: 0.3em;
+}
+
+.CTE_Namefield {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0 0.5em;
+}
+
+.CTE_Namefield label {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+#input2 {
+    background-color: var(--color-invisible);
+    color: rgb(230, 230, 230);
+    outline: none;
+    border: none;
+    border-bottom: solid 1px var(--basic-bg-color);
+    padding: 0.7em 0 0.1em 0;
+    font-size: 17px;
+    width: 60%;
+}
+
+.CTE_content-form {
+    height: 68%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.CTE_colorTHEME-btn-wrapper {
+    width: 100%;
+    height: 3em;
+    margin: 0.75em 0 0 0;
+    background-color: rgb(19, 19, 19);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.CTE-colortheme-btn {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 100%;
+    margin: 0.2em;
+    margin-left: 0.4em;
+}
+
+.CTE-colortheme-btn:hover {
+    cursor: pointer;
+}
+
+.CTE_Colorfield {
+    margin: 0.75em 0 0 0;
+    width: 100%;
+    height: 40%;
+    font-size: 19px;
+    font-weight: 500;
+    padding: 0 0 0.5em 0;
+}
+
+#CTE_colorTheme-title {
+    margin-left: 0.5em;
+}
+
+#CTE_colorTheme-untitle {
+    margin: 0.5em 0 0 0.5em;
+}
+
+.CTE_SubTopicfield {
+    margin: 0.75em 0 0 0.5em;
+    width: 100%;
+    font-size: 19px;
+    font-weight: 500;
+    padding: 0 0 0.5em 0;
+}
+
+#theme-1 {
+    background-image: none;
+    background-color: grey;
+}
+
+#theme-2 {
+    background-image: linear-gradient(to bottom right, #2aac5c, #e58f61);
+}
+
+#theme-3 {
+    background-image: linear-gradient(to bottom right, #871717, #8c47d1);
+}
+
+#theme-4 {
+    background-image: linear-gradient(to bottom right, #b39937, #5bcd78);
+}
+
+.CTE_SubTopic-header {
+    display: flex;
+    flex-direction: row;
+}
+
+#CTE_SubTopic-btn {
+    transition: all 0.1s ease-out;
+    margin: 0.3em 0 0 0.3em;
+    font-size: 19px;
+}
+
+#CTE_SubTopic-btn:hover {
+    transition: all 0.1s ease-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#CTE-subtopic-dropdown {
+    display: none;
+    position: absolute;
+    background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
+    box-shadow: 1px 1px 7px var(--border-color);
+    min-width: 160px;
+    z-index: 8000;
+    top: 7.45em;
+    margin-left: 9em;
+    height: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex-direction: column;
+}
+
+#CTE-subtopic-dropdown li:hover {
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#CTE-subtopic-dropdown li {
+    color: var(--front-color);
+    padding: 12px 16px;
+    list-style: none;
+    display: block;
+}
+
+#displayed-subtopic {
+    margin: 0.11em 0 0 0.6em;
+}
+
+.CTE-header {
+    height: 7%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cteAbortButton {
+    transition: color 0.1s ease-out;
+    margin: 0 0.3em 0 0;
+    font-size: 22px;
+}
+
+#cteAbortButton:hover {
+    transition: color 0.1s ease-out;
+    cursor: pointer;
+    color: var(--button-hover-color);
+}
+
+.CTE_InputNamefield {
+    display: flex;
+    flex-direction: row;
+}
+
+#cteDeleteName {
+    margin: 1.7em 0 0 1em;
+    transition: all 0.15s ease;
+}
+
+#cteDeleteName:hover {
+    transition: all 0.15s ease;
+    cursor: pointer;
+    color: var(--button-hover-color);
+}
+
+.CTE_footer {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+}
+
+#cteAcceptName {
+    width: 150px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid var(--front-color);
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-block;
+    margin: 0 0 0 0.5em;
+    outline: none;
+    color: var(--front-color);
+}
+
+#cteAcceptName:hover {
+    transition: all 0.15s ease-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+
+/* ***********************************createSubTopic-popUp************************************* */
+
+.createSubTopic-popUp {
+    width: 40%;
+    height: 30%;
+    background-image: linear-gradient(to bottom right, rgb(26, 33, 36), rgb(45, 51, 57));
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+    top: 0;
+    margin-bottom: auto;
+    margin-top: 13em;
+    position: absolute;
+    box-shadow: 5px 5px 15px var(--border-color);
+    z-index: 21200;
+    color: var(--front-color);
+    text-align: left;
+    display: none;
+    flex-direction: column;
+}
+
+.createSubTopic-popUp label {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0.5em 0 0 0.5em;
+}
+
+.CST-header {
+    height: 12%;
+    border-bottom: 1px solid var(--front-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.CST-header h3 {
+    margin: 0.3em 0 0.3em 0.3em;
+    padding: 0;
+}
+
+.CST-content {
+    margin: 0 0 0 0.5em;
+    height: 28.5%;
+}
+
+.CST-footer {
+    height: 46.5%;
+    display: flex;
+    align-items: end;
+}
+
+#cst-AbortButton {
+    transition: all 0.15s ease;
+    font-size: 19px;
+    margin: 0 0.4em 0 0;
+}
+
+#cst-AbortButton:hover {
+    transition: all 0.15s ease;
+    cursor: pointer;
+    color: var(--button-hover-color);
+}
+
+#cst-acceptName {
+    width: 170px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid var(--front-color);
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-block;
+    margin: 0 0 0 0.5em;
+    outline: none;
+    color: var(--front-color);
+}
+
+#cst-acceptName:hover {
+    transition: all 0.15s ease-out;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#cst-DeleteName {
+    transition: all 0.15s ease;
+}
+
+#cst-DeleteName:hover {
+    transition: all 0.15s ease;
+    cursor: pointer;
+    color: var(--button-hover-color);
+}
+
+#input4 {
+    background-color: var(--color-invisible);
+    color: rgb(230, 230, 230);
+    outline: none;
+    border: none;
+    border-bottom: solid 1px var(--basic-bg-color);
+    padding: 0.7em 0 0.1em 0;
+    font-size: 17px;
+    width: 65%;
 }
 
 
@@ -2745,7 +3099,7 @@ textarea {
 .ShowCards-sideCon {
     width: 27.5%;
     height: 100%;
-    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
+    background-image: linear-gradient(to bottom right, rgb(26, 33, 36), rgb(45, 51, 57));
     border-right: 1px solid var(--front-color);
 }
 
@@ -3023,7 +3377,7 @@ textarea {
 }
 
 .colorful-text {
-    background: linear-gradient(to bottom right, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
+    background: linear-gradient(to bottom right, var(--button-hover-color), var(--third-front-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

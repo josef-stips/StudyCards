@@ -36,9 +36,6 @@ let SideMenuTable = document.getElementById('sdm-table');
 let SetColorToDefault_Butt = document.getElementById('SetColorToDefault-Butt');
 let ResetApp_Butt = document.getElementById('ResetApp-Butt');
 
-let ColorChangeUI_Area = document.getElementById('color-field-1');
-let EmailUI_Area = document.getElementsByClassName('form')[0];
-
 //SideMenuIcons and IconDiv
 let sdm_Icons = document.getElementById('sdm-icons');
 
@@ -70,7 +67,6 @@ let pgNavClickEl_3 = document.getElementById('pg-navClickEl-3');
 
 //pg INI elements 
 let pg_INI_close_btn = document.querySelector('#pg-INI-close-btn');
-let pg_ModeOverview = document.querySelector('.pg-Overview-wrapper');
 
 let pg_classicMode_btn = document.querySelector('#pg-classicMode-btn');
 let pg_writeMode_btn = document.querySelector('#pg-writeMode-btn');
@@ -117,7 +113,7 @@ let pgNochmalButton = document.getElementsByClassName('pg-nochmal-div')[0];
 let pgSpaeterButton = document.getElementsByClassName('pg-spaeter-div')[0];
 
 //Playground Mode elements 
-let pg_writeField = document.getElementsByClassName('UserShortInput2')[1];
+let pg_writeField = document.getElementsByClassName('UserShortInput2')[0];
 
 let ShowAllCardsWind_ClsButton = document.getElementById('showCards-WindButt');
 let ShowAllcardsWind = document.getElementById('allCardsWindow');
@@ -142,6 +138,22 @@ let stsTable_Item4 = document.getElementById('stsTable-Item4');
 let stsTable_Item5 = document.getElementById('stsTable-Item5');
 
 let sts_HeadTitle = document.getElementById('sts-head-title');
+let CTE_SubTopic_btn = document.querySelector('#CTE_SubTopic-btn');
+let CTE_subtopic_dropdown = document.querySelector('#CTE-subtopic-dropdown');
+let displayed_subtopic = document.querySelector('#displayed-subtopic');
+let table_wrapper = document.querySelector('.table-wrapper');
+let CTE_colorTheme_untitle = document.querySelector('#CTE_colorTheme-untitle');
+let display_stack_theme = document.querySelector('.display-stack-theme');
+let createSubTopic_popUp = document.querySelector('.createSubTopic-popUp');
+let cst_AbortButton = document.querySelector('#cst-AbortButton');
+let cst_DeleteName = document.querySelector('#cst-DeleteName');
+let cst_nameField = document.querySelector('#input4');
+let cst_acceptName = document.querySelector('#cst-acceptName');
+
+let theme_1 = document.querySelector('#theme-1');
+let theme_2 = document.querySelector('#theme-2');
+let theme_3 = document.querySelector('#theme-3');
+let theme_4 = document.querySelector('#theme-4');
 
 let sts_FirstContent = document.getElementById('first-content');
 let sts_SecondContent = document.getElementById('sec-content');
@@ -186,9 +198,6 @@ let CardsOfMaxCardstext = document.getElementById('CardsOfMaxCards-text');
 //Dark/Light Mode Button
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
-let r = document.querySelector(':root');
-let rs = getComputedStyle(r);
-
 //Variables for ShowAllCards Window
 
 let CheckButton_Blur = true;
@@ -196,8 +205,6 @@ let CheckButton_Blur = true;
 //Other importaant stuff
 let stackLocation = "";
 let CurrChartStack = "";
-
-let TableCells = [];
 
 //On the Settings Window there are buttons at the side with names
 //If you click on any of these this variable has the same name as the button you just clicked
@@ -303,33 +310,70 @@ const ChangePlayMode = (Selected_Mode) => {
 };
 
 //Contenteditable field from 'CreateTableElWindow'
-let CTE_ContenteditableField = document.getElementsByClassName('UserShortInput2')[0];
+let CTE_ContenteditableField = document.getElementById('input2');
+
+// important stack data
+//Stack theme
+let StackThemes = {
+    'No theme': ['', ''],
+    'Green Orange': ['#2aac5c', '#e58f61'],
+    'Blood Moon': ['#871717', '#8c47d1'],
+    'Spring Fragrance': ['#b39937', ' #5bcd78'],
+};
+
+// curr selected theme 
+let curr_selected_theme = 'No theme'; // No theme: default
+
+// All stacks with their theme
+let stackData = {
+    'themes': {
+
+    },
+};
 
 //SideTableMenu and important data
 
 // Checks if localstorage has some things stored
+if (localStorage.getItem('StackData')) {
+    stackData = JSON.parse(localStorage.getItem('StackData'));
+
+    console.log(stackData)
+};
 
 //Pusht die von der letzten Session gespeicherten Table Elemente in den Array 'TableCells'
 if (localStorage.getItem('UserTable')) {
+    SideMenuTable.style.display = 'inline-table';
+
     SideMenuTable.innerHTML = localStorage.getItem('UserTable');
-}
 
-if (document.getElementById('sdm-table').querySelector('tbody')) {
+    AddEvent_subTopic();
+} else {
+    SideMenuTable.style.display = 'none';
+};
 
-    let SingleTableEl = document.getElementById('sdm-table').querySelector('tbody').rows;
+// Gets all Cards from the app the user has created (from all sub topics)
+function Initialize_Stacks() {
+    let Allrows = [];
+    let subtopic_tables = SideMenuTable.querySelectorAll('tbody');
 
+    for (k of subtopic_tables) {
+        Allrows.push(k.rows);
+    };
 
-    for (i = 0; i < SingleTableEl.length; i++) {
-        TableCells.push(SingleTableEl[i].lastElementChild);
+    for (const i of Allrows) {
+        for (const h of i) {
+            TableCells.push(h.childNodes[0])
+        };
     };
 
     for (i = 0; i < TableCells.length; i++) {
         Karteikarten[TableCells[i].innerText] = {
             'vs': [],
             'vr': []
-        }
-    }
-}
+        };
+    };
+};
+Initialize_Stacks();
 
 for (i = 0; i < TableCells.length; i++) {
     if (localStorage.getItem(`${TableCells[0].innerText}_stapel_VS`) != null) {
@@ -341,7 +385,6 @@ for (i = 0; i < TableCells.length; i++) {
         for (m of JSON.parse(localStorage.getItem(`${TableCells[i].innerText}_stapel_RS`))) {
             Karteikarten[`${TableCells[i].innerText}`].vr.push(m);
         };
-
     };
 };
 
@@ -352,12 +395,15 @@ if (TableCells.length >= 1) {
     CurrChartStack = stackLocation;
 
     StackNameTitle.textContent = stackLocation
-
-    //Shows the right stack name in the progress window
+        //Shows the right stack name in the progress window
     stackInfoText.textContent = `Current Stack - ${stackLocation}`
+
+    document.querySelector('.fixed-footer').style.display = 'flex';
 
 } else {
     StackNameTitle.textContent = 'Your stack name';
+
+    document.querySelector('.fixed-footer').style.display = 'none';
 };
 
 if (TableCells.length >= 1) {
@@ -375,12 +421,20 @@ if (TableCells.length >= 1) {
     DefineValueForStackArray();
 
 } else {
- 
     MainCon_InitialText.style.display = 'block';
     MainContent.style.display = 'none';
-    SideMenuTable.style.display = 'none';
-
 };
+
+function ThemeForStack() {
+    let allStacks = getAllTable_trs();
+    
+    console.log(stackData.themes , stackLocation)
+    if (allStacks != [] && stackData.themes[stackLocation] != null) {
+        // Changes the body background with the stack theme
+        ChangeToStackTheme(stackLocation);
+    };
+};
+ThemeForStack();
 
 //check if user already saw update info pop up and clicked the close button 
 function UserSawInfoPopUp() {
@@ -394,7 +448,9 @@ function UserSawInfoPopUp() {
     };
 };
 
-//Wird beim drücken von 'stappel_Rückseite' "z.237" ausgeführt
+console.log(TableCells)
+
+//Wird beim drücken von 'stappel_Rückseite' ausgeführt
 function AddCardToStack() {
     //Text von der karteikarte
     var StInner = stappel_RueckSeite.children[0].textContent;
@@ -895,55 +951,78 @@ function ToggleContentEditableOfElements(boolean) {
 }
 
 function DeleteStackNameInPopUp() {
-    CTE_ContenteditableField.textContent = null;
+    CTE_ContenteditableField.value = null;
 };
 
 function AbortUserStackName() {
     CreateTableElWindow.style.display = 'none';
     darkContainer.style.display = 'none';
-    CTE_ContenteditableField.textContent = null;
+    CTE_ContenteditableField.value = null;
 };
 
-let CreateSubTopic = false;
+//number
+let SelectedSubTopic_dropDown;
 
-//When the user wants to create a new stack or sub topic for stacks and wants to confirm the name of it , this function gets called
-//It checks if the user wants to create a stack or a sub topic for stacks
-//It also checks if a stack/sub topic with this name is already existing
+//When the user wants to create a new stack and wants to confirm the name of it , this function gets called
+//It also checks if a stack with this name is already existing and if the user choosed a sub topic for it. 
+//If there is no sub topic , the user can't create a card
 function AcceptUserStackName() { 
-    // CreateSubTopic: Boolean; if false it creates a stack; if true it creates a sub topic for stacks
+    var result = CheckIfNameAlreadyExists(CTE_ContenteditableField.value);
+    //If result == true a stack with this name already exists
 
-    //If the user wants to create a stack
-    if(!CreateSubTopic) {
-        var result = CheckIfNameAlreadyExists(CTE_ContenteditableField.tetContent);
-        //If result == true a stack with this name already exists
-
-        if(result && CTE_ContenteditableField.textContent != '') {
-            pressed_small_pop_up = true;
-            SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A stack with this name already exists');
-        };
-
-    } else { // If the user wants to create a sub topic for stacks
-        var result_02 = CheckIfNameAlreadyExists_SubTopic(CTE_ContenteditableField.tetContent);
-
-        if(result_02 && CTE_ContenteditableField.textContent != '') {
-            pressed_small_pop_up = true;
-            SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A sub topic with this name already exists');
-        };
+    if(result && CTE_ContenteditableField.value != '') {
+        pressed_small_pop_up = true;
+        SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'A stack with this name already exists');
     };
 
-    if (CTE_ContenteditableField.textContent != '' /*&& !result && !CreateSubTopic*/) {
-        let Content = CTE_ContenteditableField.textContent;
+    if(CTE_ContenteditableField.value == "") {
+        pressed_small_pop_up = true;
+        SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , 'Type in a name for your stack');
+    };
+
+    if(displayed_subtopic.textContent == "" && CTE_ContenteditableField.value != '') {
+        pressed_small_pop_up = true;
+        SetUpSmallPopUp('oh' , 'ok' , 'block' , 'block' , `You need to choose a sub topic. There is no? Create one then!`);
+    };
+
+    if (CTE_ContenteditableField.value != '' && !result && displayed_subtopic.textContent != "") {
+        let Content = CTE_ContenteditableField.value;
+
+        // stack theme
+        stackData.themes[Content] = {[curr_selected_theme] : [StackThemes[curr_selected_theme][0] ,StackThemes[curr_selected_theme][1]]};
+        localStorage.setItem('StackData' , JSON.stringify(stackData));
     
-        CreateTableElement(Content);
+        // Content = name of the stack; displayed_subtopic.textContent = choosed sub topic table; 
+        // SelectedSubTopic_dropDown = which sub topic the user selected (index)
+        CreateTableElement(Content , displayed_subtopic.textContent , SelectedSubTopic_dropDown);
     
         CreateTableElWindow.style.display = 'none';
         darkContainer.style.display = 'none'; 
-        CTE_ContenteditableField.textContent = null;
+        CTE_ContenteditableField.value = null;
 
         CurrChartStack = stackLocation;
 
         GetTimeData();
         GetRepsData();
+    };
+};
+
+//When the user wants to create a new sub topic 
+function CST_AcceptSubTopicName() {
+    let name = cst_nameField.value;
+
+    //result = true: name exists, result = false: name doesn't exists
+    var result = CheckIfNameAlreadyExists_SubTopic(name);
+
+    if(name != '' && !result) {
+        createSubTopic_popUp.style.display = 'none';
+        darkContainer.style.display = 'none';
+
+        sdm_create_subTopic(name);
+
+    } else {
+        pressed_small_pop_up = true;
+        SetUpSmallPopUp('ok','aj','block','block','A sub topic with this name already exists');
     };
 };
 
@@ -1003,22 +1082,31 @@ function CheckIfNameAlreadyExists(NewName) {
 };
 
 //This function creates a contenteditable table element for the user | user_input is the name of the new stack
-function CreateTableElement(user_input) {
+function CreateTableElement(user_input , subtopicTable , subtopic_index) {
     let LastChildDataSet
+    let allSubTopics = getAllSubtTopics();
+    let subTopicTable = SideMenuTable.querySelector(`tbody[table_id="${subtopicTable}"]`);
 
-    if (TableCells.length >= 1 && SideMenuTable.getElementsByTagName('tbody').length >= 1) {
+    console.log(subTopicTable);
 
-        LastChildDataSet = document.getElementById('sdm-table').querySelector('tbody').lastElementChild.lastElementChild.getAttribute('data-table-index');
+    if (subTopicTable.textContent != "") {
+
+        LastChildDataSet = subTopicTable.lastElementChild.lastElementChild.getAttribute('data-table-index');
+
+        console.log('es existieren bereits mehrere Elemente')
     
-    } else if(TableCells.length <= 0 && SideMenuTable.getElementsByTagName('tbody').length <= 0) {
+    } else if(subTopicTable.textContent == "") {
         
         LastChildDataSet = 0;
+
+        console.log('es existierte noch kein element')
     };
+
+    console.log(LastChildDataSet)
 
     let UserCreatedName = document.createTextNode(`${user_input}`);
 
-    //Creates a new element with attributes
-
+    // Creates a new element with attributes
     let Usertr = document.createElement('tr');
     let Usertd = document.createElement('td');
 
@@ -1029,18 +1117,7 @@ function CreateTableElement(user_input) {
     Usertd.appendChild(UserCreatedName);
     Usertr.appendChild(Usertd);
 
-    if (TableCells.length >= 1 && SideMenuTable.getElementsByTagName('tbody').length >= 1) {
-
-        SideMenuTable.querySelector('tbody').appendChild(Usertr);
-
-    } else {
-
-        let t_tbody = document.createElement('tbody');
-
-        SideMenuTable.appendChild(t_tbody);
-
-        SideMenuTable.querySelector('tbody').appendChild(Usertr);
-    }
+    subTopicTable.appendChild(Usertr);
     
     let NewTableChild = document.getElementById(`${user_input}-table`);
 
@@ -1048,6 +1125,7 @@ function CreateTableElement(user_input) {
     TableCells.push(NewTableChild);
 
     SideMenuTable.style.display = 'inline-table';
+    document.querySelector('.fixed-footer').style.display = 'flex';
 
     //Calls function
     SaveTableElement(Usertd.textContent);
@@ -1063,13 +1141,14 @@ function CreateTableElement(user_input) {
 
 // Saves the User created table elements in localstorage
 function SaveTableElement(Inner) {
-    let UsTableSt = SideMenuTable.innerHTML; //User Created Table Elements
+    let UsTableSt = SideMenuTable.innerHTML; //User Created Table Elements with sub topics
 
     localStorage.setItem('UserTable', UsTableSt);
 
-    SetFocusToTable(Inner , 0);
+    if(Inner != undefined) {
+        SetFocusToTable(Inner , 0);
+    };
 };
-
 
 //This function adds an addEventlistener to every table element of the "TableCells" Array.
 function TableCellEvent() {
@@ -1077,6 +1156,8 @@ function TableCellEvent() {
         TableCells[i].addEventListener('click', () => {
 
             stackLocation = `${TableCells[i].textContent}`;
+
+            ChangeToStackTheme(stackLocation);
 
             //Gets Data from localstorage and push it into the right array
             if (localStorage.getItem(`${stackLocation}_stapel_VS`) != null) {
@@ -1107,6 +1188,10 @@ function TableCellEvent() {
 
             GetTimeData();
             GetRepsData();
+
+            setTimeout(() => {
+                SideMenu.style.width = '0';
+            } , 10);
         });
     };
 };
@@ -1139,6 +1224,8 @@ function SetFocusToTable(TableCellInner , CardAmount) {
     setTimeout(() => {
         SideMenu.style.width = '0';
     } , 140);
+
+    ChangeToStackTheme(stackLocation);
 };
 
 TableCellEvent();
@@ -1163,7 +1250,7 @@ function deleteSingleIndexCard() {
         PlayGround.style.display = 'none';
         ShowAllcardsWind.style.display = 'none';
         darkContainer.style.display = 'none';
-    }
+    };
 
     stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
 };
@@ -1225,69 +1312,132 @@ function DeleteAllStacks() {
         SideMenu.style.width = '0';
     } , 10);
 
+    // delete all stacks
+    deleteAllTable_trs();
 
-    if(SideMenuTable.querySelector('tbody') != null) {
-        SideMenuTable.removeChild(SideMenuTable.querySelector('tbody'))
-    };
-
-    SideMenuTable.style.display = 'none';
+    // SideMenuTable.style.display = 'none';
     MainContent.style.display = 'none';
     MainCon_InitialText.style.display = 'block';
 
     StackNameTitle.textContent = 'Your stack name';
 
     SetInIText_TransferWin();
+
+    // Updates the sideMenuTable in the localStorage
+    SaveTableElement();
+};
+
+// deletes all stacks from all tables in the sideMenuTable
+function deleteAllTable_trs() {
+    let allTables = SideMenuTable.querySelectorAll('tbody');
+
+    for (k of allTables) {
+        k.innerHTML = null;
+    };
+};
+
+// gets all stacks from all tables in the sideMenuTable
+function getAllTable_trs() {
+    let allTables = SideMenuTable.querySelectorAll('tbody');
+    let allStacks = [];
+
+    for (k of allTables) {
+        console.log(k)
+
+        for (const h of k.children) {
+            console.log(h)
+
+            allStacks.push(h);
+        };
+    };
+
+    return allStacks;
 };
 
 //Deletes the current stack
-function DeleteCurrentStack() {
-    let CurrStack = stackLocation;
-    let LiveTableList = SideMenuTable.querySelector('tbody').children
+function DeleteCurrentStack(StackToRem) {
+    let CurrStack;
 
-    if(LiveTableList.length == 1) {
+    //define stack to remove 
+    //It's the current selected stack by default but you can also use a parameter to show what stack you want to delete
+    if(StackToRem == undefined) {
+        CurrStack = stackLocation;
+    } else {
+        CurrStack = StackToRem;
+    };
+
+    let LiveTableList = SideMenuTable.querySelectorAll('tbody');
+
+    // If this stack was the last stack in the users app
+    let allTrs = getAllTable_trs();
+
+    if(allTrs.length == 1) {
         DeleteAllStacks();
-
+        console.log('delete everything!')
         return
     };
 
-    for(i=0;i < LiveTableList.length;i++) {
+    // If it isn't the last stack in the users app
+    LiveTableList.forEach(tbody => {
+        for(i=0;i < tbody.children.length;i++) {
+            if (tbody.children[i].innerText == CurrStack) {
+                // deletes
+                let childToRemove = tbody.children[i];
+                tbody.removeChild(childToRemove);
 
-        if (LiveTableList[i].innerText == CurrStack) {
-            removeSpecificNode(i, CurrStack);
+                removeSpecificNode(CurrStack);
+            };
         };
-    };
+    });
+
+    // deletes theme data of the stack to delete
+    delete stackData.themes[CurrStack];
 };
 
 //Removes a specific node from an element
-function removeSpecificNode(i , Stack) {
+function removeSpecificNode(Stack) {
     //Array of Table HTMlCollection 
-    let TableCellList = [...SideMenuTable.querySelector('tbody').children]
-
-    if (TableCellList.length > 1) {
-        TableCellList.splice(i , 1)
-
-    } else {
-        TableCellList.splice(i , 1)
-    };
-
-    //Clears Content from Table
-    SideMenuTable.querySelector('tbody').textContent = ``;
-
-    //Adds Content from the Array above to Table
-    for (let index = 0; index < TableCellList.length; index++) {
-        const element = TableCellList[index];
-
-        SideMenuTable.querySelector('tbody').appendChild(element);
-    };
-
-    //Removes Element in LocalStorage
-    localStorage.removeItem(`${Stack}_stapel_VS`);
-    localStorage.removeItem(`${Stack}_stapel_RS`);
+    let TableCellList = getAllTable_trs();
 
     //Reloads the UserTable in localStorage
     localStorage.setItem('UserTable' , SideMenuTable.innerHTML);
 
     if(TableCellList != []) SwitchToNextStack(TableCellList);
+
+    //Removes Element in LocalStorage
+    localStorage.removeItem(`${Stack}_UserTimesNew`);
+    localStorage.removeItem(`${Stack}_UserRepsNew`);
+    localStorage.removeItem(`${Stack}_UserCardAmountNew`);
+    localStorage.removeItem(`${Stack}_UserDateNew`);
+    localStorage.removeItem(`${Stack}_stapel_RS`);
+    localStorage.removeItem(`${Stack}_stapel_VS`);
+    localStorage.removeItem(`${Stack}_user_usedMode`);
+
+    if (localStorage.getItem('AmountOfCards')) {
+        let timesAN = JSON.parse(localStorage.getItem('timesArrayNew'));
+        let AmountOfCards = JSON.parse(localStorage.getItem('AmountOfCards'));
+        let UsedMode = JSON.parse(localStorage.getItem('UsedMode'));
+        let RepsItem = JSON.parse(localStorage.getItem('RepsItem'));
+        let DateItem = JSON.parse(localStorage.getItem('DateItem'));
+    
+        delete timesAN[Stack];
+        delete AmountOfCards[Stack]; 
+        delete UsedMode[Stack];
+        delete RepsItem[Stack];
+        delete DateItem[Stack];
+
+        localStorage.setItem('timesArrayNew', JSON.stringify(timesAN));
+        localStorage.setItem('AmountOfCards', JSON.stringify(AmountOfCards));
+        localStorage.setItem('UsedMode', JSON.stringify(UsedMode));
+        localStorage.setItem('RepsItem', JSON.stringify(RepsItem));
+        localStorage.setItem('DateItem', JSON.stringify(DateItem));
+    };
+
+    if(localStorage.getItem('StackData')) {
+        let StackData = JSON.parse(localStorage.getItem('StackData'));
+        delete StackData['themes'][Stack];
+        localStorage.setItem('StackData', JSON.stringify(StackData));
+    };
 };
 
 //Switches to the next stack in your table
@@ -1309,42 +1459,11 @@ function SwitchToNextStack(Array) {
         };
 
     } else if(Array.length <= 0) {
-        AllStacksDeleted();
+        ClearStorage();
     };
 
     //Close the DropDownMenu when it's open
     CloseHeaderDropDown();
-};
-
-
-//When all stacks are deleted , this function shows the right things in the document
-function AllStacksDeleted() {
-    stackLocation = "";
-    CurrChartStack = "";
-
-    SideMenuTable.style.display = 'none';
-    MainContent.style.display = 'none';
-    MainCon_InitialText.style.display = 'block';
-    StackNameTitle.textContent = 'Your stack name';
-
-    stackInfoText.textContent = 'Current Stack';
-
-    setTimeout(() => {
-        SideMenu.style.width = '0';
-    } , 10);
-
-    //From timer.js
-    currentLocation = "";
-    currentLocation02 = "";
-    currentLocation03 = "";
-    currentLocation04 = "";
-    currentLocation05 = "";
-    
-    times = {};
-    ToRepeat = {};
-    FromUserDate = {};
-    CardsAmount = {};
-    UsedModes = {};
 };
 
 //Sets up the Contet for the Small Alert PopUp
@@ -1362,15 +1481,26 @@ function SetUpSmallPopUp(butt1_Inner , butt2_Inner , SmallPopUpDisplay , darkCon
 //Bug fix
 ShowCards_SideContent.textContent = ``;
 
-//Other
+//Clears the app and the storage from all previous stack info etc.
+//It clears the app to its default point
 function ClearStorage() {
-    localStorage.removeItem('UserTable');
     localStorage.removeItem('timesArrayNew');
+    localStorage.removeItem('StackData');
+    localStorage.removeItem('AmountOfCards');
+    localStorage.removeItem('UsedMode');
+    localStorage.removeItem('RepsItem');
+    localStorage.removeItem('DateItem');
+
+    stackData = {'themes': {}};
 
     for (k in Karteikarten) {
         localStorage.removeItem(`${k}_UserTimesNew`);
+        localStorage.removeItem(`${k}_UserRepsNew`);
+        localStorage.removeItem(`${k}_UserCardAmountNew`);
+        localStorage.removeItem(`${k}_UserDateNew`);
         localStorage.removeItem(`${k}_stapel_RS`);
         localStorage.removeItem(`${k}_stapel_VS`);
+        localStorage.removeItem(`${k}_user_usedMode`);
     };
 
     stackLocation = "";
@@ -1388,34 +1518,30 @@ function ClearStorage() {
     FromUserDate = {};
     CardsAmount = {};
     UsedModes = {};
-};
 
-function SetAppColorsToDefault() {
-    localStorage.setItem('firstBackground' , "#528bff");
-    localStorage.setItem('secondBackground' , "#8575ff");
+    mainBGColor();
+    document.querySelector('.fixed-footer').style.display = 'none';
 
-    if (document.body.classList.contains('dark-mode')) {
+    // md02 things
+    md02_headerbarlist.textContent = null;
+    file_namefield.value = null;
+    file_lastSave_field.value = null;
 
-        r.style.setProperty('--bg-div-gardiant-01', "#528bff");
-        r.style.setProperty('--bg-div-gardiant-02', "#8575ff");
-        r.style.setProperty('--bg-gardiant-01', "#528bff");
-        r.style.setProperty('--bg-gardiant-02', "#8575ff");
-
-    } else {
-
-        r.style.setProperty('--bg-gardiant-01', "#528bff");
-        r.style.setProperty('--bg-gardiant-02', "#8575ff");
+    // check if the side menu table needs to disable visibility
+    let subtopics = getAllSubtTopics();
+    if(subtopics.length == 0) {
+        SideMenuTable.style.display = 'none';
     };
-
-    setColor(style1_Input, '--bg-gardiant-01', ColorField_1);
-    setColor(style2_Input, '--bg-gardiant-02', ColorField_2);
 };
 
+//Resets the app completely
 function ResetApp() {
     localStorage.clear();
 
     Karteikarten = {};
     TableCells = [];
+
+    stackData = {'themes' : {}};
 
     //From timer.js
     currentLocation = "";
@@ -1437,10 +1563,7 @@ function ResetApp() {
         SideMenu.style.width = '0';
     } , 10);
 
-
-    if(SideMenuTable.querySelector('tbody') != null) {
-        SideMenuTable.removeChild(SideMenuTable.querySelector('tbody'))
-    };
+    SideMenuTable.textContent = null;
 
     SideMenuTable.style.display = 'none';
     MainContent.style.display = 'none';
@@ -1454,8 +1577,13 @@ function ResetApp() {
     stackInfoText.textContent = 'Current Stack';
 
     SetAppColorsToDefault();
+
+    localStorage.setItem('sawUpdate_1.0.9', true);
+
+    document.querySelector('.fixed-footer').style.display = 'none';
 };
 
+//Displays the version of the app
 function FetchPreload() {
     if (window.App != undefined) {
         let version_field = document.getElementById('info-version_field');
@@ -1480,25 +1608,250 @@ function GetUpdatedStackTable(UpdatedChilds) {
     let HTMLreceiver = document.createElement('table');
     HTMLreceiver.innerHTML = TableHTML;
 
-    if (HTMLreceiver.querySelector('tbody') !== null) {
-        let UpdatedTableList = [...HTMLreceiver.querySelector('tbody').children];
+    if (HTMLreceiver.querySelectorAll('tbody')[0] !== null) {
+        let All_trs = [];
+        
+        for (const i of HTMLreceiver.querySelectorAll('tbody')) {
+            console.log(i,i.children)
 
-        for (const k of UpdatedTableList) {
-            UpdatedChilds.push(k.children[0])
+            for (const k of i.children) {
+                All_trs.push(k);// tr
+            };
+        };
+
+        for (const k of All_trs) {
+            UpdatedChilds.push(k.children[0]);// td
         };
     };
+
+    console.log(UpdatedChilds);
 };
+
+//Pushes stack data into the stack data array
+function PushStackData() {
+    let StacksEl = [];
+    let Stacks = [];
+    GetUpdatedStackTable(StacksEl);
+    for (const i of StacksEl) {
+        Stacks.push(i.textContent);
+    };
+
+    // console.log(Stacks)
+};
+PushStackData()
 
 //About side menu "sub topic" button 
 
+//gets all sub topics from the table in the side menu
+function getAllSubtTopics() {
+    let all_subTopics = [];
+
+    for (const i of SideMenuTable.children) {
+        if(i.getAttribute('table-sub-topic-index') != null) {
+            all_subTopics.push(i);
+        };  
+    };  
+
+    return all_subTopics
+};
+
+//When the user clicks the dropdown button and the dropdown gets displayed
+//All SubTopics get pushed into the dropdown
+function CTE_dropdown_DisplaySubTopics() {
+    let SubTopics = getAllSubtTopics();
+
+    CTE_subtopic_dropdown.textContent = null;
+
+    let children_count = 0;
+    for (const i of SubTopics) {
+        let subtopic_name = SubTopics[children_count].firstChild.lastChild.textContent;
+
+        let li = document.createElement('li');
+        li.setAttribute('subtopicdropdown_li_el' , `${children_count}`);
+        li.addEventListener('click' , function a() {
+            CTE_Select_SubTopic(this, subtopic_name);
+        });
+
+        li.append(subtopic_name);
+        console.log(subtopic_name)
+        CTE_subtopic_dropdown.appendChild(li);
+
+        children_count++;
+    };
+};
+
+function CTE_Select_SubTopic(subtopic , subtopic_name) {
+    CTE_SubTopic_btn.setAttribute('cte_subtopic-btn-isclicked', 'false');
+    CTE_SubTopic_btn.classList = 'fa-solid fa-caret-right';
+    CTE_SubTopic_btn.style.marginTop = '0.3em';
+    CTE_subtopic_dropdown.style.display = 'none';
+
+    displayed_subtopic.textContent = subtopic_name;
+
+    SelectedSubTopic_dropDown = subtopic.getAttribute('subtopicdropdown_li_el');
+
+    console.log(SelectedSubTopic_dropDown)
+};
+
+//User shoose stack theme
+function ChooseStackTheme(theme) {
+    switch (theme) {
+        case Object.keys(StackThemes)[0]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[0]}`;
+            curr_selected_theme = Object.keys(StackThemes)[0];
+            break;
+
+        case Object.keys(StackThemes)[1]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[1]}`;
+            curr_selected_theme = Object.keys(StackThemes)[1];
+            break;
+
+        case Object.keys(StackThemes)[2]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[2]}`;
+            curr_selected_theme = Object.keys(StackThemes)[2];
+            break;
+
+        case Object.keys(StackThemes)[3]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[3]}`;
+            curr_selected_theme = Object.keys(StackThemes)[3];
+            break;
+    
+        default:
+            break;
+    };
+};
+
 //Creates a sub topic with the name the user choosed
 function sdm_create_subTopic(name) {
+    let div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
+    div.className = 'table-sub-topic';
+    div.setAttribute('table-sub-topic-index' , '1');
 
+    let i = document.createElement('i');
+    i.setAttribute('tablesubtopic-caret-btn-is-clicked' , 'true');
+    i.className = 'fa-solid fa-caret-down';
+    i.addEventListener('click' , function a() {
+        toggleSubTopic(this); 
+    });
+
+    let i2 = document.createElement('i');
+    i2.className = 'fa-solid fa-trash';
+    i2.style.fontSize = '12px';
+    i2.style.marginTop = '0.575em';
+    i2.addEventListener('click' , function a() {
+        deleteSubTopic(this.parentElement.parentElement); // this.parentElement.parentElement = subtopic (main div)
+    });
+
+    let p = document.createElement('p');
+    let p_text = document.createTextNode(name);
+    p.className = 'sub-topic-text';
+    p.appendChild(p_text);
+
+    let flex_div0 = document.createElement('div');
+    flex_div0.style.display = 'flex';
+    flex_div0.style.flexDirection = 'row';
+
+    let tbody = document.createElement('tbody');
+    tbody.setAttribute('table_id' , name);
+
+    flex_div0.appendChild(i);
+    flex_div0.appendChild(i2);
+    flex_div0.appendChild(p);
+    div.appendChild(flex_div0);
+
+    SideMenuTable.style.display = 'block';
+    SideMenuTable.appendChild(div);
+    SideMenuTable.appendChild(tbody);
+
+    // Saves the complete table
+    SaveTableElement();
+};
+
+// User wants to close or to open the table of a sub topic
+function toggleSubTopic(subtopic) {
+    let subTopicName = subtopic.parentNode.parentNode.textContent;
+    let supTopicTable = SideMenuTable.querySelector(`tbody[table_id="${subTopicName}"]`);// grabs tbody with the correct attribute value
+
+    switch (subtopic.getAttribute('tablesubtopic-caret-btn-is-clicked')) {
+        case 'false':
+            
+            subtopic.className = 'fa-solid fa-caret-down';
+            subtopic.setAttribute('tablesubtopic-caret-btn-is-clicked' , 'true');
+
+            supTopicTable.style.display = 'block';
+            break;
+
+        case 'true':
+            
+            subtopic.className = 'fa-solid fa-caret-right';
+            subtopic.setAttribute('tablesubtopic-caret-btn-is-clicked' , 'false');
+
+            supTopicTable.style.display = 'none';
+            break;
+    };
+};
+
+//Adds every sub topic its event
+function AddEvent_subTopic() {
+    let SubTopics = getAllSubtTopics();
+
+    for (const k of SubTopics) {
+        let btn = k.firstChild.firstChild
+        let remove_btn = k.firstChild.firstChild.nextSibling;
+
+        btn.addEventListener('click' , function a() {
+            toggleSubTopic(btn); 
+        });
+        remove_btn.addEventListener('click' , function a() {
+            deleteSubTopic(this.parentElement.parentElement); 
+        });
+    };
 };
 
 //Checks if a sub topic with this name already exists
+// return true: A name already exists , return false: A name doesn't exists
 function CheckIfNameAlreadyExists_SubTopic(text) {
+    let SubTopics = getAllSubtTopics();
+
+    for (const i of SubTopics) {
+        let content = i.firstChild.lastChild.textContent;
+        if(content == text) {
+            return true;
+        };
+    };
+    return false;
+};
+
+// deletes single sub topic
+function deleteSubTopic(subtopic_el) {
+    // get the current tbody from the sub topic the user wants to remove
+    let table = SideMenuTable.querySelector(`tbody[table_id="${subtopic_el.firstChild.lastChild.textContent}"]`);
+    let allStacks_name = [];
     
+    // get all stacks from the sub topic to remove them
+    for (const i of table.children) {
+        let Stack = i.textContent
+
+        allStacks_name.push(Stack);
+        DeleteCurrentStack(Stack);        
+    };
+
+    console.log(allStacks_name)
+
+    // remove elements from html
+    SideMenuTable.removeChild(table);
+    SideMenuTable.removeChild(subtopic_el);
+
+    //check if this was the last sub topic with its stacks
+    if(SideMenuTable.innerHTML.trim().length <= 0) {// delete everything
+        DeleteAllStacks();
+        localStorage.removeItem('UserTable')
+
+    } else {// update table in localstorage
+        localStorage.setItem('UserTable' , SideMenuTable.innerHTML);
+    };
 };
 
 // return random intenger

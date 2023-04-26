@@ -71,7 +71,7 @@ function DeselectAllCards() {
     let cardList = [...document.getElementsByClassName('AllCardsList_popUp-window')[0].children];
 
     selected_cards_int = 0;
-    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length -1}`;
+    selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${cardList.length}`;
 
     for (let i = 0; i < cardList.length; i++) {
         const el = cardList[i];
@@ -152,18 +152,27 @@ function SetInIText_TransferWin() {
 
 //Copies the table from the side menu to the pop up window and modifies the copied table
 function GetStackTable() {
-    let Stacks = SideMenuTable.querySelector('tbody');
+    let Stacks = SideMenuTable.querySelectorAll('tbody');
+    let tbody = document.createElement('tbody');
+    let All_trs = [];
 
     //Copy Stacks from SideMenu to pop up window
     allStacks_table.textContent = null;
-    allStacks_table.appendChild(Stacks.cloneNode(true));
 
-    //pushes all cells in one array
-    let table_cells = [...allStacks_table.querySelector('tbody').children];
+    for (const i of Stacks) {
+        for (const h of i.childNodes) {
+            tbody.appendChild(h.cloneNode(true));
+            All_trs.push(h)
+        };
+    };
+
+    allStacks_table.appendChild(tbody)
+
+    let All_html_trs = [...allStacks_table.children];
 
     //remove className from all td elements
-    for (let i = 0; i < table_cells.length; i++) {
-        const e = table_cells[i];
+    for (let i = 0; i < All_html_trs.length; i++) {
+        const e = All_html_trs[i];
 
         for (let i = 0; i < e.children.length; i++) {
             const ele = e.children[i];
@@ -193,10 +202,10 @@ function addEventListenerToStackTable(e) {
 let selected_stacks_int = 0;
 
 function ToggleSelectOfCell(cell) {
-    switch (cell.getAttribute('CellIsSelected')) {
+    switch (cell.getAttribute('cellisselected')) {
         case 'false':
 
-            cell.setAttribute('CellIsSelected', 'true');
+            cell.setAttribute('cellisselected', 'true');
             cell.style.backgroundImage = "linear-gradient(to bottom right, var(--bg-table-gardiant-01), var(--bg-table-gardiant-02))";
 
             //Inccrease selected_cards variable
@@ -208,7 +217,7 @@ function ToggleSelectOfCell(cell) {
 
         case 'true':
 
-            cell.setAttribute('CellIsSelected', 'false');
+            cell.setAttribute('cellisselected', 'false');
             cell.style.backgroundImage = "";
 
             //Decrease selected_cards variable
@@ -230,15 +239,11 @@ function CopyCards() {
     let table_cells = [...allStacks_table.querySelector('tbody').children];
 
     for (let i = 0; i < table_cells.length; i++) {
-        const e = table_cells[i];
+        const ele = table_cells[i];
 
-        for (let i = 0; i < e.children.length; i++) {
-            const ele = e.children[i];
-
-            if (ele.getAttribute('cellisselected') == 'true') {
-                stacks.push(ele.parentElement)
-                ToggleSelectOfCell(ele);
-            };
+        if (ele.getAttribute('cellisselected') == 'true') {
+            stacks.push(ele)
+            ToggleSelectOfCell(ele);
         };
     };
 
@@ -298,15 +303,11 @@ function TransferCards() {
     let table_cells = [...allStacks_table.querySelector('tbody').children];
 
     for (let i = 0; i < table_cells.length; i++) {
-        const e = table_cells[i];
+        const ele = table_cells[i];
 
-        for (let i = 0; i < e.children.length; i++) {
-            const ele = e.children[i];
-
-            if (ele.getAttribute('cellisselected') == 'true') {
-                stacks.push(ele.parentElement)
-                ToggleSelectOfCell(ele);
-            };
+        if (ele.getAttribute('cellisselected') == 'true') {
+            stacks.push(ele)
+            ToggleSelectOfCell(ele);
         };
     };
 
@@ -494,6 +495,8 @@ function SwitchToSelectedStack(aEl) {
         stackInfoText.textContent = `Current Stack - ${stackLocation}`;
         
         CurrChartStack = stackLocation;
+
+        ChangeToStackTheme(stackLocation);
     };
 
     GetTimeData();
@@ -514,10 +517,21 @@ function DeleteChartData() {
     let RepsItem = JSON.parse(localStorage.getItem('RepsItem'));
 
     //Delete specific item
-    delete TimesArrayItem[CurrStack];
-    delete AmountOfCardsItem[CurrStack];
-    delete DateItem[CurrStack];
-    delete RepsItem[CurrStack];
+    if(TimesArrayItem != null) {
+        delete TimesArrayItem[CurrStack];
+    };
+
+    if(AmountOfCardsItem != null) {
+        delete AmountOfCardsItem[CurrStack];
+    };
+
+    if(RepsItem != null) {
+        delete RepsItem[CurrStack];
+    };
+
+    if(DateItem != null) {
+        delete DateItem[CurrStack];
+    };
 
     //Items from localStorage that need to remove
     localStorage.setItem('timesArrayNew' , JSON.stringify(TimesArrayItem));

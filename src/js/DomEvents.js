@@ -171,17 +171,18 @@ second_TimesProgress_Header_item.addEventListener('click', () => {
 });
 
 sn_transferCards_butt.addEventListener('click', () => {
-    md_PopUp_TransferCards.style.display = 'block';
     darkContainer.style.display = 'block';
 
     if (TableCells[0] != null) {
+        md_PopUp_TransferCards.style.display = 'block';
+
         CreateMiniCardListLoop_2();
         GetStackTable();
 
         selectedCards_Counter.textContent = `selected cards: ${selected_cards_int}/${Karteikarten[stackLocation].vs.length}`;
 
     } else {
-        SetInIText_TransferWin();
+        SetUpSmallPopUp('ok', 'aj', 'block', 'block', 'There is no stack availible');
     };
 
     //closes the header drop down menu when it's open
@@ -189,7 +190,6 @@ sn_transferCards_butt.addEventListener('click', () => {
 });
 
 sn_saveStack_butt.addEventListener('click', () => {
-    md_PopUp_DownloadCards.style.display = 'flex';
     darkContainer.style.display = 'block';
 
     //closes the header drop down menu when it's open
@@ -199,6 +199,8 @@ sn_saveStack_butt.addEventListener('click', () => {
     md02_stack_loc = stackLocation;
 
     if (TableCells[0] != null) {
+        md_PopUp_DownloadCards.style.display = 'flex';
+
         CreateMiniCardListLoop_3();
         GetStacks();
 
@@ -221,7 +223,8 @@ sn_saveStack_butt.addEventListener('click', () => {
         };
 
     } else {
-        SetInitialText_DownloadCardsWindow();
+        SetUpSmallPopUp('ok', 'aj', 'block', 'block', 'There is no stack availible which you could save');
+        // SetInitialText_DownloadCardsWindow();
     };
 });
 
@@ -260,7 +263,7 @@ SetColorToDefault_Butt.addEventListener('click', () => {
 sdm_XIcon.addEventListener('click', () => {
     if (TableCells.length >= 1) {
 
-        SetUpSmallPopUp('Yes', 'No', 'block', 'block', 'Do you really want to delete the current stack?');
+        SetUpSmallPopUp('Yes', 'No', 'block', 'block', 'Do you really want to delete this stack?');
 
         pressed_DeleteCurrStack_butt = true;
 
@@ -621,8 +624,8 @@ CTE_AbortButton.addEventListener('click', () => {
 
 CTE_DeleteButton.addEventListener('click', () => {
     DeleteStackNameInPopUp();
+    CTE_ContenteditableField.focus();
 })
-
 
 CTE_AcceptButton.addEventListener('click', () => {
     AcceptUserStackName();
@@ -631,11 +634,10 @@ CTE_AcceptButton.addEventListener('click', () => {
 SideMenuAddButton.addEventListener('click', () => {
     CreateTableElWindow.style.display = 'block';
     darkContainer.style.display = 'block';
-
-    //Sets focus to contenteditable area (so its comfortabler for the user to use the app)
     CTE_ContenteditableField.focus();
 
-})
+    displayed_subtopic.textContent = null;
+});
 
 SideMenuOpenButton.addEventListener('click', () => {
     SideMenu.style.width = '44vh';
@@ -800,12 +802,55 @@ info_pp_close_btn.addEventListener('click', () => {
 });
 
 sdm_plusTopic_item.addEventListener('click', () => {
-    CreateSubTopic = true;
     darkContainer.style.display = 'block';
-    CreateTableElWindow.style.display = 'block';
-    CTE_ContenteditableField.focus();
+    createSubTopic_popUp.style.display = 'flex';
+    cst_nameField.focus();
+    cst_nameField.value = null;
+});
+
+cst_AbortButton.addEventListener('click', () => {
+    darkContainer.style.display = 'none';
+    createSubTopic_popUp.style.display = 'none';
+});
+
+cst_DeleteName.addEventListener('click', () => {
+    cst_nameField.value = null;
+    cst_nameField.focus();
 });
 
 connect_cards_area.addEventListener('click', () => {
     CM_deselect_Card();
+});
+
+CTE_SubTopic_btn.addEventListener('click', () => {
+    if (CTE_SubTopic_btn.getAttribute('cte_subtopic-btn-isclicked') == 'false') {
+        CTE_SubTopic_btn.setAttribute('cte_subtopic-btn-isclicked', 'true');
+        CTE_SubTopic_btn.classList = 'fa-solid fa-caret-down';
+        CTE_SubTopic_btn.style.marginTop = '0.25em';
+        CTE_subtopic_dropdown.style.display = 'flex';
+        CTE_dropdown_DisplaySubTopics();
+
+    } else if (CTE_SubTopic_btn.getAttribute('cte_subtopic-btn-isclicked') == 'true') {
+        CTE_SubTopic_btn.setAttribute('cte_subtopic-btn-isclicked', 'false');
+        CTE_SubTopic_btn.classList = 'fa-solid fa-caret-right';
+        CTE_SubTopic_btn.style.marginTop = '0.3em';
+        CTE_subtopic_dropdown.style.display = 'none';
+    };
+});
+
+theme_1.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[0]);
+});
+theme_2.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[1]);
+});
+theme_3.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[2]);
+});
+theme_4.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[3]);
+});
+
+cst_acceptName.addEventListener('click', () => {
+    CST_AcceptSubTopicName();
 });

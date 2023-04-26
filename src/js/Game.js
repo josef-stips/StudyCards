@@ -196,8 +196,10 @@ function PlayModeIsNotActive() {
     //If user is in connect mode
     curr_SelPairs = 0;
 
-    pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
-    pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
+    if(PlayGround_Cards_VS != undefined && PlayGround_Cards_RS != undefined) {
+        pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
+        pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
+    };
 
     CardsOfMaxCardstext.textContent = `0/${Karteikarten[`${stackLocation}`].vs.length}`;
 
@@ -491,6 +493,7 @@ const ToClassicMode = () => {
     pgKarteiKarteRS.style.display = 'flex';
 
     pg_writeField.parentElement.style.display = 'none';
+
     connect_cards_area.style.display = 'none';
     multipleChoice_area.style.display = 'none';
 };

@@ -76,7 +76,9 @@ document.onkeydown = (e) => {
         document.activeElement !== mail_name_field &&
         document.activeElement !== mail_message_field &&
         document.activeElement !== search_bar &&
-        document.activeElement !== WriteMode_AcceptUserAnswer_btn
+        document.activeElement !== WriteMode_AcceptUserAnswer_btn &&
+        document.activeElement !== document.querySelector('#input2') &&
+        document.activeElement !== cst_nameField
     ) {
         if (e.ctrlKey && e.which == 77) {
 
