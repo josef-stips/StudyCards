@@ -223,6 +223,7 @@ let pressed_transferCards_butt = false;
 let pressed_copyCards_butt = false;
 let pressed_savedFile_butt = false;
 let pressed_deleteAllCards_butt = false;
+let pressed_deleteSubTopic = false;
 //For all buttons which open a new small window in a window and nothing special should happen 
 let pressed_small_pop_up = false;
 
@@ -1798,6 +1799,8 @@ function toggleSubTopic(subtopic) {
 };
 
 //Adds every sub topic its event
+let subtopic_toDelete;
+
 function AddEvent_subTopic() {
     let SubTopics = getAllSubtTopics();
 
@@ -1809,7 +1812,10 @@ function AddEvent_subTopic() {
             toggleSubTopic(btn); 
         });
         remove_btn.addEventListener('click' , function a() {
-            deleteSubTopic(this.parentElement.parentElement); 
+            subtopic_toDelete = this.parentElement.parentElement;
+
+            pressed_deleteSubTopic = true;
+            SetUpSmallPopUp('yes' , 'no' , 'block' , 'block' , 'Are you sure you wanna delete this sub topic?');
         });
     };
 };

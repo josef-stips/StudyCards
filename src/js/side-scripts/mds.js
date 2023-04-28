@@ -828,7 +828,7 @@ function SaveStackInSystem() {
     let PropAmount = Object.keys(Stackdata).length;
 
     if (PropAmount == 0) {
-        pressed_savedFile_butt = true;
+        pressed_small_pop_up = true;
         SetUpSmallPopUp('ok' , 'ah' , 'block' , 'block' , 'You first need to select cards you wanna save');
 
     } else if(PropAmount > 0) {

@@ -127,3 +127,11 @@ document.onkeydown = (e) => {
         // }
     };
 };
+
+// for creating sub topic
+document.querySelector('#input4').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        CST_AcceptSubTopicName();
+    };
+});

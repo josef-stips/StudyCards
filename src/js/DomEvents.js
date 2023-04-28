@@ -297,7 +297,8 @@ spu_YesButton.addEventListener('click', () => {
         pressed_copyCards_butt == false &&
         pressed_savedFile_butt == false &&
         pressed_small_pop_up == false &&
-        pressed_deleteAllCards_butt == false) {
+        pressed_deleteAllCards_butt == false &&
+        pressed_deleteSubTopic == false) {
 
         darkContainer.style.display = 'none';
 
@@ -353,6 +354,10 @@ spu_YesButton.addEventListener('click', () => {
 
         pressed_deleteAllCards_butt = false;
         deleteAllCards();
+
+    } else if (pressed_deleteSubTopic == true) {
+        pressed_deleteSubTopic = false;
+        deleteSubTopic(subtopic_toDelete);
     };
 })
 
@@ -367,7 +372,8 @@ spu_NoButton.addEventListener('click', () => {
         pressed_copyCards_butt == false &&
         pressed_savedFile_butt == false &&
         pressed_small_pop_up == false &&
-        pressed_deleteAllCards_butt == false) {
+        pressed_deleteAllCards_butt == false &&
+        pressed_deleteSubTopic == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -429,6 +435,10 @@ spu_NoButton.addEventListener('click', () => {
 
         SmallPopUp.style.display = 'none';
         pressed_deleteAllCards_butt = false;
+
+    } else if (pressed_deleteSubTopic == true) {
+        SmallPopUp.style.display = 'none'
+        pressed_deleteSubTopic = false;
     };
 })
 
