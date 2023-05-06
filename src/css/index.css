@@ -1367,6 +1367,37 @@ header a {
     color: var(--button-hover-color);
 }
 
+.md02-infoPop-up-main {
+    margin: 0 0.3em 0 0.4em;
+    user-select: none;
+}
+
+.md02-infoPop-up-main h4,
+h5 {
+    margin: 0 0 0 0;
+}
+
+#md02-infoPop-up-head-filesTab {
+    width: 100%;
+    height: 3em;
+    margin: 0.2em 0.2em 0 0.4em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#md02-info-popup-close-btn-filesTab {
+    font-size: 22px;
+    margin-right: 0.6em;
+    transition: color 0.1s ease-in;
+}
+
+#md02-info-popup-close-btn-filesTab:hover {
+    cursor: pointer;
+    transition: color 0.1s ease-in;
+    color: var(--button-hover-color);
+}
+
 
 /* save button style */
 
@@ -1493,13 +1524,13 @@ header a {
 
 #files-cards-area {
     margin: 1em 0 0 0;
-    height: 45em;
+    height: 41em;
     overflow: scroll;
 }
 
 #files-area {
     margin: 0.5em 0 0 0;
-    height: 46em;
+    height: 42em;
     overflow: scroll;
 }
 

@@ -963,8 +963,6 @@ function DisplayFileCards(FileObject, fileName) {
     
         Selected_FileCards = [];
         FileCards_SelectedCards_Amount = 0;
-    
-        console.log(Selected_FileCards)
     };
 };
 

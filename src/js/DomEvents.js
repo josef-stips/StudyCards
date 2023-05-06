@@ -927,3 +927,21 @@ md02_fileContent_ExportAll_SelectedCards_btn.addEventListener('click', function 
     clicked_ExportSelectedCards_btn = true;
     Export_FileCards_toStack();
 });
+
+files_wrapper_questionMark.addEventListener('click', function a() {
+    md02_filesTab_openInfo_Window();
+});
+
+// open files tab info button
+function md02_filesTab_openInfo_Window() {
+    md02_info_pop_up_FilesTab.style.display = 'block';
+};
+
+md02_info_popup_close_btn_filesTab.addEventListener('click', function a() {
+    md02_filesTab_closeInfo_Window();
+});
+
+// close files tab info button
+function md02_filesTab_closeInfo_Window() {
+    md02_info_pop_up_FilesTab.style.display = 'none';
+};

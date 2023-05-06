@@ -105,6 +105,8 @@ let md02_fileContent_ExportFileAs_Stack_btn = document.querySelector('#md02-file
 let md02_fileContent_ExportAll_SelectedCards_btn = document.querySelector('#md02-fileContent-ExportAll-SelectedCards');
 let CreateStack_footer_infoText = document.querySelector('#CreateStack-footer-infoText');
 let CTE_headerTitle = document.querySelector('#CTE-header-title');
+let files_wrapper_questionMark = document.querySelector('#files-wrapper-question-mark');
+let md02_info_popup_close_btn_filesTab = document.querySelector('#md02-info-popup-close-btn-filesTab');
 
 let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
 let pg_Start_btn = document.querySelector('#pg-Start-btn');
@@ -294,7 +296,8 @@ let info_pp_close_btn = document.querySelector('#info-pp-close-btn');
 let info_pop_up = document.querySelector('.info-pop-up');
 let middleBigPopUpClass = document.querySelectorAll('.middleBig-popUp');
 //md02 info pop up
-let md02_info_pop_up = document.querySelector('.md02-info-pop-up');
+let md02_info_pop_up = document.querySelectorAll('.md02-info-pop-up')[0];
+let md02_info_pop_up_FilesTab = document.querySelectorAll('.md02-info-pop-up')[1];
 let md02_infoPopup_close_btn = document.querySelector('#md02-info-popup-close-btn');
 
 let md02_selected_cards = 0;
