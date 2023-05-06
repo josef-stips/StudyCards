@@ -944,26 +944,28 @@ function DisplayFileData(FileObject) {
     };
 };
 
-// Displays the cards from a sertain file
+// Displays the cards from a certain file
 function DisplayFileCards(FileObject, fileName) {
-    // example: fileName -> Englisch.json; stackName -> Englisch
-    let stackName = fileName.slice(0,-5); 
-    // get the cards of the current stack from the file 
-    let FileData_vs = FileObject['Data'][fileName][stackName].vs;
-    let FileData_rs = FileObject['Data'][fileName][stackName].rs;
-    console.log(FileData_vs, FileData_rs)
-
-    // Inform user from which file the cards are
-    md02_FilesHeader_FileName_Displayer.textContent = fileName;
-    // Inform user how many cards this file has
-    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: 0/${FileData_vs.length}`;
-
-    CreateMiniCardListLoop_4(FileData_vs, FileData_rs, stackName);
-
-    Selected_FileCards = [];
-    FileCards_SelectedCards_Amount = 0;
-
-    console.log(Selected_FileCards)
+    if (fileName != undefined) {
+        // example: fileName -> Englisch.json; stackName -> Englisch
+        let stackName = fileName.slice(0,-5); 
+        // get the cards of the current stack from the file 
+        let FileData_vs = FileObject['Data'][fileName][stackName].vs;
+        let FileData_rs = FileObject['Data'][fileName][stackName].rs;
+        console.log(FileData_vs, FileData_rs)
+    
+        // Inform user from which file the cards are
+        md02_FilesHeader_FileName_Displayer.textContent = fileName;
+        // Inform user how many cards this file has
+        md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: 0/${FileData_vs.length}`;
+    
+        CreateMiniCardListLoop_4(FileData_vs, FileData_rs, stackName);
+    
+        Selected_FileCards = [];
+        FileCards_SelectedCards_Amount = 0;
+    
+        console.log(Selected_FileCards)
+    };
 };
 
 // delete single file
