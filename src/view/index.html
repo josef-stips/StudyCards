@@ -232,9 +232,14 @@
             </div>
             <hr>
             <table>
-                <tr>
+                <tr id="md02-stackOverview-tab">
                     <td>
                         stack overview
+                    </td>
+                </tr>
+                <tr id="md02-files-tab">
+                    <td>
+                        files
                     </td>
                 </tr>
             </table>
@@ -248,81 +253,141 @@
                 </div>
 
                 <div id="stack-wrapper">
-                    <div>
+                    <div id="stackHeader-el-01">
                         <i id="scrollToLeft-btn" class="fas fa-arrow-left"></i>
                     </div>
-                    <nav>
+                    <nav id="stackHeader-el-02">
                         <ul id="header-bar-list">
                         </ul>
                     </nav>
-                    <div>
+                    <div id="stackHeader-el-03">
                         <i id="scrollToRight-btn" class="fas fa-arrow-right"></i>
                     </div>
+
+                    <!-- Content for Files Tab -->
+                    <h3 id="md02-header-Text">All current saved files on your system</h3>
                 </div>
             </div>
 
             <div id="md02-main-content-wrapper">
-                <div id="cards-area">
+                <div class="md02-Tab-Content-01">
+                    <div id="cards-area">
 
-                    <div id="md02-currStackInfo-div">
-                        <div id="md02-infoDiv-innerWrapper">
-                            <h4 id="md02-selectedStack-shower">CurrStack | </h4>
-                            <h4 id="md02-selectedCards-counter">selected cards: 0/0</h4>
-                            <nav>
-                                <ul id="md02-info-div-header-list">
-                                    <li style="color:rgb(255, 255, 255);cursor: default;">
-                                        |
-                                    </li>
-                                    <li>
-                                        <i class="fa-regular fa-check-square" title="select opposite" id="md02-selectOppo-cards-btn"></i>
-                                    </li>
-                                    <li>
-                                        <i class="fa-solid fa-x" title="abort" id="md02-deselect-cards-btn"></i>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div id="md02-currStackInfo-div">
+                            <div id="md02-infoDiv-innerWrapper">
+                                <h4 id="md02-selectedStack-shower">CurrStack | </h4>
+                                <h4 id="md02-selectedCards-counter">selected cards: 0/0</h4>
+                                <nav>
+                                    <ul id="md02-info-div-header-list">
+                                        <li style="color:rgb(255, 255, 255);cursor: default;">
+                                            |
+                                        </li>
+                                        <li>
+                                            <i class="fa-regular fa-check-square" title="select opposite" id="md02-selectOppo-cards-btn"></i>
+                                        </li>
+                                        <li>
+                                            <i class="fa-solid fa-x" title="abort" id="md02-deselect-cards-btn"></i>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div id="cards-main-wrapper">
+                            <div id="cards-wrapper">
+                                <nav>
+                                    <ul id="md02-content-cards-list">
+
+                                    </ul>
+                                </nav>
+                            </div>
+                            <i id="cards-wrapper-question-mark" class="fa-solid fa-question"></i>
                         </div>
                     </div>
-
-                    <div id="cards-main-wrapper">
-                        <div id="cards-wrapper">
-                            <nav>
-                                <ul id="md02-content-cards-list">
-
-                                </ul>
-                            </nav>
+                    <div id="info-and-confi-area">
+                        <div id="user-setting">
+                            <!-- If File doesn't exists -->
+                            <div id="file-exist-warning-wrapper">
+                                <div id="fe-warning">
+                                    <i id="fe-excalamation-mark" class="fa-solid fa-exclamation"></i>
+                                    <p id="red-warning-text">something</p>
+                                </div>
+                            </div>
+                            <!-- If File exists -->
+                            <div id="file-exist-green-warning-wrapper">
+                                <div id="fe-green-warning">
+                                    <i id="fe-green-check-mark" class="fa-solid fa-check"></i>
+                                    <p id="green-warning-text">something</p>
+                                </div>
+                            </div>
+                            <!-- File exists but not everything is fine but it's still ok -->
+                            <div id="file-exist-yellow-warning-wrapper">
+                                <div id="fe-yellow-warning">
+                                    <i id="fe-yellow-check-mark" class="fa-solid fa-check"></i>
+                                    <p id="yellow-warning-text">something</p>
+                                </div>
+                            </div>
+                            <!-- form -->
+                            <form id="file-form">
+                                <div id="fileProper-wrapper">
+                                    <label for="file-namefield">name of file</label>
+                                    <input type="text" id="file-namefield" name="name" value="" disabled>
+                                    <label id="lastSave-label" for="file-lastSave-field">last save</label>
+                                    <input type="text" id="file-lastSave-field" name="name" value="" disabled>
+                                </div>
+                                <div>
+                                    <button type="button" id="save-button">save file</button>
+                                </div>
+                            </form>
                         </div>
-                        <i id="cards-wrapper-question-mark" class="fa-solid fa-question"></i>
                     </div>
                 </div>
-                <div id="info-and-confi-area">
-                    <div id="user-setting">
-                        <!-- If File doesn't exists -->
-                        <div id="file-exist-warning-wrapper">
-                            <div id="fe-warning">
-                                <i id="fe-excalamation-mark" class="fa-solid fa-exclamation"></i>
-                                <p>Your cards are not saved as a file. Select the cards you want to select and click "save file" to save them.</p>
+
+                <div class="md02-Tab-Content-02">
+                    <div id="files-wrapper">
+
+                        <div id="md02-filesInfo-div">
+                            <div class="md02-InfoInnerWrapper" id="FilesCard_firstHeaderWrapper">
+                                <span id="Files-count">Files: 0</span>
+                                <i id="files-wrapper-question-mark" class="fa-solid fa-question"></i>
                             </div>
                         </div>
-                        <!-- If File exists -->
-                        <div id="file-exist-green-warning-wrapper">
-                            <div id="fe-green-warning">
-                                <i id="fe-green-check-mark" class="fa-solid fa-check"></i>
-                                <p id="green-warning-text">You saved a few cards as a file. Click "saved files" in the side navigation to review the saved file.</p>
+
+                        <div id="files-main-wrapper">
+                            <div id="files-area">
+                                <nav>
+                                    <ul id="md02-content-files-list">
+
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
-                        <!-- form -->
-                        <form id="file-form">
-                            <div id="fileProper-wrapper">
-                                <label for="file-namefield">name of file</label>
-                                <input type="text" id="file-namefield" name="name" value="" disabled>
-                                <label id="lastSave-label" for="file-lastSave-field">last save</label>
-                                <input type="text" id="file-lastSave-field" name="name" value="" disabled>
+
+                    </div>
+
+                    <div id="file-content-wrapper">
+
+                        <div id="md02-filesContent-EditArea-Header">
+                            <div class="md02-InfoInnerWrapper">
+                                <span id="md02-filesContent-EditArea-Stack-displayer">Stack | </span>
+                                <span id="Cards-Of-Files-count">Cards: 0 - </span>
+                                <i title="Select opposite cards" id="md02-fileContent-SelectAllCards-btn" class="fa-regular fa-check-square md02FileContentHeaderItem"></i>
+                                <i title="Deselect cards" id="md02-fileContent-DeselectAllCards-btn" class="fa-solid fa-x md02FileContentHeaderItem"></i>
+                                <i title="Export file as a stack" id="md02-fileContent-ExportFile-As-Stack" class="fa-solid fa-file-arrow-down md02FileContentHeaderItem"></i>
+                                <i title="Export selected cards as a stack" id="md02-fileContent-ExportAll-SelectedCards" class="fa-solid fa-file-export md02FileContentHeaderItem"></i>
                             </div>
-                            <div>
-                                <button type="button" id="save-button">save file</button>
+                        </div>
+
+                        <div id="files-Cards-main-wrapper">
+                            <div id="files-cards-area">
+                                <nav>
+                                    <ul id="md02-content-files-cards-list">
+
+                                    </ul>
+                                </nav>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -683,7 +748,7 @@
 
     <div id="CreateTableElWindow">
         <div class="CTE-header">
-            <h2>Create new stack</h2>
+            <h2 id="CTE-header-title">Create new stack</h2>
             <i title="abort" id="cteAbortButton" class="fa-solid fa-x fa-x"></i>
         </div>
         <hr>
@@ -727,6 +792,7 @@
 
         <div class="CTE_footer">
             <button title="confirm" id="cteAcceptName" style="--clr:#FF44CC"><span>Create Stack <i class="fas fa-arrow-right"></i></span><i></i></button>
+            <p id="CreateStack-footer-infoText">By clicking "Create Stack" all cards from the file are automatically in the stack</p>
         </div>
     </div>
 

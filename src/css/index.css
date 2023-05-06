@@ -1069,9 +1069,97 @@ header a {
 
 #md02-main-content-wrapper {
     /*giga main div */
+    height: calc(93% - 5px);
+}
+
+.md02-Tab-Content-01 {
     display: flex;
     flex-direction: row;
     height: calc(92% - 1px);
+}
+
+.md02-Tab-Content-02 {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+#files-wrapper {
+    width: 50%;
+    height: 100%;
+    border-right: solid 1px var(--front-color);
+}
+
+#md02-filesInfo-div {
+    margin: 0.5em 0 0 0;
+    padding: 0 0 0.4em 0;
+    border-bottom: solid 1px var(--front-color);
+    color: var(--front-color);
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#md02-filesContent-EditArea-Header {
+    margin: 0.5em 0 0 0;
+    padding: 0 0 0.4em 0;
+    border-bottom: solid 1px var(--front-color);
+    color: var(--front-color);
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#file-content-wrapper {
+    width: 50%;
+    height: 100%;
+}
+
+#files-wrapper-question-mark {
+    transition: color 0.15s ease;
+    color: var(--front-color);
+    margin: -0.1em 0 0 0.4em;
+}
+
+#files-wrapper-question-mark:hover {
+    transition: color 0.15s ease;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+.md02-InfoInnerWrapper {
+    margin: 0 0 0 0.5em;
+}
+
+.md02FileContentHeaderItem {
+    margin-left: 0.25em;
+    transition: color 0.15s ease;
+}
+
+.md02FileContentHeaderItem:hover {
+    transition: color 0.15s ease;
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+.CardsFromFile_ReplacementText {
+    color: var(--front-color);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#FilesCard_firstHeaderWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 98%;
 }
 
 #cards-area {
@@ -1193,6 +1281,39 @@ header a {
     font-size: 15px;
     background-color: rgba(0, 127, 44, 0.285);
     border-radius: 10px;
+}
+
+#file-exist-yellow-warning-wrapper {
+    margin-left: 0.3em;
+    width: 95%;
+    display: none;
+}
+
+#fe-yellow-check-mark {
+    margin: 0 0.6em 0 0;
+}
+
+#fe-yellow-warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: var(--front-color);
+    border: solid 1px rgb(251, 255, 0);
+    font-size: 15px;
+    background-color: rgb(102, 104, 9);
+    border-radius: 10px;
+}
+
+#md02-sidebar {
+    transition: all 0.1s ease-in;
+    display: block;
+}
+
+#md02-header-Text {
+    display: none;
+    margin: 0 0 0 0.6em;
+    color: var(--front-color);
 }
 
 
@@ -1331,7 +1452,7 @@ header a {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin: 0.5em 0 0 1em;
+    margin: 0.7em 0 0.9em 1em;
 }
 
 #md02-currStackInfo-div h4 {
@@ -1358,6 +1479,53 @@ header a {
 
 #md02-selectedStack-shower {
     white-space: pre;
+}
+
+#md02-content-files-list {
+    padding: 0;
+    margin: 0 0 0 1.25em;
+}
+
+#md02-content-files-cards-list {
+    padding: 0;
+    margin: 0.5em 0 0 1.25em;
+}
+
+
+/* li */
+
+.md02_Files-ListItem {
+    color: var(--front-color);
+    background-color: var(--mini-button-bg-color);
+    padding: 20px;
+    height: 2vh;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    margin: 1em 4em 0 0;
+    user-select: none;
+}
+
+.md02_Files-ListItem-Text {
+    padding: 0;
+    transition: color 0.15s ease;
+    margin: 0;
+}
+
+.md02_Files-ListItem-Text:hover {
+    cursor: pointer;
+    color: var(--button-hover-color);
+    transition: color 0.15s ease;
+}
+
+#md02_Files-ListItem-TrashCan {
+    transition: color 0.15s ease;
+}
+
+#md02_Files-ListItem-TrashCan:hover {
+    cursor: pointer;
+    color: var(--button-hover-color);
+    transition: color 0.15s ease;
 }
 
 
@@ -2304,6 +2472,13 @@ textarea {
     transition: all 0.15s ease-out;
     color: var(--button-hover-color);
     cursor: pointer;
+}
+
+#CreateStack-footer-infoText {
+    display: none;
+    margin: 0 0 0.7em 0.5em;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 

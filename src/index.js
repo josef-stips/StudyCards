@@ -128,7 +128,7 @@ ipcMain.on('checkfile_exists', (event, data) => {
         });
 
     } else {
-        event.sender.send("FileDoesnt'tExists", 'false');
+        event.sender.send("FileDoesn'tExists", 'false');
     };
 });
 
@@ -158,7 +158,6 @@ ipcMain.on('gotData', (event, data) => {
     });
 });
 
-
 //String similarity
 ipcMain.on('proveStringSimilarity', (event, data) => {
     let string1 = data.string1;
@@ -182,3 +181,55 @@ function StringSimilarity(String1, String2) {
     };
     return false;
 };
+
+//Give the front end all files with its data
+ipcMain.on("ReturnFiles", (event, args) => {
+    let FileNames = args['Names'];
+    let FilesData = args['Data'];
+
+    //File Path
+    const userPath = `${app.getPath('appData')}/studycards/App Files`;
+
+    fs.readdir(userPath, (err, files) => {
+        if (err) {
+            console.error(err);
+            return;
+        };
+
+        files.forEach(file => {
+            let filePath = path.join(userPath, file);
+
+            // Skip directories and non-JSON files
+            if (fs.statSync(filePath).isDirectory() || path.extname(filePath) !== '.json') {
+                return;
+            };
+
+            const data = fs.readFileSync(filePath, 'utf-8');
+
+            // pushes file data into that given file-data array
+            args['Names'].push(file);
+            args['Data'][file] = JSON.parse(data);
+        });
+        console.log(args, FilesData, FileNames)
+
+        let FileData = args;
+
+        event.sender.send('ReturnedFiles', FileData);
+    });
+});
+
+// delete File 
+ipcMain.on('DeleteFileFromSystem', (event, file) => { // arg: file name
+    //File Path of all Files where the file is located
+    const userPath = `${app.getPath('appData')}/studycards/App Files`;
+    const filePath = path.join(userPath, file);
+
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            console.log(err);
+            event.reply('DeleteFileFromSystem_Response', { success: false, message: `An error occured deleting file. error: ${err}` });
+        } else {
+            event.reply('DeleteFileFromSystem_Response', { success: true, message: 'deleted file successfully' });
+        };
+    });
+});

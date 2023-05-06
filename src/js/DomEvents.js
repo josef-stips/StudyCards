@@ -149,6 +149,10 @@ second_md_PopUp_Header_item.addEventListener('click', () => {
 second_DownloadCards_Header_item.addEventListener('click', () => {
     md_PopUp_DownloadCards.style.display = 'none';
     darkContainer.style.display = 'none';
+
+    Selected_FileCards = [];
+    FileCards_SelectedCards_Amount = 0;
+    opened_md02_popUp = false;
 });
 
 second_TimesProgress_Header_item.addEventListener('click', () => {
@@ -190,6 +194,7 @@ sn_transferCards_butt.addEventListener('click', () => {
 });
 
 sn_saveStack_butt.addEventListener('click', () => {
+    opened_md02_popUp = true;
     darkContainer.style.display = 'block';
 
     //closes the header drop down menu when it's open
@@ -207,9 +212,10 @@ sn_saveStack_butt.addEventListener('click', () => {
         md02_selectedCards_counter.textContent = `selected cards: ${md02_selected_cards}/${Karteikarten[stackLocation].vs.length}`;
         md02_selectedStacks_shower.textContent = stackLocation + " | ";
         file_namefield.value = stackLocation;
+        md02_stackOverview_tab.style.display = 'block';
 
         //Changes stackLocation from preload.js so both is the same
-        window.App.ChangeThisStackLoc(stackLocation);
+        window.App.ChangeThisStackLoc(stackLocation, Karteikarten);
         //Calls Function from preload.js
         //Checks if File with Stacklocation name is already saved
         window.App.CheckFileExists();
@@ -223,8 +229,11 @@ sn_saveStack_butt.addEventListener('click', () => {
         };
 
     } else {
-        SetUpSmallPopUp('ok', 'aj', 'block', 'block', 'There is no stack availible which you could save');
-        // SetInitialText_DownloadCardsWindow();
+        md_PopUp_DownloadCards.style.display = 'flex';
+        md02_OpenTab('none', 'flex', 'none', 'block');
+        OpenFilesTab();
+        // SetInitialText_DownloadCardsWindow();   
+        md02_stackOverview_tab.style.display = 'none';
     };
 });
 
@@ -298,7 +307,8 @@ spu_YesButton.addEventListener('click', () => {
         pressed_savedFile_butt == false &&
         pressed_small_pop_up == false &&
         pressed_deleteAllCards_butt == false &&
-        pressed_deleteSubTopic == false) {
+        pressed_deleteSubTopic == false &&
+        pressed_deleteFile_butt == false) {
 
         darkContainer.style.display = 'none';
 
@@ -358,6 +368,11 @@ spu_YesButton.addEventListener('click', () => {
     } else if (pressed_deleteSubTopic == true) {
         pressed_deleteSubTopic = false;
         deleteSubTopic(subtopic_toDelete);
+        darkContainer.style.display = 'none';
+
+    } else if (pressed_deleteFile_butt == true) {
+        pressed_deleteFile_butt = false;
+        md02_deleteFile(li_File);
     };
 })
 
@@ -373,7 +388,8 @@ spu_NoButton.addEventListener('click', () => {
         pressed_savedFile_butt == false &&
         pressed_small_pop_up == false &&
         pressed_deleteAllCards_butt == false &&
-        pressed_deleteSubTopic == false) {
+        pressed_deleteSubTopic == false &&
+        pressed_deleteFile_butt == false) {
 
         SmallPopUp.style.display = 'none';
         darkContainer.style.display = 'none';
@@ -437,8 +453,13 @@ spu_NoButton.addEventListener('click', () => {
         pressed_deleteAllCards_butt = false;
 
     } else if (pressed_deleteSubTopic == true) {
-        SmallPopUp.style.display = 'none'
+        darkContainer.style.display = 'none';
+        SmallPopUp.style.display = 'none';
         pressed_deleteSubTopic = false;
+
+    } else if (pressed_deleteFile_butt == true) {
+        SmallPopUp.style.display = 'none';
+        pressed_deleteFile_butt = false;
     };
 })
 
@@ -643,6 +664,8 @@ SideMenuAddButton.addEventListener('click', () => {
     CreateTableElWindow.style.display = 'block';
     darkContainer.style.display = 'block';
     CTE_ContenteditableField.focus();
+    CTE_headerTitle.textContent = "Create new stack";
+    CreateStack_footer_infoText.style.display = 'none';
 
     displayed_subtopic.textContent = null;
 });
@@ -863,4 +886,44 @@ cst_acceptName.addEventListener('click', () => {
 
 adjustableHeader_btn.addEventListener('click', () => {
     toggleAppHeader();
+});
+
+//md02 stuff
+md02_stackOverview_tab.addEventListener('click', () => {
+    md02_OpenTab('flex', 'none', 'block', 'none');
+    CreateCardsForHeaderBar(stackLocation);
+});
+
+md02_files_tab.addEventListener('click', () => {
+    md02_OpenTab('none', 'flex', 'none', 'block');
+    OpenFilesTab();
+});
+
+// Open Tab in general
+function md02_OpenTab(Tab_dis_01, Tab_dis_02, stackheader, headerText) {
+    md02_Tab_Content_01.style.display = Tab_dis_01;
+    md02_Tab_Content_02.style.display = Tab_dis_02;
+    md02_sidebar.style.display = 'none';
+
+    md02_headerText.style.display = headerText;
+    stackHeader_el01.style.display = stackheader;
+    stackHeader_el02.style.display = stackheader;
+    stackHeader_el03.style.display = stackheader;
+};
+
+md02_fileContent_SelectAllCards_btn.addEventListener('click', function a() {
+    filesCards_SelectOppoCards();
+});
+
+md02_fileContent_DeselectAllCards_btn.addEventListener('click', function a() {
+    fileCards_Deselect_AllCards();
+});
+
+md02_fileContent_ExportFileAs_Stack_btn.addEventListener('click', function a() {
+    ExportFile_toStack();
+});
+
+md02_fileContent_ExportAll_SelectedCards_btn.addEventListener('click', function a() {
+    clicked_ExportSelectedCards_btn = true;
+    Export_FileCards_toStack();
 });

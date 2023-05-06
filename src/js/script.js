@@ -83,6 +83,28 @@ let side_nav_toggle_btn = document.querySelector('#side-nav-toggle-btn');
 let md02_sidebar = document.querySelector('#md02-sidebar');
 let md02_sidebar_close_btn = document.querySelector('#md02-sidebar-close-btn');
 let extra_retry_btn = document.querySelector('.extra-retry-btn');
+let md02_stackOverview_tab = document.querySelector('#md02-stackOverview-tab');
+let md02_files_tab = document.querySelector('#md02-files-tab');
+let md02_Tab_Content_01 = document.querySelector('.md02-Tab-Content-01');
+let md02_Tab_Content_02 = document.querySelector('.md02-Tab-Content-02');
+let greenWarningText = document.querySelector('#green-warning-text');
+
+let md02_headerText = document.querySelector('#md02-header-Text');
+let stackHeader_el01 = document.querySelector('#stackHeader-el-01');
+let stackHeader_el02 = document.querySelector('#stackHeader-el-02');
+let stackHeader_el03 = document.querySelector('#stackHeader-el-03');
+let FilesCount = document.querySelector('#Files-count');
+let md02_contentFilesList = document.querySelector('#md02-content-files-list');
+let filesArea = document.querySelector('#files-area');
+let md02_contentFilesCardsList = document.querySelector('#md02-content-files-cards-list');
+let md02_FilesHeader_FileName_Displayer = document.querySelector('#md02-filesContent-EditArea-Stack-displayer');
+let md02_FilesHeader_FileCards_Amount_Displayer = document.querySelector('#Cards-Of-Files-count');
+let md02_fileContent_SelectAllCards_btn = document.querySelector('#md02-fileContent-SelectAllCards-btn');
+let md02_fileContent_DeselectAllCards_btn = document.querySelector('#md02-fileContent-DeselectAllCards-btn');
+let md02_fileContent_ExportFileAs_Stack_btn = document.querySelector('#md02-fileContent-ExportFile-As-Stack');
+let md02_fileContent_ExportAll_SelectedCards_btn = document.querySelector('#md02-fileContent-ExportAll-SelectedCards');
+let CreateStack_footer_infoText = document.querySelector('#CreateStack-footer-infoText');
+let CTE_headerTitle = document.querySelector('#CTE-header-title');
 
 let pg_ShowMode_title = document.querySelector('#pg-ShowMode-title');
 let pg_Start_btn = document.querySelector('#pg-Start-btn');
@@ -202,8 +224,11 @@ let CardsOfMaxCardstext = document.getElementById('CardsOfMaxCards-text');
 let ColorSwitcher = document.getElementById('colorSwitcher');
 
 //Variables for ShowAllCards Window
-
 let CheckButton_Blur = true;
+
+// md02
+let opened_md02_popUp = false;
+let clicked_ExportSelectedCards_btn = false;
 
 //Other importaant stuff
 let stackLocation = "";
@@ -224,6 +249,7 @@ let pressed_copyCards_butt = false;
 let pressed_savedFile_butt = false;
 let pressed_deleteAllCards_butt = false;
 let pressed_deleteSubTopic = false;
+let pressed_deleteFile_butt = false;
 //For all buttons which open a new small window in a window and nothing special should happen 
 let pressed_small_pop_up = false;
 
@@ -661,7 +687,7 @@ function CreateMiniCardListLoop_2() {
         };
     
     } else {
-            SetInitialText_TransferCardsWindow();
+        SetInitialText_TransferCardsWindow();
     };
 };
 
@@ -732,10 +758,82 @@ function CreateMiniCardListLoop_3() {
         };
     
     } else {
-            SetInitialText_DownloadCardsWindow();
+        SetInitialText_DownloadCardsWindow();
     };
 };
 
+//Cretaes list element fromt saved file for md02 window
+function CreateListMiniCard_4(numb , location, vs_cards, rs_cards ){
+    if (location === undefined) {
+        location = stackLocation
+    };
+
+    let liEl = document.createElement('li');
+    liEl.setAttribute('md02-filecards-list-index' , `${numb}`);
+
+    let DivEl = document.createElement('div');
+    DivEl.className = 'Einzel_Stapel_2';
+
+    let DivEl2 = document.createElement('div');
+    DivEl2.className = 'ministapel-Vorderseite';
+
+    let DivEl3 = document.createElement('div');
+    DivEl3.className = 'ministapel-Rückseite';
+
+    let h3_El1 = document.createElement('h3');
+    let h3_El1_text = document.createTextNode(`${vs_cards[numb]}`);
+
+    h3_El1.className = 'MiniCardInput';
+    h3_El1.style.margin = '3.9% 4% 0 4%';
+    h3_El1.style.fontSize = "15px"
+
+    let h3_El2 = document.createElement('h3');
+    let h3_El2_text = document.createTextNode(`${rs_cards[numb]}`);
+
+    h3_El2.className = 'MiniCardInput';
+    h3_El2.style.margin = '3.9% 4% 0 4%';
+    h3_El2.style.fontSize = "15px"
+
+    let aEl = document.createElement('a');
+    aEl.id = 'md02-Cardmini-SelectionMark';
+    aEl.className = 'fa-solid fa-check fa-1x';
+    aEl.href = '#';
+    aEl.title = 'select';
+    aEl.setAttribute('md02-filesCard-IsSelected' , 'false');
+    aEl.addEventListener('click', function a() {
+        md02_SelectCard_FromFile(liEl, aEl); 
+    });
+    
+    DivEl.appendChild(DivEl2);
+    DivEl.appendChild(DivEl3);
+    DivEl3.appendChild(h3_El2);
+    h3_El1.appendChild(h3_El1_text);
+    h3_El2.appendChild(h3_El2_text);
+    DivEl.appendChild(aEl);
+    DivEl2.appendChild(h3_El1);
+    liEl.appendChild(DivEl);
+
+    md02_contentFilesCardsList.appendChild(liEl);
+};
+
+//decides how often the function above needs to call
+function CreateMiniCardListLoop_4(vs_cards, rs_cards, stackName) {
+    if (vs_cards.length > 0) {
+        
+        md02_contentFilesCardsList.textContent = null;
+    
+        let numb = 0;
+        for (i of vs_cards) {
+                
+            CreateListMiniCard_4(numb , stackName, vs_cards, rs_cards);
+        
+            numb++;
+        };
+    
+    } else {
+        SetInitialText_CardsFromFile();
+    };
+};
 
 //Button in the header (moon)
 ColorSwitcher.addEventListener('click' , () => {
@@ -961,8 +1059,14 @@ function DeleteStackNameInPopUp() {
 
 function AbortUserStackName() {
     CreateTableElWindow.style.display = 'none';
-    darkContainer.style.display = 'none';
+    if (!opened_md02_popUp) {
+        darkContainer.style.display = 'none';
+    };
     CTE_ContenteditableField.value = null;
+
+    if(clicked_ExportSelectedCards_btn) {
+        clicked_ExportSelectedCards_btn = false;
+    };
 };
 
 //number
@@ -1009,7 +1113,65 @@ function AcceptUserStackName() {
 
         GetTimeData();
         GetRepsData();
+
+        // The user wants to create a stack with cards from a file
+        if(opened_md02_popUp) {
+            // If the user creates a stack from the md02 and clicks the "create" btn 
+            if (!clicked_ExportSelectedCards_btn) { // If the user wants to create a stack with ALL cards from the file
+    
+                let FileCards = CardsFiles['Data'][md02_FilesHeader_FileName_Displayer.textContent][md02_FilesHeader_FileName_Displayer.textContent.slice(0,-5)];
+                let vs = FileCards['vs'];
+                let rs = FileCards['rs'];
+    
+                for (let i = 0; i < vs.length; i++) {
+                    const vs_card = vs[i];
+                    const rs_card = rs[i];
+    
+                    AddCardToStack_dynam(vs_card,rs_card);
+                };
+
+            } else {// If the user wants to create a stack with his selected cards from the file
+                let FileCards = Selected_FileCards[md02_FilesHeader_FileName_Displayer.textContent];
+
+                let vs = FileCards['vs'];
+                let rs = FileCards['rs'];
+    
+                for (let i = 0; i < vs.length; i++) {
+                    const vs_card = vs[i];
+                    const rs_card = rs[i];
+    
+                    AddCardToStack_dynam(vs_card,rs_card);
+                };
+            };
+
+            // default settings
+            md_PopUp_DownloadCards.style.display = 'none';
+            darkContainer.style.display = 'none';
+            opened_md02_popUp = false;
+            Selected_FileCards = [];
+            FileCards_SelectedCards_Amount = 0;
+
+            //Saves date when data was saved
+            localStorage.setItem(`${md02_FilesHeader_FileName_Displayer.textContent.slice(0,-5)}_lastSave` , todayDate);
+            //Updates html with it
+            file_lastSave_field.value = localStorage.getItem(`${md02_FilesHeader_FileName_Displayer.textContent.slice(0,-5)}_lastSave`);
+        };
     };
+};
+
+// Adds card to a stack dynamically
+function AddCardToStack_dynam(vs,rs) {
+    console.log(vs,rs)
+
+    Karteikarten[`${stackLocation}`].vr.push(rs);
+    Karteikarten[`${stackLocation}`].vs.push(vs);
+
+    pgKarteiKarteVS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vs[0]}`;
+    pgKarteiKarteRS.querySelector('h3').textContent = `${Karteikarten[`${stackLocation}`].vr[0]}`;
+
+    stappelUnderHead.textContent = `Amount of the index cards: ${Karteikarten[`${stackLocation}`].vs.length}`;
+
+    SaveStack();
 };
 
 //When the user wants to create a new sub topic 
@@ -1417,6 +1579,7 @@ function removeSpecificNode(Stack) {
     localStorage.removeItem(`${Stack}_stapel_RS`);
     localStorage.removeItem(`${Stack}_stapel_VS`);
     localStorage.removeItem(`${Stack}_user_usedMode`);
+    localStorage.removeItem(`${Stack}_lastSave`)
 
     if (localStorage.getItem('AmountOfCards')) {
         let timesAN = JSON.parse(localStorage.getItem('timesArrayNew'));
@@ -1506,6 +1669,7 @@ function ClearStorage() {
         localStorage.removeItem(`${k}_stapel_RS`);
         localStorage.removeItem(`${k}_stapel_VS`);
         localStorage.removeItem(`${k}_user_usedMode`);
+        localStorage.removeItem(`${k}_lastSave`)
     };
 
     stackLocation = "";
@@ -1726,6 +1890,9 @@ function ChooseStackTheme(theme) {
     };
 };
 
+// sub topics element to remove
+let subtopic_toDelete;
+
 //Creates a sub topic with the name the user choosed
 function sdm_create_subTopic(name) {
     let div = document.createElement('div');
@@ -1746,7 +1913,10 @@ function sdm_create_subTopic(name) {
     i2.style.fontSize = '12px';
     i2.style.marginTop = '0.575em';
     i2.addEventListener('click' , function a() {
-        deleteSubTopic(this.parentElement.parentElement); // this.parentElement.parentElement = subtopic (main div)
+        subtopic_toDelete = this.parentElement.parentElement;
+
+        pressed_deleteSubTopic = true;
+        SetUpSmallPopUp('yes' , 'no' , 'block' , 'block' , 'Are you sure you wanna delete this sub topic?');
     });
 
     let p = document.createElement('p');
@@ -1799,8 +1969,6 @@ function toggleSubTopic(subtopic) {
 };
 
 //Adds every sub topic its event
-let subtopic_toDelete;
-
 function AddEvent_subTopic() {
     let SubTopics = getAllSubtTopics();
 

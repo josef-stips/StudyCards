@@ -651,7 +651,7 @@ function CreateCardsForHeaderBar(Stack) {
     };
 
     //Changes stackLocation from preload.js so both is the same
-    window.App.ChangeThisStackLoc(Stack);
+    window.App.ChangeThisStackLoc(Stack, Karteikarten);
     //Calls Function from preload.js
     //Checks if File with Stacklocation name is already saved
     window.App.CheckFileExists();
@@ -782,7 +782,7 @@ function md02_select_oppo_cards() {
 document.querySelector('#save-button').addEventListener('click', SaveStackInSystem);
 
 // Save stack with cards (Always replaces old data with new data)
-//Die Datei die später gespeichert wird , wird immer mit den neu ausgewählten Carden ersetzt 
+//Die Datei die später gespeichert wird , wird immer mit den neu ausgewählten Karden ersetzt 
 function modifyStackData(stack , data_VS , data_RS , addProp) {
     switch (addProp) {
         //If the user wants to add a card
@@ -790,9 +790,23 @@ function modifyStackData(stack , data_VS , data_RS , addProp) {
 
             //Proof if a Card is already saved 
             if(Stackdata[stack] != undefined && Stackdata[stack] != undefined) {
-
+                //Check if card is already in array 
+                let found_vs = false;
+                let found_rs = false;
+                // vs
+                for (const card of Stackdata[stack].vs) {
+                    if(data_VS == card) {
+                        found_vs = true;
+                    };
+                };
+                // rs
+                for (const card of Stackdata[stack].rs) {
+                    if(data_RS == card) {
+                        found_rs = true;
+                    };
+                };
                 
-                if(!Stackdata[stack].vs[data_VS] && !Stackdata[stack].vs[data_RS]) {
+                if(!found_vs && !found_rs) {
                     //Adds card
                     Stackdata[stack].vs.push(data_VS);
                     Stackdata[stack].rs.push(data_RS);
@@ -804,7 +818,7 @@ function modifyStackData(stack , data_VS , data_RS , addProp) {
             };
 
             break;
-    
+
         //If the user wants to deselect a card
         case false:
             if (Stackdata != {}) {
@@ -837,6 +851,7 @@ function SaveStackInSystem() {
         //Updates html with it
         file_lastSave_field.value = localStorage.getItem(`${md02_stack_loc}_lastSave`);
 
+        console.log(Stackdata)
         window.App.ChangeThisStackLoc(md02_stack_loc);
         window.App.CreateFile(Stackdata);
 
@@ -848,4 +863,369 @@ function SaveStackInSystem() {
 
         Stackdata = {};
     };
+
+    CreateCardsForHeaderBar(md02_stack_loc);
+};
+
+// All Files in one Object
+let CardsFiles = {};
+
+// Open Files Tab
+function OpenFilesTab() {
+    // Returns File Data
+    window.App.ReturnFiles();
+
+    const { App } = window;
+
+    setTimeout(() => {
+        (async () => {
+            const FileObject = await App.getFileObject();
+            
+            setTimeout(() => {
+                CardsFiles = FileObject // Output: "File Data from index.js"
+                DisplayFileData(FileObject);
+
+                const Data = FileObject['Data'];
+                const firstPropertyName = Object.keys(Data)[0];
+
+                DisplayFileCards(FileObject, firstPropertyName);
+            },50);
+        })();
+    }, 50);
+};
+
+// Here are all cards the user selected from every file
+// It gets reseted when the user leaves the "files" tab
+// All files from one single file gets removed when the user switches the file
+let Selected_FileCards = [];
+let FileCards_SelectedCards_Amount = 0;
+
+// Handle File Data 
+let li_File;
+function DisplayFileData(FileObject) {
+    let FileNames = FileObject['Names'];
+
+    md02_contentFilesList.textContent = null;
+    // Displays the amount of files
+    FilesCount.textContent = `Files: ${FileNames.length}`;
+
+    for (const name of FileNames) {
+        let li = document.createElement('li');
+        let i = document.createElement('i');
+        let p = document.createElement('p');
+        // p
+        p.className = 'md02_Files-ListItem-Text';
+        p.textContent = name;
+        // i
+        i.className = 'fa-solid fa-trash-can';
+        i.id = 'md02_Files-ListItem-TrashCan';
+        i.addEventListener('click', function a() {
+            li_File = this.parentElement;
+            pressed_deleteFile_butt = true;
+            SetUpSmallPopUp('yes', 'no', 'block', 'block', 'Are you sure about this?');
+        });
+        // li
+        li.id = name; 
+        li.className = 'md02_Files-ListItem';
+        li.style.display = 'flex';
+        li.style.flexDirection = 'row';
+        li.style.justifyContent = 'space-between'; 
+        li.addEventListener('click', function a() {
+            DisplayFileCards(FileObject, name);
+        })
+
+        li.appendChild(p);
+        li.appendChild(i);
+        md02_contentFilesList.appendChild(li);
+    };
+
+    if(FileNames.length == 0) {
+        md02_noFiles();// Set replacement-text
+    };
+};
+
+// Displays the cards from a sertain file
+function DisplayFileCards(FileObject, fileName) {
+    // example: fileName -> Englisch.json; stackName -> Englisch
+    let stackName = fileName.slice(0,-5); 
+    // get the cards of the current stack from the file 
+    let FileData_vs = FileObject['Data'][fileName][stackName].vs;
+    let FileData_rs = FileObject['Data'][fileName][stackName].rs;
+    console.log(FileData_vs, FileData_rs)
+
+    // Inform user from which file the cards are
+    md02_FilesHeader_FileName_Displayer.textContent = fileName;
+    // Inform user how many cards this file has
+    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: 0/${FileData_vs.length}`;
+
+    CreateMiniCardListLoop_4(FileData_vs, FileData_rs, stackName);
+
+    Selected_FileCards = [];
+    FileCards_SelectedCards_Amount = 0;
+
+    console.log(Selected_FileCards)
+};
+
+// delete single file
+function md02_deleteFile(liEl) {
+    md02_contentFilesList.removeChild(liEl);
+
+    // Delete File and return if the deleting was succesfull
+    window.App.deleteFileFromSys(liEl.firstChild.textContent);
+
+    FilesCount.textContent = `Files: ${md02_contentFilesList.children.length}`;
+
+    CheckIfFilesExisting();
+
+    // Check if there was an error deleting the file
+    const { App } = window;
+    setTimeout(() => {
+        (async () => {
+            const DeletingSuccess = await App.getFile_DeleteSuccess();
+
+            if(DeletingSuccess == false) {
+                pressed_small_pop_up = true;
+                SetUpSmallPopUp('oh', 'uuuh', 'block', 'block', 'An error occured deleting the file');
+            };
+        })();
+    }, 150);
+
+    SetInitialText_CardsFromFile();
+
+    deleteFileInfoFromStorage(liEl.firstChild.textContent);
+
+    Selected_FileCards = [];
+    FileCards_SelectedCards_Amount = 0;
+};
+
+// Deletes the small lastSave Info from the storage because
+// when the file is deleted this info is useless
+function deleteFileInfoFromStorage(FileName) {
+    let name = FileName.slice(0, -5);
+
+    localStorage.removeItem(`${name}_lastSave`);
+};
+
+function CheckIfFilesExisting() {
+    if(md02_contentFilesList.children.length == 0) {
+        md02_noFiles();
+    };
+};
+
+function md02_noFiles() {
+    let li = document.createElement('li');
+    li.textContent = 'There are no files on your system saved';
+    li.className = 'md02_Files-ListItem';
+
+    md02_contentFilesList.appendChild(li);
+};
+
+//Sets Replacement Text for md02 pop up 
+function SetInitialText_CardsFromFile() {
+    md02_contentFilesCardsList.textContent = null;
+
+    let p = document.createElement('p');
+    let text = document.createTextNode('There are no cards.');
+    p.className = 'CardsFromFile_ReplacementText';
+    p.appendChild(text);
+    md02_contentFilesCardsList.appendChild(p);
+
+    md02_FilesHeader_FileName_Displayer.textContent = 'Stack';
+    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Cards: 0`;
+};
+
+// Everything about selecting cards in the "files" tab
+
+// User selects a single card from a file in the "files" tab
+function md02_SelectCard_FromFile(card, select_btn) {// card: li element; select_btn: a element
+    let vs = card.firstChild.firstChild.firstChild.textContent;
+    let rs = card.firstChild.children[1].firstChild.textContent;
+
+    // curr selected file name "string"
+    let Curr_file = md02_FilesHeader_FileName_Displayer.textContent;
+
+    switch (select_btn.getAttribute('md02-filesCard-IsSelected')) {
+        case 'true':
+            select_btn.setAttribute('md02-filesCard-IsSelected', 'false');
+
+            // style
+            select_btn.className = "fa-solid fa-check fa-1x";
+            card.style.backgroundColor = "";
+
+            console.log(Curr_file)
+            modifyFiles_StackData(Curr_file, vs, rs, false);// add card to array
+
+            if(FileCards_SelectedCards_Amount > 0) FileCards_SelectedCards_Amount--;
+
+            break;
+
+        case 'false':
+            select_btn.setAttribute('md02-filesCard-IsSelected', 'true');
+
+            // style
+            select_btn.className = "fa-solid fa-x fa-1x";
+            card.style.backgroundColor = "rgba(0 ,0 ,0 ,0.7)";
+
+            modifyFiles_StackData(Curr_file, vs, rs, true);// add card to array
+
+            FileCards_SelectedCards_Amount++;
+        
+            break;
+    };
+
+    // Inform user: How many cards he selected and how many cards are in the file 
+    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: ${Selected_FileCards[Curr_file].vs.length}/${card.parentElement.children.length}`;
+};
+
+// function triggered with a button in the small header: Selects all opposite cards
+function filesCards_SelectOppoCards() {
+    //Gets li Elements
+    let ulChilds = [...md02_contentFilesCardsList.children];
+
+    //Gets children and set all back to default
+    for (const k of ulChilds) {
+        for (let i = 0; i < k.children.length; i++) {
+            const e = k.children[i].lastChild;
+
+            if(e.getAttribute('md02-filescard-isselected') === 'false') {
+                //Sets back to defaut 
+                e.setAttribute('md02-filescard-isselected' , 'true');
+                e.className = "fa-solid fa-x fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "rgba(0 ,0 ,0 ,0.7)";
+
+                modifyFiles_StackData(md02_FilesHeader_FileName_Displayer.textContent , e.parentElement.childNodes[0].textContent , e.parentElement.childNodes[1].firstChild.textContent , true);
+
+                FileCards_SelectedCards_Amount++;
+
+            } else if(e.getAttribute('md02-filescard-isselected') === 'true') {
+                //Sets back to defaut 
+                e.setAttribute('md02-filescard-isselected' , 'false');
+                e.className = "fa-solid fa-check fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "";
+
+                modifyFiles_StackData(md02_FilesHeader_FileName_Displayer.textContent , e.parentElement.childNodes[0].textContent , e.parentElement.childNodes[1].firstChild.textContent , false);
+
+                if(FileCards_SelectedCards_Amount > 0) FileCards_SelectedCards_Amount--;
+            };
+        };
+    };
+
+    // Update html
+    // Inform user: How many cards he selected and how many cards are in the file 
+    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: ${FileCards_SelectedCards_Amount}/${ulChilds.length}`;
+};
+
+// function triggered by a btn click event in the header of "files" tab content
+// deselects all cards
+function fileCards_Deselect_AllCards() {
+    FileCards_SelectedCards_Amount = 0;
+    Selected_FileCards = [];
+
+    //Gets li Elements and ul
+    let ulChilds = [...md02_contentFilesCardsList.children];
+
+    //Gets children and set all back to default
+    for (const k of ulChilds) {
+        for (let i = 0; i < k.children.length; i++) {
+            const e = k.children[i].lastChild;
+
+            if(e.getAttribute('md02-filescard-isselected') === 'true') {
+                //Sets back to defaut 
+                e.setAttribute('md02-filescard-isselected' , 'false');
+                e.className = "fa-solid fa-check fa-1x";
+                e.parentElement.parentElement.style.backgroundColor = "";
+
+                if(FileCards_SelectedCards_Amount > 0) FileCards_SelectedCards_Amount--;
+
+            } else if(e.getAttribute('md02-filescard-isselected') === 'false') {};
+        };
+    };
+
+    // Update html
+    // Inform user: How many cards he selected and how many cards are in the file 
+    md02_FilesHeader_FileCards_Amount_Displayer.textContent = `| Selected cards: ${FileCards_SelectedCards_Amount}/${ulChilds.length}`;
+};
+
+// modifyss the array with the user selected cards from a file in the "files" tab
+function modifyFiles_StackData(stack , data_VS , data_RS , addProp) {// addProp: false -> user wants to delete a card from the array
+    switch (addProp) {
+        //If the user wants to add a card
+        case true:
+
+            //Proof if a Card is already saved 
+            if(Selected_FileCards[stack] != undefined && Selected_FileCards[stack] != undefined) {
+                //Check if card is already in array 
+                let found_vs = false;
+                let found_rs = false;
+                // vs
+                for (const card of Selected_FileCards[stack].vs) {
+                    if(data_VS == card) {
+                        found_vs = true;
+                    };
+                };
+                // rs
+                for (const card of Selected_FileCards[stack].rs) {
+                    if(data_RS == card) {
+                        found_rs = true;
+                    };
+                };
+                
+                if(!found_vs && !found_rs) {
+                    //Adds card
+                    Selected_FileCards[stack].vs.push(data_VS);
+                    Selected_FileCards[stack].rs.push(data_RS);
+                };
+
+            } else {
+                //Builds arrays and adds card
+                Selected_FileCards[stack] = {'vs' : [data_VS]  , 'rs' : [data_RS]};
+            };
+
+            break;
+
+        //If the user wants to deselect a card
+        case false:
+            if (Selected_FileCards != {}) {
+                //Proofs if Element that the user wants to delete exists and deletes it
+                let VS_index = Selected_FileCards[stack]['vs'].indexOf(data_VS);
+                let RS_index = Selected_FileCards[stack]['rs'].indexOf(data_RS);
+
+                if(VS_index !== -1 && RS_index !== -1) {
+                    //delete
+                    Selected_FileCards[stack].vs.splice(VS_index , 1);
+                    Selected_FileCards[stack].rs.splice(RS_index , 1);
+                };
+            };
+
+            break;
+    };
+};
+
+// triggered by btn event: Export all cards from the file as a stack
+function ExportFile_toStack() {
+    let currFile = md02_FilesHeader_FileName_Displayer.textContent;
+
+    md02_Open_CreateStack(currFile.slice(0, -5)); // name of file without extname 
+};
+
+function md02_Open_CreateStack(name) {
+    CTE_ContenteditableField.focus();
+    displayed_subtopic.textContent = null;
+    CreateTableElWindow.style.display = 'block';
+    darkContainer.style.display = 'block';
+    CTE_ContenteditableField.value = name;
+    CTE_headerTitle.textContent = "Creates a new stack with all cards from the file";
+    CreateStack_footer_infoText.textContent = `By clicking "Create Stack" all cards from the file are automatically in the stack`;
+    CreateStack_footer_infoText.style.display = 'block';
+};
+
+// triggered by btn event: Export all selected cards from the file as a stack
+function Export_FileCards_toStack() {
+    console.log("export all selected cards", Selected_FileCards)
+
+    let currFile = md02_FilesHeader_FileName_Displayer.textContent;
+
+    md02_Open_CreateStack(currFile.slice(0, -5)); // name of file without extname 
+    CTE_headerTitle.textContent = "Creates a new stack with all cards you selected from the file";
+    CreateStack_footer_infoText.textContent = `By clicking "Create Stack" all cards you selected from the file are automatically in the stack`;
 };
