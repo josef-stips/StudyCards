@@ -2403,6 +2403,30 @@ textarea {
     background-image: linear-gradient(to bottom right, #b39937, #5bcd78);
 }
 
+#theme-5 {
+    background-image: linear-gradient(to bottom right, #caa1d9, #e6e873);
+}
+
+#theme-6 {
+    background-image: linear-gradient(to bottom right, #6bdbab, #e09aea);
+}
+
+#theme-7 {
+    background-image: linear-gradient(to bottom right, #1c2645, #382929);
+}
+
+#theme-8 {
+    background-image: linear-gradient(to bottom right, #80bc67, #d98282);
+}
+
+#theme-9 {
+    background-image: linear-gradient(to bottom right, #5f8176, #815a5a);
+}
+
+#theme-10 {
+    background-image: linear-gradient(to bottom right, #543132, #36395e);
+}
+
 .CTE_SubTopic-header {
     display: flex;
     flex-direction: row;

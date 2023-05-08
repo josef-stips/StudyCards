@@ -181,6 +181,12 @@ let theme_1 = document.querySelector('#theme-1');
 let theme_2 = document.querySelector('#theme-2');
 let theme_3 = document.querySelector('#theme-3');
 let theme_4 = document.querySelector('#theme-4');
+let theme_5 = document.querySelector('#theme-5');
+let theme_6 = document.querySelector('#theme-6');
+let theme_7 = document.querySelector('#theme-7');
+let theme_8 = document.querySelector('#theme-8');
+let theme_9 = document.querySelector('#theme-9');
+let theme_10 = document.querySelector('#theme-10');
 
 let sts_FirstContent = document.getElementById('first-content');
 let sts_SecondContent = document.getElementById('sec-content');
@@ -350,9 +356,15 @@ let CTE_ContenteditableField = document.getElementById('input2');
 //Stack theme
 let StackThemes = {
     'No theme': ['', ''],
-    'Green Orange': ['#2aac5c', '#e58f61'],
+    'Green Female': ['#2aac5c', '#e58f61'],
     'Blood Moon': ['#871717', '#8c47d1'],
     'Spring Fragrance': ['#b39937', ' #5bcd78'],
+    'Eternity': ['#caa1d9', '#e6e873'],
+    'Unity': ['#6bdbab', '#e09aea'],
+    'Apocalypse': ['#1c2645', '#382929'],
+    'Light Omega': ['#80bc67', '#d98282'],
+    'Underlying Motive': ['#5f8176', '#815a5a'],
+    'Alpha Male': ['#543132', '#36395e'],
 };
 
 // curr selected theme 
@@ -1887,8 +1899,33 @@ function ChooseStackTheme(theme) {
             CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[3]}`;
             curr_selected_theme = Object.keys(StackThemes)[3];
             break;
+        case Object.keys(StackThemes)[4]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[4]}`;
+            curr_selected_theme = Object.keys(StackThemes)[4];
+            break;
     
-        default:
+        case Object.keys(StackThemes)[5]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[5]}`;
+            curr_selected_theme = Object.keys(StackThemes)[5];
+            break;
+    
+        case Object.keys(StackThemes)[6]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[6]}`;
+            curr_selected_theme = Object.keys(StackThemes)[6];
+            break;
+    
+        case Object.keys(StackThemes)[7]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[7]}`;
+            curr_selected_theme = Object.keys(StackThemes)[7];
+            break;
+        case Object.keys(StackThemes)[8]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[8]}`;
+            curr_selected_theme = Object.keys(StackThemes)[8];
+            break;
+    
+        case Object.keys(StackThemes)[9]:
+            CTE_colorTheme_untitle.textContent = `choosed theme - ${Object.keys(StackThemes)[9]}`;
+            curr_selected_theme = Object.keys(StackThemes)[9];
             break;
     };
 };

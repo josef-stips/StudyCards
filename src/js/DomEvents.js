@@ -879,6 +879,24 @@ theme_3.addEventListener('click', () => {
 theme_4.addEventListener('click', () => {
     ChooseStackTheme(Object.keys(StackThemes)[3]);
 });
+theme_5.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[4]);
+});
+theme_6.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[5]);
+});
+theme_7.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[6]);
+});
+theme_8.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[7]);
+});
+theme_9.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[8]);
+});
+theme_10.addEventListener('click', () => {
+    ChooseStackTheme(Object.keys(StackThemes)[9]);
+});
 
 cst_acceptName.addEventListener('click', () => {
     CST_AcceptSubTopicName();
