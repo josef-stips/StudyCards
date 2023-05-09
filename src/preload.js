@@ -18,15 +18,11 @@ let ChangeThisStackLoc = (stack, Kartei_Karten) => {
 
 // Creates File
 let CreateFile = (dataToSave) => {
-    console.log("Data sended")
-    console.log(curr_stack)
-
     //file name and type
     let FileProper = {
         name: curr_stack,
         type: 'json'
     };
-
     //Sends message to renderer process
     ipcRenderer.send('gotData', { FileProper, dataToSave });
 };
@@ -150,9 +146,6 @@ let CheckFileState = (args) => {
     let stack_rs = Karteikarten[curr_stack].vr;
     let stack_all = [...stack_vs, ...stack_rs];
 
-    console.log(file_all)
-    console.log(stack_all)
-
     if (file_all.length == stack_all.length) {
         return "all_similar";
 
@@ -186,14 +179,10 @@ function ReturnFiles() {
 let FileObject;
 ipcRenderer.on("ReturnedFiles", (event, args) => {
     FileObject = args;
-
-    console.log(FileObject)
 });
 
 //md02 , delete one file
 function deleteFileFromSys(file) { // file: file name
-    console.log(file);
-
     ipcRenderer.send('DeleteFileFromSystem', file);
 };
 
@@ -222,14 +211,10 @@ var clicked_repeat_mainProc;
 
 ipcRenderer.on('StringIsSimilar', (event, arg) => {
     ChangeRepeatState(false)
-
-    console.log("String is similar")
 });
 
 ipcRenderer.on('StringIsNotSimilar', (event, arg) => {
     ChangeRepeatState(true)
-
-    console.log('String is not similar')
 });
 
 function ChangeRepeatState(state) {

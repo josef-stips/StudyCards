@@ -382,8 +382,6 @@ let stackData = {
 // Checks if localstorage has some things stored
 if (localStorage.getItem('StackData')) {
     stackData = JSON.parse(localStorage.getItem('StackData'));
-
-    console.log(stackData)
 };
 
 //Pusht die von der letzten Session gespeicherten Table Elemente in den Array 'TableCells'
@@ -473,8 +471,7 @@ if (TableCells.length >= 1) {
 
 function ThemeForStack() {
     let allStacks = getAllTable_trs();
-    
-    console.log(stackData.themes , stackLocation)
+
     if (allStacks != [] && stackData.themes[stackLocation] != null) {
         // Changes the body background with the stack theme
         ChangeToStackTheme(stackLocation);
@@ -493,8 +490,6 @@ function UserSawInfoPopUp() {
         darkContainer.style.display = 'block';
     };
 };
-
-console.log(TableCells)
 
 //Wird beim drücken von 'stappel_Rückseite' ausgeführt
 function AddCardToStack() {
@@ -1176,8 +1171,6 @@ function AcceptUserStackName() {
 
 // Adds card to a stack dynamically
 function AddCardToStack_dynam(vs,rs) {
-    console.log(vs,rs)
-
     Karteikarten[`${stackLocation}`].vr.push(rs);
     Karteikarten[`${stackLocation}`].vs.push(vs);
 
@@ -1266,25 +1259,16 @@ function CheckIfNameAlreadyExists(NewName) {
 //This function creates a contenteditable table element for the user | user_input is the name of the new stack
 function CreateTableElement(user_input , subtopicTable , subtopic_index) {
     let LastChildDataSet
-    let allSubTopics = getAllSubtTopics();
     let subTopicTable = SideMenuTable.querySelector(`tbody[table_id="${subtopicTable}"]`);
-
-    console.log(subTopicTable);
 
     if (subTopicTable.textContent != "") {
 
         LastChildDataSet = subTopicTable.lastElementChild.lastElementChild.getAttribute('data-table-index');
-
-        console.log('es existieren bereits mehrere Elemente')
     
     } else if(subTopicTable.textContent == "") {
         
         LastChildDataSet = 0;
-
-        console.log('es existierte noch kein element')
     };
-
-    console.log(LastChildDataSet)
 
     let UserCreatedName = document.createTextNode(`${user_input}`);
 
@@ -1524,11 +1508,7 @@ function getAllTable_trs() {
     let allStacks = [];
 
     for (k of allTables) {
-        console.log(k)
-
         for (const h of k.children) {
-            console.log(h)
-
             allStacks.push(h);
         };
     };
@@ -1555,7 +1535,6 @@ function DeleteCurrentStack(StackToRem) {
 
     if(allTrs.length == 1) {
         DeleteAllStacks();
-        console.log('delete everything!')
         return
     };
 
@@ -1796,8 +1775,6 @@ function GetUpdatedStackTable(UpdatedChilds) {
         let All_trs = [];
         
         for (const i of HTMLreceiver.querySelectorAll('tbody')) {
-            console.log(i,i.children)
-
             for (const k of i.children) {
                 All_trs.push(k);// tr
             };
@@ -1807,8 +1784,6 @@ function GetUpdatedStackTable(UpdatedChilds) {
             UpdatedChilds.push(k.children[0]);// td
         };
     };
-
-    console.log(UpdatedChilds);
 };
 
 //Pushes stack data into the stack data array
@@ -1819,8 +1794,6 @@ function PushStackData() {
     for (const i of StacksEl) {
         Stacks.push(i.textContent);
     };
-
-    // console.log(Stacks)
 };
 PushStackData()
 
@@ -1857,7 +1830,6 @@ function CTE_dropdown_DisplaySubTopics() {
         });
 
         li.append(subtopic_name);
-        console.log(subtopic_name)
         CTE_subtopic_dropdown.appendChild(li);
 
         children_count++;
@@ -1873,8 +1845,6 @@ function CTE_Select_SubTopic(subtopic , subtopic_name) {
     displayed_subtopic.textContent = subtopic_name;
 
     SelectedSubTopic_dropDown = subtopic.getAttribute('subtopicdropdown_li_el');
-
-    console.log(SelectedSubTopic_dropDown)
 };
 
 //User shoose stack theme
@@ -2055,8 +2025,6 @@ function deleteSubTopic(subtopic_el) {
         allStacks_name.push(Stack);
         DeleteCurrentStack(Stack);        
     };
-
-    console.log(allStacks_name)
 
     // remove elements from html
     SideMenuTable.removeChild(table);

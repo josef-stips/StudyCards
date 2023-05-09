@@ -196,7 +196,9 @@ function PlayModeIsNotActive() {
     //If user is in connect mode
     curr_SelPairs = 0;
 
-    if(PlayGround_Cards_VS != undefined && PlayGround_Cards_RS != undefined) {
+    console.log(PlayGround_Cards_RS, PlayGround_Cards_VS)
+
+    if(PlayGround_Cards_VS && PlayGround_Cards_RS) {
         pgKarteiKarteVS.querySelector('h3').textContent = `${PlayGround_Cards_VS[Runde]}`;
         pgKarteiKarteRS.querySelector('h3').textContent = `${PlayGround_Cards_RS[Runde]}`;
     };

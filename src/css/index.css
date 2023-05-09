@@ -174,7 +174,7 @@ a:hover {
 #start-screen {
     position: absolute;
     z-index: 9999;
-    background-image: linear-gradient(to bottom right, var(--basic-bg-color), var(--basic-bg-color02));
+    background-image: linear-gradient(to bottom right, var(--bg-gardiant-01), var(--bg-gardiant-02));
     width: 100%;
     height: 100%;
     margin: auto auto auto auto;
@@ -194,11 +194,12 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 10em;
 }
 
 #startscreen-title {
     color: rgba(255, 255, 255, 0);
-    font-size: 5.8em;
+    font-size: 5.8vh;
     margin-top: 3.5em;
     margin-right: 11em;
     font-weight: 400;
@@ -212,7 +213,7 @@ a:hover {
 
 #startscreen-sub-title {
     color: rgba(255, 255, 255, 0);
-    font-size: 1.75em;
+    font-size: 1.75vh;
     margin-left: 0.13em;
     font-weight: 400;
     margin-top: 0.3em;
@@ -226,7 +227,7 @@ a:hover {
 #startscreen-title-seperator {
     color: var(--front-color);
     margin-top: 0.1em;
-    width: 100%;
+    width: 0;
     animation-name: separator-animation;
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
@@ -238,10 +239,10 @@ a:hover {
 
 @keyframes separator-animation {
     from {
-        width: 0%;
+        width: 0vh;
     }
     to {
-        width: 100%;
+        width: 90vh;
     }
 }
 
@@ -337,6 +338,7 @@ header a {
 }
 
 #header-dropdown-con {
+    padding-bottom: 0.5em;
     display: none;
     position: absolute;
     background-image: linear-gradient(to bottom right, var(--bg-header-gardiant-01), var(--user-input-02));
@@ -524,7 +526,7 @@ header a {
     width: min-content;
     display: none;
     flex-direction: column;
-    margin-left: 9em;
+    margin-left: 8.2em;
     margin-top: 2.3em;
 }
 
@@ -954,7 +956,7 @@ header a {
 }
 
 #allStacks-table-wrapper {
-    margin: 1.95% 0 0 0.7em;
+    margin: 0.47em 0 0 0.7em;
     height: 90.5%;
     width: 90%;
     overflow-y: auto;
@@ -982,7 +984,7 @@ header a {
 #allStacks-table tbody tr {
     background-color: rgba(96, 96, 96, 0.285);
     display: block;
-    padding: 1em;
+    padding: 0.5em;
     margin-top: 1em;
 }
 
@@ -1450,6 +1452,7 @@ h5 {
     background-color: var(--mini-button-bg-color);
     padding: 0.4em;
     transition: 0.1s all ease-in-out;
+    text-align: center;
 }
 
 .header-bar-list-item:hover {
@@ -1928,8 +1931,8 @@ h5 {
 /* first Chart */
 
 #Chart-wrapper {
-    width: 140vh;
-    height: 57vh;
+    width: 125vh;
+    height: 55vh;
     margin-left: 2em;
 }
 
@@ -1950,8 +1953,8 @@ h5 {
 /* Second Chart */
 
 #Chart-wrapper2 {
-    width: 140vh;
-    height: 57vh;
+    width: 125vh;
+    height: 55vh;
     margin-left: 2em;
 }
 
@@ -3585,12 +3588,12 @@ textarea {
 /* ****************************INFO POP UP*************************************** */
 
 .info-pop-up {
-    width: 47%;
-    height: 42%;
+    width: 52%;
+    height: 55%;
     background-image: linear-gradient(to bottom right, var(--bg-div-gardiant-01), var(--bg-div-gardiant-02));
     left: 0;
     right: 0;
-    top: 12em;
+    top: 8.5em;
     bottom: 0;
     margin: 0 auto auto auto;
     position: absolute;
@@ -3743,13 +3746,13 @@ textarea {
         font-size: 23px;
     }
     #nav_links li {
-        font-size: 13px;
+        font-size: 16px;
     }
     #sdm-open-button {
-        font-size: 25px;
+        font-size: 28px;
     }
     header h1 {
-        font-size: 23px;
+        font-size: 25.5px;
     }
     #play-ground {
         position: absolute;
@@ -3776,15 +3779,161 @@ textarea {
         margin: auto auto auto auto;
     }
     #pg-sv {
-        height: 28vh;
+        height: 26vh;
+        margin-top: 1em;
+        width: 65%;
+        box-shadow: none;
     }
     #pg-sr {
-        height: 28vh;
+        height: 26vh;
+        margin-bottom: 1em;
+        box-shadow: none;
+        width: 65%;
+    }
+    #pg-sv h3 {
+        font-size: 23px;
+    }
+    #pg-sr h3 {
+        font-size: 23px;
     }
     #CreateTableElWindow {
-        margin-top: 15em;
+        margin-top: 8em;
+        height: 64%;
     }
     form {
         width: 35em;
+    }
+    #first-chart-header {
+        margin-left: 0.6em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    #second-chart-header {
+        margin-left: 0.6em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    #first-chart-header h2 {
+        font-size: 20px;
+    }
+    #second-chart-header h2 {
+        font-size: 20px;
+    }
+    #Chart-wrapper {
+        width: 123vh;
+        height: 51vh;
+    }
+    #Chart-wrapper2 {
+        width: 123vh;
+        height: 51vh;
+    }
+    #stappel {
+        width: 99vh;
+        height: 93%;
+        margin: 0.15em 0 0 0;
+    }
+    #neuer-stappel {
+        height: 21em;
+        width: 99vh;
+    }
+    #createCard-Pen {
+        font-size: 18px;
+        z-index: 2000;
+        margin: 0.5em 0.8em 0 0;
+    }
+    #adjustable-header-btn {
+        top: 10.6%;
+        left: 98%;
+    }
+    #main-content {
+        margin-top: 1.5em;
+    }
+    #header-bar-list {
+        width: 51em;
+        height: 3.5em;
+    }
+    .header-bar-list-item {
+        font-size: 12px;
+        padding: 0.3em 0.2em 0.2em 0;
+    }
+    #first-md-PopUp-Header-title {
+        margin: -0.35em 0 0 0;
+    }
+    #currCards-nav-wrapper {
+        height: 90%;
+    }
+    .Einzel_Stapel_2 {
+        height: 10vh;
+    }
+    #currStackInfo-div {
+        height: 5%;
+    }
+    #AllStacksInfo-div {
+        height: 5%;
+    }
+    #md02-currStackInfo-div {
+        height: 5.5%;
+    }
+    #md02-infoDiv-innerWrapper {
+        margin: 0.4em 0 0 1em;
+    }
+    #side-nav-toggle-btn-wrapper {
+        height: 3em;
+    }
+    #md02-header-bar {
+        height: 9%;
+    }
+    #md02-currStackInfo-div {
+        font-size: 13.5px;
+    }
+    #files-cards-area {
+        height: 27em;
+    }
+    #files-wrapper-question-mark {
+        margin: -0.1em 0.5em 0 0;
+    }
+    .md-PopUp-Header {
+        height: 5.8%;
+    }
+    .createSubTopic-popUp {
+        height: 40%;
+        margin-top: 11em;
+    }
+    .small-pop-up {
+        width: 40%;
+        top: 11em;
+    }
+    .pg-Overview-under-div {
+        top: 73.7vh;
+    }
+    .pg-ModeOverview {
+        margin: 1em 0 0 0;
+        padding-top: 0;
+        border-bottom: none;
+        border-top: none;
+    }
+    .md02_Files-ListItem {
+        height: 1.6vh;
+    }
+    #files-area {
+        height: 25em;
+    }
+    #cards-wrapper {
+        height: 64vh;
+    }
+    #allCardsWindow {
+        width: 85.1%;
+        height: 89vh;
+        top: 51.2px;
+        left: 7.42%;
+    }
+    #allCards-searchBar-wrapper {
+        width: 90%;
+    }
+    #pg-RetryMistakes-btn {
+        margin: 5.5em 0 0 0.2em;
+    }
+    .pg-sub-secondDiv {
+        margin-top: 2.2em;
     }
 }
