@@ -10,7 +10,7 @@ let DoughnutChart_btn = document.getElementById('DoughnutChart-btn');
 
 //Second Chart
 let LineChart_btn02 = document.getElementById('LineChart-btn02');
-let BarChart_btn02 = document.getElementById('BarChart-btn02');
+let BarChart_btn02 =document.getElementById('BarChart-btn02');
 let PieChart_btn02 = document.getElementById('PieChart-btn02');
 let DoughnutChart_btn02 = document.getElementById('DoughnutChart-btn02');
 
