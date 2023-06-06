@@ -378,7 +378,6 @@ let stackData = {
 };
 
 //SideTableMenu and important data
-
 // Checks if localstorage has some things stored
 if (localStorage.getItem('StackData')) {
     stackData = JSON.parse(localStorage.getItem('StackData'));

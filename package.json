@@ -23,7 +23,8 @@
         "chart.js": "^4.2.1",
         "electron-squirrel-startup": "^1.0.0",
         "string-similarity": "^4.0.4",
-        "update-electron-app": "^2.0.1"
+        "update-electron-app": "^2.0.1",
+        "yarn": "^1.22.19"
     },
     "devDependencies": {
         "@electron-forge/cli": "^6.0.4",
