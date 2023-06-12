@@ -1,0 +1,31 @@
+{
+    "liveServer.settings.donotVerifyTags": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Night Owl",
+    "workbench.editorAssociations": {
+        "*.py": "default",
+        "*.xlsx": "default"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "[html]": {
+    
+        "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter"
+    },
+    "workbench.colorCustomizations": {
+    "[Night Owl]": {}
+    },
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter"
+    },
+    "editor.minimap.size": "fit",
+    "window.commandCenter": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[python]": {
+        "editor.formatOnType": true
+    }
+}
